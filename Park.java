@@ -1,5 +1,6 @@
 // Imports
 import java.util.ArrayList;
+import java.util.HashSet;
 
 // Class definition for park (Main Structure)
 public class Park {
@@ -9,7 +10,7 @@ public class Park {
     private String parkLocation; // Location of the Park
 
     // ArrayLists to store all visitors in the park
-    private ArrayList<Visitor> visitors;
+    private HashSet<Visitor> visitors;
 
     // ArrayLists to store all employees in the park
     private ArrayList<Employee> employees;
@@ -30,39 +31,42 @@ public class Park {
         this.parkLocation = parkLocation; // Sets the park's location
 
         // Initialize the ArrayLists
-        this.visitors = new ArrayList<>();
+        this.visitors = new HashSet<>();
         this.employees = new ArrayList<>();
         this.sections = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.tickets = new ArrayList<>();
     }
 
-    // Method to add a visitior
-    public void addVisitor(Visitor v) {
-        // Check if the visitor object is not null and is not in the list
-        if (v != null && !visitors.contains(v)) {
-            visitors.add(v);
+    // Method to add a Person to the park
+    public void addPerson(Person p) {
 
-            // Print a message indicating the success of the visitor adding to the list
-            System.out.println("Visitor " + v.getName() + " has been added to the park.");
-        } else {
-            // Print a message indicating the failure of the visitor adding to the list
-            System.out.println("Visitor already in the park or invalid.");
+        // Check if the object of person is null
+        if (p == null) {
+            System.out.println("Invalid person. Cannot add null");
+            return;
         }
-    }
 
-    // Method to remove a visitor
-    public void removeVisitor(Visitor v) {
-        // Check if the visitor object is not null and is in the list
-        if (v != null && visitors.contains(v)) {
-            // If it passes the conditions, vistor is removed from the list
-            visitors.remove(v);
-            // Print a message indicating the success of the visitor removal from the list
-            System.out.println("Visitor " + v.getName() + " has been removed from the park");
+        // Check if person is a visitor
+        if (p instanceof Visitor) {
+            Visitor v = (Visitor) p;
+            if (visitors.add(v)) {
+                System.out.println("Visitor: " + v.getName() + ", added to the park");
+            } else {
+                System.out.println("Visitor: " + v.getName() + ", already in the park");
+            }
+        }
 
+        // Check if persin is an employee
+        if (p instanceof Employee) {
+            Employee e = (Employee) p;
+            if (employees.add(e)) {
+                System.out.println("Employee: " + e.getName() + ", ID: "+ e.getID + ", added to the park");
+            } else {
+                System.out.println("Employee: " + e.getName() + ", ID: "+ e.getID + ", already exists in the park");
+            }
         } else {
-            // Print a message indicating the failure of the visitor removal from the list
-            System.out.println("Visitors was not in the park or invalid.");
+            System.out.println("Person is neither a Visitor nor an Employee");
         }
     }
 
