@@ -3,7 +3,7 @@ public abstract class Person {
     private int age;
     private int id;
 
-    public Person(){
+    public Person() {
         this.name = "Unknown";
         this.age = -1;
         this.id = -1;
@@ -39,6 +39,10 @@ public abstract class Person {
     public void setId(int id) {
         this.id = id;
     }
+
+    // Abstract methods to be implemented bysubclasses
+    public abstract void addToPark(Park park);
+    public abstract void removeFromPark(Park park);
 
     //This should print out whether you are Visitor OR Employee
     public abstract void personType(); 

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 // Class definition for park (Main Structure)
-public class Park {
+class Park {
 
     // Instance variables holding park's name and location
     private String parkName = "Ride & Seek"; // Name of the Park
