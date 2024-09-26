@@ -1,28 +1,32 @@
 public class Ticket {
-    private double price;
-    private int ticketNumber;
+    private double ticketPrice;
+    private String ticketID;
+    private boolean isUsed; // Check if the ticket has been used
+    boolean isRefunded; // Check if the ticket has been refunded
 
-    public Ticket(double price, int ticketNumber){
-        this.price = price;
-        this.ticketNumber = ticketNumber;
+    public Ticket(double ticketPrice, String ticketID){
+        this.ticketPrice = ticketPrice;
+        this.ticketID = ticketID;
     }
 
-    public int getTicketNumber(){
-        return ticketNumber;
+    public String getTicketID(){
+        return ticketID;
     }
-    public void setTicketNumber(int ticketNumber) {
-        this.ticketNumber = ticketNumber;
+    public void setTicketID(String ticketID) {
+        this.ticketID = ticketID;
     }
-    public double getPrice(){
-        return price;
+    
+    public double getTicketPrice(){
+        return ticketPrice;
     }
-    public void setPrice(double price){
-        this.price = price;
+
+    public void setTicketPrice(double ticketPrice){
+        this.ticketPrice = ticketPrice;
     }
 
     @Override
     public String toString() {
-        return "Ticket Number: " + ticketNumber + ", Price: $" + price;
+        return "Ticket Number: " + ticketID + ", Price: $" + ticketPrice;
     }
 
 }

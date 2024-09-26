@@ -40,6 +40,11 @@ public abstract class Person {
         this.id = id;
     }
 
+    // Abstract methods that subclasses (Visitor, Employee) must implement
+    public abstract void addToPark(Park park); // Adds the person to the park
+    public abstract void removeFromPark(Park park); // Removes the person from the park
+
+
     //This should print out whether you are Visitor OR Employee
     public abstract void personType(); 
 }
