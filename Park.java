@@ -60,53 +60,6 @@ public class Park {
         return employees;
     }
 
-    // // Method to add a Person to the park takes object of Person
-    // public void addPerson(Person p) {
-
-    //     // Check if the object of person is null
-    //     if (p == null) {
-    //         // Print an error message if object p is null
-    //         System.out.println("Invalid person. Cannot add null");
-    //         return; // Exit the method early since there is nothing to add
-    //     }
-
-    //     // Check if person is a visitor
-    //     if (p instanceof Visitor) {
-    //         Visitor v = (Visitor) p; // Cast the Person object to a Visitor type
-
-    //         // Try to add the visitor to the HashSet (Prevents Duplicates Automatically)
-    //         if (visitors.add(v)) {
-    //             // Print a confirmation message if visitor is added
-    //             System.out.println("Visitor: " + v.getName() + ", added to the park");
-    //         } else {
-    //             // Print a failure message if visitor already exists in the HashSet
-    //             System.out.println("Visitor: " + v.getName() + ", already in the park");
-    //         }
-    //     } 
-        
-    //     // Check if person is an employee
-    //     else if (p instanceof Employee) { 
-    //         Employee e = (Employee) p; // Cast the Person object to an Employee type
-
-    //         // Try to add the employee to the HashSet (Prevents Duplicates Automatically)
-    //         if (employees.add(e)) {
-    //             // Print a confirmation message if employee is added
-    //             System.out.println("Employee: " + e.getName() + ", ID: "+ e.getID + ", added to the park");
-    //         } else {
-    //             // Print a failure message if employee already exists in the HashSet
-    //             System.out.println("Employee: " + e.getName() + ", ID: "+ e.getID + ", already exists in the park");
-    //         }
-    //     } else {
-    //         // If the person is neither a Visitor nor an Employee, print an error message
-    //         System.out.println("Person is neither a Visitor nor an Employee");
-    //     }
-    // }
-
-    // // Method to remove a person from the Park takes object of Person
-    // public void removePerson(Person p) {
-        
-    // }
-
     // Method to assign an employee for a section
     public void assignEmployee(Employee e, Section s) {
 
