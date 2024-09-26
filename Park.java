@@ -43,17 +43,27 @@ public class Park {
         if (v != null && !visitors.contains(v)) {
             visitors.add(v);
 
-            // Print confirmation that the visitor has been succefully added to the park
+            // Print a message indicating the success of the visitor adding to the list
             System.out.println("Visitor " + v.getName() + " has been added to the park.");
         } else {
-            // If 'v' is null or visitor already in the list, print a message with the issue
+            // Print a message indicating the failure of the visitor adding to the list
             System.out.println("Visitor already in the park or invalid.");
         }
     }
 
     // Method to remove a visitor
     public void removeVisitor(Visitor v) {
+        // Check if the visitor object is not null and is in the list
+        if (v != null && visitors.contains(v)) {
+            // If it passes the conditions, vistor is removed from the list
+            visitors.remove(v);
+            // Print a message indicating the success of the visitor removal from the list
+            System.out.println("Visitor " + v.getName() + " has been removed from the park");
 
+        } else {
+            // Print a message indicating the failure of the visitor removal from the list
+            System.out.println("Visitors was not in the park or invalid.");
+        }
     }
 
     // Method to assign an employee for a section
