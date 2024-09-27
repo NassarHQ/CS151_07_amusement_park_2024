@@ -1,18 +1,15 @@
 public abstract class Person {
     private String name;
     private int age;
-    private int id;
 
     public Person(){
         this.name = "Unknown";
         this.age = -1;
-        this.id = -1;
     }
 
-    public Person(String name, int age, int id) {
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
-        this.id = id;
     }
 
     // Getters and setters
@@ -30,14 +27,6 @@ public abstract class Person {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     // Abstract methods that subclasses (Visitor, Employee) must implement
