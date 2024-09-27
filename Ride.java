@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Ride {
+class Ride implements ParkInteractables {
 
     // Declaring variables needed for rides
     private String rideName;
@@ -90,6 +90,11 @@ class Ride {
 
     public void setVisitorQueue(Queue<Visitor> visitorQueue) {
         this.visitorQueue = visitorQueue;
+    }
+
+    // Getter and Setter for onRide
+    public Queue<Visitor> getOnRide() {
+        return visitorQueue;
     }
     
     // Method to load passengers onto the ride from the queue
