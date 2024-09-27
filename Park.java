@@ -46,26 +46,64 @@ public class Park {
         // Check if the object of Person is null
         if (p == null) {
             // Print an error message if object p is null
-            System.out.println("Invalid person. Cannot add null");
+            System.out.println("Invalid person. Cannot add null.");
         }
         p.removeFromPark(this);
     }
 
-    // Method to add a ride in the park
-    public void addRide(Ride r) {
-        // TO BE IMPLEMENTED
+    // Utility method to print ride-related messages
+    private void printRideMessage(String action, Ride r, boolean success) {
+        String status = success ? "successfully" : "unsuccessfully";
+        System.out.println("Ride: " + r.getRideName() + " was " +
+            status + " " + action + " in the park.");
+    }
+
+    // Helper method to avoid redundancy of adding and removing rides
+    public boolean manageRide(Ride r, boolean add) {
+        // Check if Ride object is null
         if (r == null) {
-            System.out.println("Invalid Ride");
+            System.out.println("Invalid Ride. Cannot perform operations");
         }
 
-        if (rides.contain(r)) {
+        // Adding a ride
+        if (add) {
+            // Check if the ride is in the park
+            if (rides.contains(r)) {
+                // If found, it gives a message saying 
+                printRideMessage("added", r, false);
+                return false;
+            } 
+            // Else, it adds the ride to the park
+            rides.add(r);
+            printRideMessage("added", r, true);
+            return true;
 
+        } else { // Removing a ride
+            if (!rides.contains(r)) {
+                // If ride was not in the list it gives an error
+                printRideMessage("removed", r, false);
+                return false; // return flase
+            } 
+            // If found, removes the ride successfully
+            rides.remove(r);
+            printRideMessage("removed", r, true);
+            return true; // return true
         }
+    }
+
+    // Public method to add a ride using the helper method
+    public void addRide(Ride r) {
+        manageRide(r, true); // Call helper method with add set to true
+    }
+
+    // Public method to remove a ride using the helper method
+    public void removeRide(Ride r) {
+        manageRide(r, false); // Call helper method with add set to false
     }
 
     // Display metric 
     public void displayMetric() {
-
+        // TO BE IMPLEMENTED...
     }
 
     // Method to manage tickets in the park
@@ -82,9 +120,5 @@ public class Park {
     // Getter for employees
     public Set<Employee> getEmployees() {
         return employees;
-    }
-
-    public String rideStatus(Ride r) {
-        return "Ride: " + r.getRideName() + " is already in the park";
     }
 }
