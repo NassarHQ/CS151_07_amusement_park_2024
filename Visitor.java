@@ -4,8 +4,8 @@ public class Visitor extends Person {
         super();
     }
 
-    public Visitor(String name, int age, int id){
-        super (name, age, id);
+    public Visitor(String name, int age){
+        super (name, age);
     }
 
     //Most functionality of visitors will include stuff involving TICKETS and RIDES.
@@ -16,10 +16,10 @@ public class Visitor extends Person {
         // this refers to the current instance of visitor
         if (park.getVisitors().add(this)) {
             // Print a confirmation that the visitor is added
-            System.out.println("Visitor: " + getName() + " added to the park");
+            System.out.println(toString() + " added to the park");
         } else {
             // Print a message that the visitor already exists
-            System.out.println("Visitor: " + getName() + " already in the park");
+            System.out.println(toString() + " already in the park");
         }
     }
 
@@ -29,15 +29,21 @@ public class Visitor extends Person {
         // this refers to the current instance of visitor
         if (park.getVisitors().remove(this)) {
             // Print a message that the visitor already is added
-            System.out.println("Visitor: " + getName() + " removed from the park.");
+            System.out.println(toString() + " removed from the park.");
         } else {
             // Print a message that the visitor is not in the park
-            System.out.println("Visitor: " + getName() + " not found in the park.");
+            System.out.println(toString() + " not found in the park.");
         }
     }
 
     @Override
     public void personType(){
         System.out.println("Visitor");
+    }
+
+    @Override
+    // Override toString method to provide a string representation of the Visitor object
+    public String toString() {
+        return "Visitor " + getName();
     }
 }
