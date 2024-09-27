@@ -7,8 +7,8 @@ import java.util.Set;
 public class Park {
 
     // Instance variables holding park's name and location
-    private String parkName = "Ride & Seek"; // Name of the Park
-    private String parkLocation = "666 Roller Coaster Avenue"; // Location of the Park
+    private final String parkName = "Ride & Seek"; // Name of the Park
+    private final String parkLocation = "666 Roller Coaster Avenue"; // Location of the Park
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
@@ -16,7 +16,7 @@ public class Park {
     private Set<Employee> employees = new HashSet();
     private ArrayList<Section> sections;
     private ArrayList<Ride> rides;
-    private Set<Ticket> tickets = new HashSet();
+    private Set<Ticket> tickets = new HashSet;
 
     // Constructor for the Park class
     public Park() {
@@ -51,6 +51,21 @@ public class Park {
         p.removeFromPark(this);
     }
 
+    // Method to add a ride in the park
+    public void addPark(Ride r) {
+        // TO BE IMPLEMENTED
+    }
+
+    // Method to assign an employee for a section
+    public void assignEmployee(Employee e, Section s) {
+        // TO BE IMPLEMENTED
+    }
+
+    // Method to manage tickets in the park
+    public void setllTicket(Ticket t, Visitor v) {
+        // TO BE IMPLEMENTED
+    }
+
     // Getter for visitors
     public Set<Visitor> getVisitors() {
         return visitors;
@@ -59,20 +74,5 @@ public class Park {
     // Getter for employees
     public Set<Employee> getEmployees() {
         return employees;
-    }
-
-    // Method to assign an employee for a section
-    public void assignEmployee(Employee e, Section s) {
-        // TO BE IMPLEMENTED
-    }
-
-    // Method to operate rides
-    public void operateRide() {
-        // TO BE IMPLEMENTED
-    }
-
-    // Method to manage tickets in the park
-    public void manageTickets(Ticket t) {
-        // TO BE IMPLEMENTED
     }
 }
