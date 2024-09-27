@@ -1,6 +1,7 @@
 // Imported Libraries
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 // Class definition for park (Main Structure)
 public class Park {
@@ -11,11 +12,11 @@ public class Park {
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
-    private HashSet<Visitor> visitors;
-    private HashSet<Employee> employees;
+    private Set<Visitor> visitors = new HashSet();
+    private Set<Employee> employees = new HashSet();
     private ArrayList<Section> sections;
     private ArrayList<Ride> rides;
-    private ArrayList<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet();
 
     // Constructor for the Park class
     public Park() {
@@ -51,27 +52,27 @@ public class Park {
     }
 
     // Getter for visitors
-    public HashSet<Visitor> getVisitors() {
+    public Set<Visitor> getVisitors() {
         return visitors;
     }
 
     // Getter for employees
-    public HashSet<Employee> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 
     // Method to assign an employee for a section
     public void assignEmployee(Employee e, Section s) {
-
+        // TO BE IMPLEMENTED
     }
 
     // Method to operate rides
     public void operateRide() {
-
+        // TO BE IMPLEMENTED
     }
 
     // Method to manage tickets in the park
     public void manageTickets(Ticket t) {
-
+        // TO BE IMPLEMENTED
     }
 }
