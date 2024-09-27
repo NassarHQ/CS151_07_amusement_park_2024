@@ -4,10 +4,12 @@ class Employee extends Person{
     // Declared role and employeeID
     private String role;
     private String employeeID;
+    private int id;
 
     // Parametarized Constructor
     public Employee(String name, int age, int id, String role, String employeeID) {
-        super(name, age, id);
+        super(name, age);
+        this.id = id;
         this.role = role;
         this.employeeID = employeeID;
     }
@@ -48,7 +50,7 @@ class Employee extends Person{
     // Method to remove person from Park
     public void removeFromPark(Park park) {
         // remove the employee from the park employee set
-        // this refers to the current instance of employee
+        // this refers to the current  instance of employee
         if (park.getEmployees().remove(this)) {
             System.out.println(toString()+ " removed from park");
         } else {
@@ -65,6 +67,6 @@ class Employee extends Person{
     @Override
     // Override toString method to provide a string representation of the Employee object
     public String toString() {
-        return "Employee " + getName() + ", with ID: " + getId();
+        return "Employee " + getName() + ", with ID: " + getEmployeeID();
     }
 }

@@ -16,7 +16,7 @@ public class Park {
     private Set<Employee> employees = new HashSet();
     private ArrayList<Section> sections;
     private ArrayList<Ride> rides;
-    private Set<Ticket> tickets = new HashSet;
+    private Set<Ticket> tickets = new HashSet();
 
     // Constructor for the Park class
     public Park() {
@@ -26,7 +26,7 @@ public class Park {
         this.employees = new HashSet<>();
         this.sections = new ArrayList<>();
         this.rides = new ArrayList<>();
-        this.tickets = new ArrayList<>();
+        this.tickets = new HashSet<>();
     }
 
     // Method to add a Person to the park
@@ -52,18 +52,26 @@ public class Park {
     }
 
     // Method to add a ride in the park
-    public void addPark(Ride r) {
+    public void addRide(Ride r) {
         // TO BE IMPLEMENTED
+        if (r == null) {
+            System.out.println("Invalid Ride");
+        }
+
+        if (rides.contain(r)) {
+
+        }
     }
 
-    // Method to assign an employee for a section
-    public void assignEmployee(Employee e, Section s) {
-        // TO BE IMPLEMENTED
+    // Display metric 
+    public void displayMetric() {
+
     }
 
     // Method to manage tickets in the park
-    public void setllTicket(Ticket t, Visitor v) {
+    public void sellTicket(Ticket t, Visitor v) {
         // TO BE IMPLEMENTED
+
     }
 
     // Getter for visitors
@@ -74,5 +82,9 @@ public class Park {
     // Getter for employees
     public Set<Employee> getEmployees() {
         return employees;
+    }
+
+    public String rideStatus(Ride r) {
+        return "Ride: " + r.getRideName() + " is already in the park";
     }
 }
