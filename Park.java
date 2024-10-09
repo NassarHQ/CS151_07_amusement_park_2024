@@ -16,7 +16,7 @@ public class Park {
     private Set<Employee> employees = new HashSet();
     private ArrayList<Section> sections;
     private ArrayList<Ride> rides;
-    private Set<Ticket> tickets = new HashSet;
+    private Set<Ticket> tickets = new HashSet();
 
     // Constructor for the Park class
     public Park() {
@@ -26,7 +26,7 @@ public class Park {
         this.employees = new HashSet<>();
         this.sections = new ArrayList<>();
         this.rides = new ArrayList<>();
-        this.tickets = new ArrayList<>();
+        this.tickets = new HashSet<>();
     }
 
     // Method to add a Person to the park
@@ -46,24 +46,70 @@ public class Park {
         // Check if the object of Person is null
         if (p == null) {
             // Print an error message if object p is null
-            System.out.println("Invalid person. Cannot add null");
+            System.out.println("Invalid person. Cannot add null.");
         }
         p.removeFromPark(this);
     }
 
-    // Method to add a ride in the park
-    public void addPark(Ride r) {
-        // TO BE IMPLEMENTED
+    // Utility method to print ride-related messages
+    private void printRideMessage(String action, Ride r, boolean success) {
+        String status = success ? "successfully" : "unsuccessfully";
+        System.out.println("Ride: " + r.getRideName() + " was " +
+            status + " " + action + " in the park.");
     }
 
-    // Method to assign an employee for a section
-    public void assignEmployee(Employee e, Section s) {
-        // TO BE IMPLEMENTED
+    // Helper method to avoid redundancy of adding and removing rides
+    public boolean manageRide(Ride r, boolean add) {
+        // Check if Ride object is null
+        if (r == null) {
+            System.out.println("Invalid Ride. Cannot perform operations");
+        }
+
+        // Adding a ride
+        if (add) {
+            // Check if the ride is in the park
+            if (rides.contains(r)) {
+                // If found, it gives a message saying 
+                printRideMessage("added", r, false);
+                return false;
+            } 
+            // Else, it adds the ride to the park
+            rides.add(r);
+            printRideMessage("added", r, true);
+            return true;
+
+        } else { // Removing a ride
+            if (!rides.contains(r)) {
+                // If ride was not in the list it gives an error
+                printRideMessage("removed", r, false);
+                return false; // return flase
+            } 
+            // If found, removes the ride successfully
+            rides.remove(r);
+            printRideMessage("removed", r, true);
+            return true; // return true
+        }
+    }
+
+    // Public method to add a ride using the helper method
+    public void addRide(Ride r) {
+        manageRide(r, true); // Call helper method with add set to true
+    }
+
+    // Public method to remove a ride using the helper method
+    public void removeRide(Ride r) {
+        manageRide(r, false); // Call helper method with add set to false
+    }
+
+    // Display metric 
+    public void displayMetric() {
+        // TO BE IMPLEMENTED...
     }
 
     // Method to manage tickets in the park
-    public void setllTicket(Ticket t, Visitor v) {
+    public void sellTicket(Ticket t, Visitor v) {
         // TO BE IMPLEMENTED
+
     }
 
     // Getter for visitors
