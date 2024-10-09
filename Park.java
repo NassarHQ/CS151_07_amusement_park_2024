@@ -14,9 +14,11 @@ public class Park {
     // ArrayLists to store sections, rides, and tickets
     private Set<Visitor> visitors = new HashSet();
     private Set<Employee> employees = new HashSet();
-    private ArrayList<Section> sections;
+    private ArrayList<ParkSection> sections;
     private ArrayList<Ride> rides;
-    private Set<Ticket> tickets = new HashSet();
+    private Set<Ticket> availableTickets = new HashSet<>();
+    private Set<Ticket> soldTickets = new HashSet<>();
+    private Set<Ticket> archivedTickets = new HashSet();
 
     // Constructor for the Park class
     public Park() {
@@ -108,10 +110,20 @@ public class Park {
 
     // Method to manage tickets in the park
     public void sellTicket(Ticket t, Visitor v) {
-        // TO BE IMPLEMENTED
-
+        if (availableTickets.contains(t)) {  // Ensure the ticket is available for purchase
+            if (v.getBalance() >= t.getTicketPrice()) {
+                availableTickets.remove(t); // Remove from available tickets
+                soldTickets.add(t); // Add to sold tickets
+                v.deductBalance(t.getTicketPrice()); // Deduct from visitor's balance
+                v.addToPurchaseHistory(t.getTicketID()); // Track the purchase
+                System.out.println("Ticket sold successfully!");
+            } else {
+                System.out.println("Insufficient Funds. Please refill your balance.");
+            }
+        } else {
+            System.out.println("This ticket is not available for purchase.");
+        }
     }
-
     // Getter for visitors
     public Set<Visitor> getVisitors() {
         return visitors;
