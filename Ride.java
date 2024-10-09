@@ -113,8 +113,12 @@ class Ride implements ParkInteractables {
                 System.out.println(visitor.getName() + "doesn't meet the ride requirements");
             }
         }
-
-        // TO BE IMPLEMENTED...
+        // Automatically start the ride if passengers are loaded
+        if (onRide.size() > 0) {
+            startUse(); 
+        } else {
+            System.out.println("No suitable passengers to load");
+        }
     }
 
     // Method to unload passengers of a ride
