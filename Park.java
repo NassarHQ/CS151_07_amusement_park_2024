@@ -1,4 +1,4 @@
-// Imported Libraries
+package CS151_07_amusement_park_2024;// Imported Libraries
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
