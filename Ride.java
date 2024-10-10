@@ -94,7 +94,7 @@ class Ride implements ParkInteractables {
 
     // Getter for onRide
     public Queue<Visitor> getOnRide() {
-        return visitorQueue;
+        return onRide;
     }
     
     // Method to load passengers onto the ride from the queue
@@ -108,9 +108,9 @@ class Ride implements ParkInteractables {
             Visitor visitor = visitorQueue.poll();
             if(visitor.getHeight() >= minHeight && visitor.getWeight() <= maxWeight){
                 onRide.offer(visitor);
-                System.out.println(visitor.getName() + "has boarded the ride.");
+                System.out.println(visitor.getName() + " has boarded the ride.");
             } else {
-                System.out.println(visitor.getName() + "doesn't meet the ride requirements");
+                System.out.println(visitor.getName() + " doesn't meet the ride requirements");
             }
         }
         // Automatically start the ride if passengers are loaded
@@ -129,7 +129,7 @@ class Ride implements ParkInteractables {
         }
         while (!onRide.isEmpty()){
             Visitor visitor = onRide.poll();
-            System.out.println(visitor.getName() + "has finished the ride and is leaving");
+            System.out.println(visitor.getName() + " has finished the ride and is leaving");
         }
         stopUse(); //After unloading, stop the ride
     }
