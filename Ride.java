@@ -147,7 +147,12 @@ class Ride implements ParkInteractables {
     // Interface to start ride
     @Override
     public void startUse() {
-        // TO BE IMPLEMENTED...
+        if (isRunning) {
+            System.out.println("Ride is already running.");
+            return;
+        }
+        System.out.println("Ride is starting.");
+        isRunning = true;
     }
 
     // Interface to stop ride
