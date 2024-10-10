@@ -136,12 +136,12 @@ class Ride implements ParkInteractables {
 
     // Method to count visitors in line
     public int countVisitorsInLine() {
-        // TO BE IMPLEMENTED...
+        return visitorQueue.size();
     }
 
     // Method to check if the ride is available
     public boolean isAvailable() {
-        // TO BE IMPLEMENTED...
+        return !isRunning && onRide.size() < rideCapacity;
     }
 
     // Interface to start ride
