@@ -12,10 +12,22 @@ public class Park {
     private final double dailyRevenueGoal = 5000.0;
     private final int dailyVisitorGoal = 100;
 
+<<<<<<< HEAD
     // Variables to store daily metrics
     private double totalRevenue;   // Stores total revenue
     private int totalVisitors;     // Stores total number of visitors
     private int totalTicketsSold;  // Stores total number of tickets sold
+=======
+  // HashSets to store visitors and employees.
+  // ArrayLists to store sections, rides, and tickets
+  private Set < Visitor > visitors;
+  private Set < Employee > employees;
+  private ArrayList < ParkSection > parkSection;
+  private ArrayList < Ride > rides;
+  private Set < Ticket > availableTickets;
+  private Set < Ticket > soldTickets;
+  private Set < Ticket > archivedTickets;
+>>>>>>> 274576baddcfffe14f6631343db8fca52788309d
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
@@ -27,8 +39,20 @@ public class Park {
     private Set < Ticket > soldTickets = new HashSet < > ();
     private Set < Ticket > archivedTickets = new HashSet();
 
+<<<<<<< HEAD
     // Constructor for the Park class
     public Park() {
+=======
+    // Initialize the ArrayLists
+    this.visitors = new HashSet < Visitor >();
+    this.employees = new HashSet < Employee > ();
+    this.parkSection = new ArrayList < ParkSection >();
+    this.rides = new ArrayList < Ride > ();
+    this.availableTickets = new HashSet < Ticket > ();
+    this.soldTickets = new HashSet < Ticket > ();
+    this.archivedTickets = new HashSet < Ticket > ();
+  }
+>>>>>>> 274576baddcfffe14f6631343db8fca52788309d
 
         // Initialize the ArrayLists
         this.visitors = new HashSet < > ();
