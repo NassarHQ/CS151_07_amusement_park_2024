@@ -127,7 +127,11 @@ class Ride implements ParkInteractables {
             System.out.println("Ride is not Running. No passengers to Unload");
             return;
         }
-        // TO BE IMPLEMENTED...
+        while (!onRide.isEmpty()){
+            Visitor visitor = onRide.poll();
+            System.out.println(visitor.getName() + "has finished the ride and is leaving");
+        }
+        stopUse(); //After unloading, stop the ride
     }
 
     // Method to count visitors in line
