@@ -12,8 +12,10 @@ public class Park {
     private final double dailyRevenueGoal = 5000.0;
     private final int dailyVisitorGoal = 100;
 
-    // Variables to store daily revenue
-    private double totalRevenue;
+    // Variables to store daily metrics
+    private double totalRevenue;   // Stores total revenue
+    private int totalVisitors;     // Stores total number of visitors
+    private int totalTicketsSold;  // Stores total number of tickets sold
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
@@ -110,8 +112,10 @@ public class Park {
         manageRide(r, false); // Call helper method with add set to false
     }
 
-    public void parkMetric() {
-        totalRevenue = 0.0; // Reset total revenue before calculation
+    public void calculateParkMetric() {
+        totalRevenue = 0.0; // Reset total revenue
+        totalVisitors = visitors.size(); // Get the count of total visitors
+        totalTicketsSold = soldTickets.size(); // Get the count of total sold tickets
 
         // Calcualte total revenue from sold tickets
         for (Ticket t: soldTickets) {
@@ -127,7 +131,6 @@ public class Park {
         }
 
         // Check if visitor goal has been met
-        int totalVisitors = visitors.size();
         if (totalVisitors >= dailyVisitorGoal) {
             System.out.println("Goal Met: " + totalVisitors +
                 " visitors have entered the park today!");
@@ -136,22 +139,17 @@ public class Park {
                 " more visitors needed to meet the goal of " + dailyVisitorGoal + " visitors.");
         }
     }
-    }
 
     // Display metric 
     public void displayParkMetric() {
-        // Call parkMetric to calculate
-        parkMetric();
-
-        // Get the count from the sets
-        int totalVisitors = visitors.size();
-        int totalSoldTickets = soldTickets.size();
+        // Call parkMetric to calculate all metrics
+        calculateParkMetric();
 
         // Display metric
         System.out.println("Park Metric:");
         System.out.println("Total visitors Today: " + totalVisitors);
         System.out.println("Total revenue Today: $" + totalRevenue);
-        System.out.println("Tickets Sold Today: " + totalSoldTickets);
+        System.out.println("Tickets Sold Today: " + totalTicketsSold);
     }
 
     // Method to manage tickets in the park
