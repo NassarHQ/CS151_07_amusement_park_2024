@@ -1,3 +1,5 @@
+package CS151_07_amusement_park_2024;
+
 public class Ticket {
     private double ticketPrice;
     private String ticketID;

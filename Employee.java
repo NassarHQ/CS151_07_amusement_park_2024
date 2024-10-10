@@ -1,3 +1,5 @@
+package CS151_07_amusement_park_2024;
+
 // Employee Class
 class Employee extends Person{
 
