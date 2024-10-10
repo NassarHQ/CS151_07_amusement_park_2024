@@ -6,39 +6,40 @@ import java.util.Set;
 // Class definition for park (Main Structure)
 public class Park {
 
-    // Instance variables holding park's name and location
-    private final String parkName = "Ride & Seek"; // Name of the Park
-    private final String parkLocation = "666 Roller Coaster Avenue"; // Location of the Park
-    private final double dailyRevenueGoal = 5000.0;
-    private final int dailyVisitorGoal = 100;
+  // Instance variables holding park's name and location
+  private final String parkName = "Ride & Seek"; // Name of the Park
+  private final String parkLocation = "666 Roller Coaster Avenue"; // Location of the Park
+  private final double dailyRevenueGoal = 5000.0; // Daily revenue goal
+  private final int dailyVisitorGoal = 100; // Daily visitor goal
+  
+  // Variables to store daily metrics
+  private double totalRevenue;   // Stores total revenue
+  private int totalVisitors;     // Stores total number of visitors
+  private int totalTicketsSold;  // Stores total number of tickets sold
 
-    // Variables to store daily metrics
-    private double totalRevenue;   // Stores total revenue
-    private int totalVisitors;     // Stores total number of visitors
-    private int totalTicketsSold;  // Stores total number of tickets sold
 
-    // HashSets to store visitors and employees.
-    // ArrayLists to store sections, rides, and tickets
-    private Set < Visitor > visitors = new HashSet();
-    private Set < Employee > employees = new HashSet();
-    private ArrayList < ParkSection > parkSection;
-    private ArrayList < Ride > rides;
-    private Set < Ticket > availableTickets = new HashSet < > ();
-    private Set < Ticket > soldTickets = new HashSet < > ();
-    private Set < Ticket > archivedTickets = new HashSet();
+  // HashSets to store visitors and employees.
+  // ArrayLists to store sections, rides, and tickets
+  private Set < Visitor > visitors;
+  private Set < Employee > employees;
+  private ArrayList < ParkSection > parkSection;
+  private ArrayList < Ride > rides;
+  private Set < Ticket > availableTickets;
+  private Set < Ticket > soldTickets;
+  private Set < Ticket > archivedTickets;
 
-    // Constructor for the Park class
-    public Park() {
+  // Constructor for the Park class
+  public Park() {
 
-        // Initialize the ArrayLists
-        this.visitors = new HashSet < > ();
-        this.employees = new HashSet < > ();
-        this.parkSection = new ArrayList < > ();
-        this.rides = new ArrayList < > ();
-        this.availableTickets = new HashSet < > ();
-        this.soldTickets = new HashSet < > ();
-        this.archivedTickets = new HashSet < > ();
-    }
+    // Initialize the ArrayLists
+    this.visitors = new HashSet < Visitor >();
+    this.employees = new HashSet < Employee > ();
+    this.parkSection = new ArrayList < ParkSection >();
+    this.rides = new ArrayList < Ride > ();
+    this.availableTickets = new HashSet < Ticket > ();
+    this.soldTickets = new HashSet < Ticket > ();
+    this.archivedTickets = new HashSet < Ticket > ();
+  }
 
     // Method to add a Person to the park
     public void addPerson(Person p) {
