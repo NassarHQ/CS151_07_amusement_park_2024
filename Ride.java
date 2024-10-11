@@ -13,22 +13,24 @@ class Ride implements ParkInteractables {
     private int rideMinHeight;
     private int rideMaxWeight;
     private boolean isOperational; // Track if the ride is currently running
+    private boolean hasStarted; // Track if the ride has started
     private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
     private List<Visitor> onRide; // To keep track of visitors currently on the ride
-    private boolean hasStarted; // Track if the ride has started
+    
 
     // Parametarized Constructor for Ride class
     public Ride(String rideName, String rideID, int rideCapacity,
-        int rideDuration, int minHeight, int maxWeight) {
+        int rideDuration, int rideMinHeight, int rideMaxWeight) {
 
             this.rideName = rideName;
             this.rideID = rideID;
             this.rideCapacity = rideCapacity;
             this.rideDuration = rideDuration;
-            this.minHeight = minHeight;
-            this.maxWeight = maxWeight;
-            this.isRunning = false;
-            this.visitorQueue = new LinkedList<>();
+            this.rideMinHeight = rideMinHeight;
+            this.rideMaxWeight = rideMaxWeight;
+            this.isOperational = false;
+            this.hasStarted = false;
+            this.rideVisitorQueue = new LinkedList<>();
             this.onRide = new LinkedList<>();
     }
 
