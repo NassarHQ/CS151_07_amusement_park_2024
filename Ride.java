@@ -139,26 +139,26 @@ class Ride implements ParkInteractables {
         System.out.println("Current operational status: " + (isOperational ? "Operational" : "Not operational"));
         System.out.println("Ride started: " + (hasStarted ? "Yes" : "No"));
     }
-    
+
     // Interface to start ride
     @Override
     public void startUse() {
-        if (isRunning) {
+        if (hasStarted) {
             System.out.println("Ride is already running.");
             return;
         }
         System.out.println("Ride is starting.");
-        isRunning = true;
+        hasStarted = true;
     }
 
     // Interface to stop ride
     @Override
     public void stopUse() {
-        if (!isRunning) {
+        if (!hasStarted) {
             System.out.println("Ride is already stopped.");
             return;
         }
         System.out.println("Ride is stopping.");
-        isRunning = false;
+        hasStarted = false;
     }
 }
