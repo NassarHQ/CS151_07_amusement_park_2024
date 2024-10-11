@@ -122,6 +122,15 @@ class Ride implements ParkInteractables {
         rideVisitorQueue.removeAll(visitors);
     }
 
+    // Method to display ride metrics
+    public void displayRideMetrics(){
+        System.out.println("Ride metrics for " + rideName + ":");
+        System.out.println("Capacity: " + rideCapacity);
+        System.out.println("Duration: " + rideDuration + " minutes");
+        System.out.println("Minimum height requirement: " + rideMinHeight + " cm");
+        System.out.println("Maximum weight allowed: " + rideMaxWeight + " kg");
+    }
+
     // Interface to start ride
     @Override
     public void startUse() {
