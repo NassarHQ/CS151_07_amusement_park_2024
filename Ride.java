@@ -107,7 +107,10 @@ class Ride implements ParkInteractables {
         return "Number of visitors in line: " + rideVisitorQueue.size();
     }
 
-    
+    // Method to manage riders
+    public void manageRiders(){
+        // Custom logic to manage riders
+    }
 
     // Interface to start ride
     @Override
