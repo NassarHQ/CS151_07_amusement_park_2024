@@ -102,52 +102,12 @@ class Ride implements ParkInteractables {
         return onRide;
     }
     
-    // Method to load passengers onto the ride from the queue
-    public void loadPassengers() {
-        if (isRunning) {
-            // if ride is running. Give an error cannot load passengers
-            System.out.println("Ride is currently running. Cannot load passnegers");
-            return;
-        }
-        while(!visitorQueue.isEmpty() && onRide.size() < rideCapacity){
-            Visitor visitor = visitorQueue.poll();
-            if(visitor.getHeight() >= minHeight && visitor.getWeight() <= maxWeight){
-                onRide.offer(visitor);
-                System.out.println(visitor.getName() + " has boarded the ride.");
-            } else {
-                System.out.println(visitor.getName() + " doesn't meet the ride requirements");
-            }
-        }
-        // Automatically start the ride if passengers are loaded
-        if (onRide.size() > 0) {
-            startUse();
-        } else {
-            System.out.println("No suitable passengers to load");
-        }
-    }
-
-    // Method to unload passengers of a ride
-    public void unloadPassengers() {
-        if (!isRunning) {
-            System.out.println("Ride is not Running. No passengers to Unload");
-            return;
-        }
-        while (!onRide.isEmpty()){
-            Visitor visitor = onRide.poll();
-            System.out.println(visitor.getName() + " has finished the ride and is leaving");
-        }
-        stopUse(); //After unloading, stop the ride
-    }
-
     // Method to count visitors in line
-    public int countVisitorsInLine() {
-        return visitorQueue.size();
+    public String countVisitorsInLine(){
+        return "Number of visitors in line: " + rideVisitorQueue.size();
     }
 
-    // Method to check if the ride is available
-    public boolean isAvailable() {
-        return !isRunning && onRide.size() < rideCapacity;
-    }
+    
 
     // Interface to start ride
     @Override
