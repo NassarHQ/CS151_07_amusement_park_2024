@@ -22,7 +22,7 @@ public class Park {
     // ArrayLists to store sections, rides, and tickets
     private Set<Visitor> visitors;
     private Set<Employee> employees;
-    private ArrayList<ParkSection> parkSections;
+    private ArrayList<ParkStore> parkSections;
     private ArrayList<Ride> rides;
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
