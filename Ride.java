@@ -70,31 +70,31 @@ class Ride implements ParkInteractables {
         this.rideDuration = rideDuration;
     }
 
-    // Getters and Setters for minHeight
-    public int getMinHeight() {
-        return minHeight;
+    // Getters and Setters for rideMinHeight
+    public int getRideMinHeight() {
+        return rideMinHeight;
     }
 
-    public void setMinHeight(int minHeight) {
-        this.minHeight = minHeight;
+    public void setRideMinHeight(int rideMinHeight) {
+        this.rideMinHeight = rideMinHeight;
     }
 
-    // Getters and Setters for maxWeight
-    public int getMaxWeight() {
-        return maxWeight;
+    // Getters and Setters for rideMaxWeight
+    public int getRideMaxWeight() {
+        return rideMaxWeight;
     }
 
-    public void setMaxWeight(int maxWeight) {
-        this.maxWeight = maxWeight;
+    public void setRideMaxWeight(int rideMaxWeight) {
+        this.rideMaxWeight = rideMaxWeight;
     }
 
-    // Getter for visitorQueue
-    public Queue<Visitor> getVisitorQueue() {
-        return visitorQueue;
+    // Getter for rideVisitorQueue
+    public Queue<Visitor> getRideVisitorQueue() {
+        return rideVisitorQueue;
     }
 
-    public void setVisitorQueue(Queue<Visitor> visitorQueue) {
-        this.visitorQueue = visitorQueue;
+    public void setRideVisitorQueue(Queue<Visitor> rideVisitorQueue) {
+        this.rideVisitorQueue = rideVisitorQueue;
     }
 
     // Getter for onRide
