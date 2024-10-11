@@ -112,6 +112,11 @@ class Ride implements ParkInteractables {
         // Custom logic to manage riders
     }
 
+    // Method to admit a set of visitors
+    public void admitRiders(Set<Visitor> visitors){
+        rideVisitorQueue.addAll(visitors);
+    }
+
     // Interface to start ride
     @Override
     public void startUse() {
