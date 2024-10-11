@@ -117,6 +117,11 @@ class Ride implements ParkInteractables {
         rideVisitorQueue.addAll(visitors);
     }
 
+    // Method to remove a set of visitors
+    public void removeRiders(Set<Visitor> visitors){
+        rideVisitorQueue.removeAll(visitors);
+    }
+
     // Interface to start ride
     @Override
     public void startUse() {
