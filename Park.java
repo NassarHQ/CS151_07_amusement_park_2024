@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import CS151_07_amusement_park_2024.ParkSection;
+import CS151_07_amusement_park_2024;
 
 public class Park {
 
