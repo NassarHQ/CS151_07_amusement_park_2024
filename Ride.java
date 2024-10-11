@@ -131,6 +131,15 @@ class Ride implements ParkInteractables {
         System.out.println("Maximum weight allowed: " + rideMaxWeight + " kg");
     }
 
+    // Method to display ride details
+    public void displayRideDetails(){
+        System.out.println("Ride details: ");
+        System.out.println("Ride Name: " + rideName);
+        System.out.println("Ride ID: " + rideID);
+        System.out.println("Current operational status: " + (isOperational ? "Operational" : "Not operational"));
+        System.out.println("Ride started: " + (hasStarted ? "Yes" : "No"));
+    }
+    
     // Interface to start ride
     @Override
     public void startUse() {
