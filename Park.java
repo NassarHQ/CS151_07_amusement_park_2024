@@ -19,13 +19,13 @@ public class Park {
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
-    private Set < Visitor > visitors = new HashSet();
-    private Set < Employee > employees = new HashSet();
+    private Set < Visitor > visitors;
+    private Set < Employee > employees;
     private ArrayList < ParkSection > parkSection;
     private ArrayList < Ride > rides;
-    private Set < Ticket > availableTickets = new HashSet < > ();
-    private Set < Ticket > soldTickets = new HashSet < > ();
-    private Set < Ticket > archivedTickets = new HashSet();
+    private Set < Ticket > availableTickets;
+    private Set < Ticket > soldTickets;
+    private Set < Ticket > archivedTickets;
 
     // Constructor for the Park class
     public Park() {
@@ -191,7 +191,6 @@ public class Park {
             System.out.println("Ticket is not eligible for refund.");
         }
     }
-
 
     // Getter for visitors
     public Set < Visitor > getVisitors() {
