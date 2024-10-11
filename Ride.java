@@ -10,11 +10,12 @@ class Ride implements ParkInteractables {
     private String rideID;
     private int rideCapacity;
     private int rideDuration;
-    private int minHeight;
-    private int maxWeight;
-    private boolean isRunning; // Track if the ride is currently running
-    private Queue<Visitor> visitorQueue; // Queue to manage visitors in line
-    private Queue<Visitor> onRide; // To keep track of visitors currently on the ride
+    private int rideMinHeight;
+    private int rideMaxWeight;
+    private boolean isOperational; // Track if the ride is currently running
+    private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
+    private List<Visitor> onRide; // To keep track of visitors currently on the ride
+    private boolean hasStarted; // Track if the ride has started
 
     // Parametarized Constructor for Ride class
     public Ride(String rideName, String rideID, int rideCapacity,
@@ -117,7 +118,7 @@ class Ride implements ParkInteractables {
         }
         // Automatically start the ride if passengers are loaded
         if (onRide.size() > 0) {
-            startUse(); 
+            startUse();
         } else {
             System.out.println("No suitable passengers to load");
         }
