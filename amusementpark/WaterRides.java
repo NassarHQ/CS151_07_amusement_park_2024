@@ -21,4 +21,11 @@ class WaterRides extends Ride {
     public void setWaterDepth(double waterDepth) {
         this.waterDepth = waterDepth;
     }
+
+    // Override the displayRideDetails method to include WaterRides-specific details
+    @Override
+    public void displayRideDetails() {
+        super.displayRideDetails(); // Display common ride details
+        System.out.println("Water depth: " + waterDepth + " meters");
+    }
 }
