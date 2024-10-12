@@ -20,4 +20,11 @@ class RollerCoaster extends Ride {
     public void setNumOfLoops(int numOfLoops) {
         this.numOfLoops = numOfLoops;
     }
+
+    //Override the displayRideDetails method to include RollerCoaster-specific details
+    @Override
+    public void displayRideDetails() {
+        super.displayRideDetails(); // Display common ride details
+        System.out.println("Number of loops: " + numOfLoops);
+    }
 }
