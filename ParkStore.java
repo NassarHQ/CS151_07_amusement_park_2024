@@ -13,6 +13,7 @@ public class ParkStore {
     private double parkStoreRevenue;
     private List<Visitor> visitors;
     private HashMap<String, Integer> inventories;
+    private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
     private final String[] allowedStoreTypes = {"Food", "Drink", "Souvenir"};
@@ -109,24 +110,30 @@ public class ParkStore {
         return this.parkStoreRevenue;
     }
 
-    // Method for selling items
+    // Method to sell items
     public void sellItems(String item, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
 
-        if (inventories.containsKey(item)) {
-            double price = itemPrices.get(item);
-            parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
-            // Use lambda function to update the quantity of sold items
-            inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity - quantity);
-            System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price + ".");
-        } else {
-            throw new IllegalArgumentException("Item is not available for sale!");
+        if (!inventories.containsKey(item) || quantity > inventories.get(item)) {
+            throw new IllegalArgumentException(
+                    !inventories.containsKey(item) ?
+                            "Item is not available for sale." :
+                            "Not enough quantity of " + item + " for sale."
+            );
         }
+
+        double price = itemPrices.get(item);
+        parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
+        soldItems.add(new Pair<>(item, quantity));  // Add sold items into a list
+
+        // Update the quantity of sold items
+        inventories.put(item, inventories.get(item) - quantity);
+        System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price + ".");
     }
 
-    // Method for adding an item
+    // Method to add items
     public void addItems(String item, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
@@ -196,6 +203,25 @@ public class ParkStore {
 
         for (String item : inventories.keySet()) {
             System.out.println(item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
+        }
+    }
+
+    // Method to view purchase history
+    public void viewStorePurchaseHistory() {
+        System.out.println("Store purchase history:" + "\n"
+                            + "Item, Quantity" + "\n"
+                            + "-----" + "\n"
+                            + soldItems);
+    }
+
+    // Helper class to store duplicate pairs for sold items
+    static class Pair<K, V> {
+        K key;
+        V value;
+
+        Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
         }
     }
 
