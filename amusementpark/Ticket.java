@@ -1,4 +1,4 @@
-package CS151_07_amusement_park_2024;
+package amusementpark;
 
 public class Ticket {
     private double ticketPrice;
