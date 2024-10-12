@@ -8,5 +8,7 @@ class WaterRides extends Ride {
     public WaterRides(String rideName, String rideID, int rideCapacity, int rideDuration, int rideMinHeight, int rideMaxWeight, double waterDepth) {
 
         // Calls the constructor of the parent class (Ride)
+        super(rideName, rideID, rideCapacity, rideDuration, rideMinHeight, rideMaxWeight);
+        this.waterDepth = waterDepth; // Set water depth for this water ride
     }
 }
