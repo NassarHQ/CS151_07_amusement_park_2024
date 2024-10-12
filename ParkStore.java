@@ -11,25 +11,152 @@ public class ParkStore {
     private double parkStoreRevenue;
     private List<Visitor> visitors;
     private List<String> inventories;
-    private boolean isOpen;
 
+    // Allowed store types
+    private final String[] allowedStoreTypes = {"Food", "Drink", "Souvenir"};
 
+    // Allowed food types
+    private final String[] allowedFoodTypes = {"Sausage", "Tacos", "Cotton candy", "Burger", "Fries"};
+
+    // Allowed drink types
+    private final String[] allowedDrinkTypes = {"Soda", "Coke", "Water"};
+
+    // Allowed souvenir types
+    private final String[] allowedSouvenirTypes = {"Hat", "Keychain", "T-Shirt", "Magnet"};
+
+    // Constructor with no args
+    public ParkStore() {
+        this.parkStoreName = parkStoreName;
+        this.parkStoreType = parkStoreType;
+        this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
+        this.inventories = new ArrayList<String>();
+        this.visitors = new ArrayList<Visitor>();
+    }
+
+    // Constructor for a store with name and type as parameters
     public ParkStore(String parkStoreName, String parkStoreType) {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
         this.inventories = new ArrayList<String>();
         this.visitors = new ArrayList<Visitor>();
-        this.isOpen = false; // Initialize the store to be closed
     }
 
+    // Constructor with additional initial revenue
+    public ParkStore(String parkStoreName, String parkStoreType, double parkStoreRevenue) {
+        this.parkStoreName = parkStoreName;
+        this.parkStoreType = parkStoreType;
+        this.parkStoreRevenue = parkStoreRevenue;  // Initialize with given revenue
+        this.inventories = new ArrayList<String>();
+        this.visitors = new ArrayList<Visitor>();
+    }
+
+    // Getter for parkStoreName
+    public String getParkStoreName() {
+        return this.parkStoreName;
+    }
+
+    // Setter for parkStoreName
+    public void setParkStoreName(String parkStoreName) {
+        this.parkStoreName = parkStoreName;
+    }
+
+    // Getter for parkStoreType
+    public String getParkStoreType() {
+        return this.parkStoreType;
+    }
+
+    // Setter with validation for parkStoreType
+    public void setParkStoreType(String parkStoreType) {
+        boolean isValidType = false;  // Flag to track if the type is valid
+
+        // Check if the provided store type is allowed
+        for (String type : allowedStoreTypes) {
+            if (type.equals(parkStoreType)) {
+                isValidType = true;  // Set flag to true if valid
+                break;  // Exit the loop early if we find a match
+            }
+        }
+
+        // If the type is valid, set it; otherwise, throw an exception
+        if (isValidType) {
+            this.parkStoreType = parkStoreType;
+        } else {
+            throw new IllegalArgumentException("Invalid store type: " + parkStoreType + ". Allowed types are: Food, Drink, Souvenir.");
+        }
+    }
+
+    public double getParkStoreRevenue() {
+        return this.parkStoreRevenue;
+    }
+
+    public void sellItem(String item) {
+        System.out.println(item + " from " + this.parkStoreName + " is sold.");
+    }
+
+    public void addItem(String item) {
+        switch (parkStoreType) {
+            case "Food":
+                if (isValidFoodType(item)) {
+                    inventories.add(item);
+                } else {
+                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
+                }
+                break;
+            case "Drink":
+                if (isValidDrinkType(item)) {
+                    inventories.add(item);
+                } else {
+                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
+                }
+                break;
+            case "Souvenir":
+                if (isValidSouvenirType(item)) {
+                    inventories.add(item);
+                } else {
+                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedSouvenirTypes));
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown store type: " + parkStoreType);
+        }
+    }
+
+    // Helper method to check for food validation
+    private boolean isValidFoodType(String item) {
+        for (String food : allowedFoodTypes) {
+            if (food.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper method to check for drink validation
+    private boolean isValidDrinkType(String item) {
+        for (String drink : allowedDrinkTypes) {
+            if (drink.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper method to check for souvenir validation
+    private boolean isValidSouvenirType(String item) {
+        for (String souvenir : allowedSouvenirTypes) {
+            if (souvenir.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
-//    public ParkStore(String name) {
-//        this.name = name;
-//        this.rides = new ArrayList<String>();
-//        this.visitors = new ArrayList<Visitor>();
-//        this.employees = new ArrayList<Employee>();
-//    }
+
+
+
 //
 //    public String getName() {
 //        return this.name = name;
