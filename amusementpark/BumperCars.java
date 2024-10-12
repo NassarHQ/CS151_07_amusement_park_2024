@@ -21,4 +21,11 @@ class BumperCars extends Ride {
     public void setCarCount(int carCount) {
         this.carCount = carCount;
     }
+
+    // Override the displayRideDetails method include BumperCars-specific details
+    @Override
+    public void displayRideDetails() {
+        super.displayRideDetails(); // Display common ride details
+        System.out.println("Number of bumper cars: " + carCount);
+    }
 }
