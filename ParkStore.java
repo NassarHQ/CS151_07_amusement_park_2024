@@ -109,12 +109,17 @@ public class ParkStore {
         return this.parkStoreRevenue;
     }
 
-    // Method for selling an item
-    public void sellItem(String item) {
+    // Method for selling items
+    public void sellItems(String item, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        }
+
         if (inventories.containsKey(item)) {
             double price = itemPrices.get(item);
-            parkStoreRevenue += price;  // Add price of sold item into revenue
-            inventories.remove(item); // Remove sold item from inventory
+            parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
+            // Use lambda function to update the quantity of sold items
+            inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity - quantity);
             System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price + ".");
         } else {
             throw new IllegalArgumentException("Item is not available for sale!");
@@ -122,7 +127,7 @@ public class ParkStore {
     }
 
     // Method for adding an item
-    public void addItem(String item, int quantity) {
+    public void addItems(String item, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
@@ -191,10 +196,10 @@ public class ParkStore {
 
         for (String item : inventories.keySet()) {
             System.out.println(item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
-            }
         }
     }
 
-
-
 }
+
+
+
