@@ -1,7 +1,9 @@
 package CS151_07_amusement_park_2024;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 class Ride implements ParkInteractables {
 
@@ -98,7 +100,7 @@ class Ride implements ParkInteractables {
     }
 
     // Getter for onRide
-    public Queue<Visitor> getOnRide() {
+    public List<Visitor> getOnRide() {
         return onRide;
     }
     
