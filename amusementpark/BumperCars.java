@@ -11,4 +11,14 @@ class BumperCars extends Ride {
         super(rideName, rideID, rideCapacity, rideDuration, rideMinHeight, rideMaxWeight);
         this.carCount = carCount; // Set the number of cars for this bumper car ride
     }
+
+    // Getter method for carCount
+    public int getCarCount() {
+        return carCount;
+    }
+
+    // Setter method for carCount
+    public void setCarCount(int carCount) {
+        this.carCount = carCount;
+    }
 }
