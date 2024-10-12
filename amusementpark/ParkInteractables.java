@@ -1,4 +1,4 @@
-package CS151_07_amusement_park_2024;
+package amusementpark;
 
 // ParkInteractables.java Interface
 public interface ParkInteractables {

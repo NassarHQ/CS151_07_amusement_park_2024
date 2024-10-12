@@ -1,4 +1,4 @@
-package CS151_07_amusement_park_2024;
+package amusementpark;
 
 public class Main {
     public static void main(String[] args) {

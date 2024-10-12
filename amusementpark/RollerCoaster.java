@@ -1,3 +1,4 @@
+package amusementpark;
 
 class RollerCoaster extends Ride {
     // Specific attribute for RollerCoaster
