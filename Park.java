@@ -1,9 +1,9 @@
+package CS151_07_amusement_park_2024;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import CS151_07_amusement_park_2024;
 
 public class Park {
 
@@ -22,7 +22,7 @@ public class Park {
     // ArrayLists to store sections, rides, and tickets
     private Set<Visitor> visitors;
     private Set<Employee> employees;
-    private ArrayList<ParkSection> parkSections;
+    private ArrayList<ParkStore> parkSections;
     private ArrayList<Ride> rides;
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
