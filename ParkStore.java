@@ -2,6 +2,8 @@ package CS151_07_amusement_park_2024;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParkStore {
 
@@ -10,7 +12,7 @@ public class ParkStore {
     private String parkStoreType;
     private double parkStoreRevenue;
     private List<Visitor> visitors;
-    private List<String> inventories;
+    private HashMap<String, Integer> inventories;
 
     // Allowed store types
     private final String[] allowedStoreTypes = {"Food", "Drink", "Souvenir"};
@@ -24,12 +26,28 @@ public class ParkStore {
     // Allowed souvenir types
     private final String[] allowedSouvenirTypes = {"Hat", "Keychain", "T-Shirt", "Magnet"};
 
+    // A hash map to store prices of each item
+    private final Map<String, Double> itemPrices = new HashMap<>() {{
+        put("Sausage", 5.0);
+        put("Tacos", 3.5);
+        put("Cotton candy", 2.0);
+        put("Burger", 7.0);
+        put("Fries", 3.0);
+        put("Soda", 1.5);
+        put("Coke", 1.5);
+        put("Water", 1.0);
+        put("Hat", 8.5);
+        put("Keychain", 4.5);
+        put("T-Shirt", 20.0);
+        put("Magnet", 5.0);
+    }};
+
     // Constructor with no args
     public ParkStore() {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
-        this.inventories = new ArrayList<String>();
+        this.inventories = new HashMap<String, Integer>();
         this.visitors = new ArrayList<Visitor>();
     }
 
@@ -38,7 +56,7 @@ public class ParkStore {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
-        this.inventories = new ArrayList<String>();
+        this.inventories = new HashMap<String, Integer>();
         this.visitors = new ArrayList<Visitor>();
     }
 
@@ -47,7 +65,7 @@ public class ParkStore {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = parkStoreRevenue;  // Initialize with given revenue
-        this.inventories = new ArrayList<String>();
+        this.inventories = new HashMap<String, Integer>();
         this.visitors = new ArrayList<Visitor>();
     }
 
@@ -86,33 +104,48 @@ public class ParkStore {
         }
     }
 
+    // Getter for parkStoreRevenue
     public double getParkStoreRevenue() {
         return this.parkStoreRevenue;
     }
 
+    // Method for selling an item
     public void sellItem(String item) {
-        System.out.println(item + " from " + this.parkStoreName + " is sold.");
+        if (inventories.containsKey(item)) {
+            double price = itemPrices.get(item);
+            parkStoreRevenue += price;  // Add price of sold item into revenue
+            inventories.remove(item); // Remove sold item from inventory
+            System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price + ".");
+        } else {
+            throw new IllegalArgumentException("Item is not available for sale!");
+        }
     }
 
-    public void addItem(String item) {
+    // Method for adding an item
+    public void addItem(String item, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        }
+
         switch (parkStoreType) {
             case "Food":
                 if (isValidFoodType(item)) {
-                    inventories.add(item);
+                    // Use lambda function to update the quantity of added items
+                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
                 }
                 break;
             case "Drink":
                 if (isValidDrinkType(item)) {
-                    inventories.add(item);
+                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
                 }
                 break;
             case "Souvenir":
                 if (isValidSouvenirType(item)) {
-                    inventories.add(item);
+                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedSouvenirTypes));
                 }
@@ -152,90 +185,16 @@ public class ParkStore {
         return false;
     }
 
+    // Method to display available items, their quantities, and prices
+    public void displayAvailableItems() {
+        System.out.println("Available items in " + this.parkStoreName + ":");
+
+        for (String item : inventories.keySet()) {
+            System.out.println(item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
+            }
+        }
+    }
+
+
 
 }
-
-
-
-//
-//    public String getName() {
-//        return this.name = name;
-//    }
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public List<String> getRides() {
-//        return this.rides;
-//    }
-//
-//    public void setRides(List<String> rides) {
-//        this.rides = rides;
-//    }
-//
-//    public List<Visitor> getVisitors() {
-//        return this.visitors;
-//    }
-//
-//    public void setVisitors(List<Visitor> visitors) {
-//        this.visitors = visitors;
-//    }
-//
-//    public List<Employee> getEmployee() {
-//        return this.employees;
-//    }
-//
-//    public void setEmployees(List<Employee> employees) {
-//        this.employees = employees;
-//    }
-//
-//    public void addRide(String ride) {
-//        this.rides.add(ride);
-//    }
-//
-//    public void removeRide(String ride) {
-//        if (this.rides.isEmpty() || !this.rides.contains(ride)) {
-//            return;
-//        }
-//        this.rides.remove(ride);
-//    }
-//
-//    public int countVisitors() {
-//        return this.visitors.size();
-//    }
-//
-//    public void addVisitor(Visitor visitor) {
-//        this.visitors.add(visitor);
-//    }
-//
-//    public void removeVisitor(Visitor visitor) {
-//        if (this.visitors.isEmpty() || !this.visitors.contains(visitor)) {
-//            return;
-//        }
-//        this.visitors.remove(visitor);
-//    }
-//
-//    public int countEmployees() {
-//        return this.employees.size();
-//    }
-//
-//    public void addEmployee(Employee employee) {
-//        this.employees.add(employee);
-//    }
-//
-//    public void removeEmployee(Employee employee) {
-//        if (this.employees.isEmpty() || !this.employees.contains(employee)) {
-//            return;
-//        }
-//        this.employees.remove(employee);
-//    }
-//
-//
-//    public void displaySectionDetails() {
-//        System.out.println(
-//                "Name of section: " + getName() + "\n" +
-//                "Number of visitors: " + countVisitors() + "\n" +
-//                "Number of employees: " + countEmployees() + "\n" +
-//                "List of rides: " + rides.toString() + "\n");
-//    }
-//}
