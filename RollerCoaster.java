@@ -10,4 +10,14 @@ class RollerCoaster extends Ride {
         super(rideName, rideID, rideCapacity, rideDuration, rideMinHeight, rideMaxWeight);
         this.numOfLoops = numOfLoops; // Set number of loops for this roller coaster
     }
+
+    //Getter method for numOfLoops
+    public int getNumOfLoops() {
+        return numOfLoops;
+    }
+
+    //Setter method for numOfLoops
+    public void setNumOfLoops(int numOfLoops) {
+        this.numOfLoops = numOfLoops;
+    }
 }
