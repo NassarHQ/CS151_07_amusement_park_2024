@@ -128,9 +128,10 @@ public class ParkStore {
         parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
         soldItems.add(new Pair<>(item, quantity));  // Add sold items into a list
 
+        System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price * quantity + ".");
+
         // Update the quantity of sold items
         inventories.put(item, inventories.get(item) - quantity);
-        System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price + ".");
     }
 
     // Method to add items
