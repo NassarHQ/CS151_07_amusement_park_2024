@@ -16,31 +16,31 @@ public class ParkStore {
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
-    private final String[] allowedStoreTypes = {"Food", "Drink", "Souvenir"};
+    private final String[] allowedStoreTypes = {"food", "drink", "souvenir"};
 
     // Allowed food types
-    private final String[] allowedFoodTypes = {"Sausage", "Tacos", "Cotton candy", "Burger", "Fries"};
+    private final String[] allowedFoodTypes = {"sausage", "tacos", "cotton candy", "burger", "fries"};
 
     // Allowed drink types
-    private final String[] allowedDrinkTypes = {"Soda", "Coke", "Water"};
+    private final String[] allowedDrinkTypes = {"soda", "coke", "water"};
 
     // Allowed souvenir types
-    private final String[] allowedSouvenirTypes = {"Hat", "Keychain", "T-Shirt", "Magnet"};
+    private final String[] allowedSouvenirTypes = {"hat", "keychain", "t-shirt", "magnet"};
 
     // A hash map to store prices of each item
     private final Map<String, Double> itemPrices = new HashMap<>() {{
-        put("Sausage", 5.0);
-        put("Tacos", 3.5);
-        put("Cotton candy", 2.0);
-        put("Burger", 7.0);
-        put("Fries", 3.0);
-        put("Soda", 1.5);
-        put("Coke", 1.5);
-        put("Water", 1.0);
-        put("Hat", 8.5);
-        put("Keychain", 4.5);
-        put("T-Shirt", 20.0);
-        put("Magnet", 5.0);
+        put("sausage", 5.0);
+        put("tacos", 3.5);
+        put("cotton candy", 2.0);
+        put("burger", 7.0);
+        put("fries", 3.0);
+        put("soda", 1.5);
+        put("coke", 1.5);
+        put("water", 1.0);
+        put("hat", 8.5);
+        put("keychain", 4.5);
+        put("t-shirt", 20.0);
+        put("magnet", 5.0);
     }};
 
     // Constructor with no args
@@ -91,7 +91,7 @@ public class ParkStore {
 
         // Check if the provided store type is allowed
         for (String type : allowedStoreTypes) {
-            if (type.equals(parkStoreType)) {
+            if (type.equals(parkStoreType.toLowerCase())) {
                 isValidType = true;  // Set flag to true if valid
                 break;  // Exit the loop early if we find a match
             }
@@ -116,22 +116,22 @@ public class ParkStore {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
 
-        if (!inventories.containsKey(item) || quantity > inventories.get(item)) {
+        if (!inventories.containsKey(item.toLowerCase()) || quantity > inventories.get(item.toLowerCase())) {
             throw new IllegalArgumentException(
-                    !inventories.containsKey(item) ?
+                    !inventories.containsKey(item.toLowerCase()) ?
                             "Item is not available for sale." :
                             "Not enough quantity of " + item + " for sale."
             );
         }
 
-        double price = itemPrices.get(item);
+        double price = itemPrices.get(item.toLowerCase());
         parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
-        soldItems.add(new Pair<>(item, quantity));  // Add sold items into a list
+        soldItems.add(new Pair<>(item.toLowerCase(), quantity));  // Add sold items into a list
 
         System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price * quantity + ".");
 
         // Update the quantity of sold items
-        inventories.put(item, inventories.get(item) - quantity);
+        inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
     }
 
     // Method to add items
@@ -142,7 +142,7 @@ public class ParkStore {
 
         switch (parkStoreType) {
             case "Food":
-                if (isValidFoodType(item)) {
+                if (isValidFoodType(item.toLowerCase())) {
                     // Use lambda function to update the quantity of added items
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
@@ -150,14 +150,14 @@ public class ParkStore {
                 }
                 break;
             case "Drink":
-                if (isValidDrinkType(item)) {
+                if (isValidDrinkType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
                 }
                 break;
             case "Souvenir":
-                if (isValidSouvenirType(item)) {
+                if (isValidSouvenirType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedSouvenirTypes));
@@ -171,7 +171,7 @@ public class ParkStore {
     // Helper method to check for food validation
     private boolean isValidFoodType(String item) {
         for (String food : allowedFoodTypes) {
-            if (food.equals(item)) {
+            if (food.equals(item.toLowerCase())) {
                 return true;
             }
         }
@@ -181,7 +181,7 @@ public class ParkStore {
     // Helper method to check for drink validation
     private boolean isValidDrinkType(String item) {
         for (String drink : allowedDrinkTypes) {
-            if (drink.equals(item)) {
+            if (drink.equals(item.toLowerCase())) {
                 return true;
             }
         }
@@ -191,7 +191,7 @@ public class ParkStore {
     // Helper method to check for souvenir validation
     private boolean isValidSouvenirType(String item) {
         for (String souvenir : allowedSouvenirTypes) {
-            if (souvenir.equals(item)) {
+            if (souvenir.equals(item.toLowerCase())) {
                 return true;
             }
         }
@@ -203,7 +203,7 @@ public class ParkStore {
         System.out.println("Available items in " + this.parkStoreName + ":");
 
         for (String item : inventories.keySet()) {
-            System.out.println(item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
+            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
         }
     }
 
