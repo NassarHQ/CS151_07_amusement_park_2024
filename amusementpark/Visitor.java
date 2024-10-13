@@ -10,7 +10,16 @@ public class Visitor extends Person {
         super (name, age);
     }
 
-    //Most functionality of visitors will include stuff involving TICKETS and RIDES.
+    public String getVisitorCategory() {
+        int age = getAge();
+        if (age < 12) {
+            return "Child";
+        } else if (age >= 65) {
+            return "Senior";
+        } else {
+            return "Adult";
+        }
+    }
 
     @Override
     public void addToPark(Park park) {
