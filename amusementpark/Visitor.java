@@ -1,13 +1,51 @@
 package amusementpark;
 
+import java.util.List;
+
 public class Visitor extends Person {
+    private String visitorType;
+    private int height;
+    private double weight;
+    private List<String> purchaseHistory;
     
     public Visitor(){
         super();
+        this.height = height;
+        this.weight = weight;
     }
 
     public Visitor(String name, int age){
         super (name, age);
+        this.height = height;
+        this.weight = weight;
+    }
+
+    // Getter for visitor's height
+    public int getVisitorHeight() {
+        return height;
+    }
+
+    // Setter for visitor's height
+    public void setVisitorHeight(int height) {
+        if (height <= 0) {
+            throw new IllegalArgumentException("Height has to be greater than 0.");
+        }
+
+        System.out.println("Height of " + toString() + " is: " + height +" cm.");
+    }
+
+    // Getter for visitor's weight
+    public double getVisitorWeight() {
+        return weight;
+    }
+
+    // Setter for visitor's weight
+    public void setVisitorWeight(double weight) {
+        if (weight <= 0) {
+            throw new IllegalArgumentException("Weight has to be greater than 0.");
+        }
+
+        System.out.println("Weight of " + toString() + " is: " + height +" kg.");
     }
 
     public String getVisitorCategory() {
@@ -57,4 +95,6 @@ public class Visitor extends Person {
     public String toString() {
         return "Visitor " + getName();
     }
+
+
 }
