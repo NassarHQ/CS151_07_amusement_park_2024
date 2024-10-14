@@ -54,7 +54,7 @@ public class Visitor extends Person {
 
         this.weight = weight;
 
-        System.out.println("Weight of " + toString() + " is: " + height +" kg.");
+        System.out.println("Weight of " + toString() + " is: " + weight +" kg.");
     }
 
     public String getVisitorCategory() {
@@ -113,22 +113,8 @@ public class Visitor extends Person {
 
         String feedback = sc.nextLine();
 
-        sc.close(); // Close scanner to prevent data leaks
-
         return toString() + " has left a feedback: " + feedback + ".\n"
                 + "Thank you for your feedback!";
-    }
-
-    // Method to purchase a ticket
-    public void purchaseTicket(Ticket t) {
-        if (purchaseHistory.contains(t.getTicketID())) {
-            System.out.println(toString() + " has already purchased ticket ID: " + t.getTicketID());
-            return; // Exit if the ticket has already been purchased by that visitor
-        }
-
-        double finalPrice = t.applyDiscount(this); // Apply ticket discount if possible
-        System.out.println(toString() + " successfully purchased a ticket. Final price: $" + finalPrice + ".");
-        purchaseHistory.add(t.getTicketID()); // Store the ticket ID to visitor's purchase history
     }
 
     // Method to view purchase history
@@ -140,4 +126,21 @@ public class Visitor extends Person {
         }
     }
 
+    // Method to add purchase to history
+    public void addToPurchaseHistory(String ticketID) {
+        if (!purchaseHistory.contains(ticketID)) {
+            purchaseHistory.add(ticketID); // Add the ticket ID to purchase history
+            System.out.println("Ticket ID " + ticketID + " added to purchase history for " + toString() + ".");
+        }
+    }
+
+    // Method to check if the visitor has purchased a specific ticket
+    public boolean hasPurchased(String ticketID) {
+        return purchaseHistory.contains(ticketID); // Return true if ticket ID is in purchase history
+    }
+
+    // Method to upgrade membership
+    //public boolean upgradeMembership(String newType, double cost) {
+    // TO BE IMPLEMENTED
+    // }
 }
