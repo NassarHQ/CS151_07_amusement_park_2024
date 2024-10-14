@@ -14,8 +14,8 @@ class Ride implements ParkInteractables {
     private int rideDuration;
     private int rideMinHeight;
     private int rideMaxWeight;
-    private boolean isOperational; // Track if the ride is currently running
-    private boolean hasStarted; // Track if the ride has started
+    private boolean isOperational; // Track if the ride is operational
+    private boolean hasStarted; // Track if the ride has started/already running
     private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
     private List<Visitor> onRide; // To keep track of visitors currently on the ride
     
