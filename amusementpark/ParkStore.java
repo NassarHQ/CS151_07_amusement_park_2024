@@ -1,9 +1,6 @@
 package amusementpark;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ParkStore {
 
@@ -11,8 +8,8 @@ public class ParkStore {
     private String parkStoreName;
     private String parkStoreType;
     private double parkStoreRevenue;
-    private List<Visitor> visitors;
     private HashMap<String, Integer> inventories;
+    private List<Visitor> visitors;
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
@@ -45,11 +42,12 @@ public class ParkStore {
 
     // Constructor with no args
     public ParkStore() {
-        this.parkStoreName = parkStoreName;
-        this.parkStoreType = parkStoreType;
+        this.parkStoreName = "";
+        this.parkStoreType = "";
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
         this.inventories = new HashMap<String, Integer>();
         this.visitors = new ArrayList<Visitor>();
+
     }
 
     // Constructor for a store with name and type as parameters
@@ -111,7 +109,7 @@ public class ParkStore {
     }
 
     // Method to sell items
-    public void sellItems(String item, int quantity) {
+    public void sellItems(Visitor v, String item, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
@@ -128,7 +126,13 @@ public class ParkStore {
         parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
         soldItems.add(new Pair<>(item.toLowerCase(), quantity));  // Add sold items into a list
 
-        System.out.println(item + " from " + this.parkStoreName + " is sold for $" + price * quantity + ".");
+        // Add visitor to list of visited visitors
+        if (!visitors.contains(v)) {
+            visitors.add(v);
+        }
+
+        System.out.println(v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
+                           "Total price is $" + price * quantity + ".");
 
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
@@ -170,37 +174,27 @@ public class ParkStore {
 
     // Helper method to check for food validation
     private boolean isValidFoodType(String item) {
-        for (String food : allowedFoodTypes) {
-            if (food.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedFoodTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for drink validation
     private boolean isValidDrinkType(String item) {
-        for (String drink : allowedDrinkTypes) {
-            if (drink.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedDrinkTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for souvenir validation
     private boolean isValidSouvenirType(String item) {
-        for (String souvenir : allowedSouvenirTypes) {
-            if (souvenir.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedSouvenirTypes).contains(item.toLowerCase());
     }
 
     // Method to display available items, their quantities, and prices
     public void displayAvailableItems() {
         System.out.println("Available items in " + this.parkStoreName + ":");
+
+        if (inventories.isEmpty()) {
+            System.out.println("No items available.");
+            return;  // Exit the method if there are no items
+        }
 
         for (String item : inventories.keySet()) {
             System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
@@ -209,10 +203,18 @@ public class ParkStore {
 
     // Method to view purchase history
     public void viewStorePurchaseHistory() {
-        System.out.println("Store purchase history:" + "\n"
-                            + "Item, Quantity" + "\n"
-                            + "-----" + "\n"
-                            + soldItems);
+        System.out.println("Store purchase history:");
+        for (Pair<String, Integer> soldItem : soldItems) {
+            System.out.println("Item: " + soldItem.key + ", Quantity: " + soldItem.value);
+        }
+    }
+
+    // Method to get list of visitors that visited the store
+    public void getVisitorsInStore() {
+        System.out.println("List of visitors that visited the store: ");
+        for (Visitor v : visitors) {
+             System.out.println(v.getName());
+        }
     }
 
     // Helper class to store duplicate pairs for sold items
