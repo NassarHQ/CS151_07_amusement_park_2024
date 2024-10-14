@@ -197,6 +197,18 @@ public class Park {
         }
     }
 
+    // Method to display all feedbacks from visitors
+    private void displayAllFeedbacks() {
+        System.out.println("Visitor Feedback:");
+        if (visitors.isEmpty()) {
+            System.out.println("No visitors have provided feedback."); // Message if no visitors
+        } else {
+            for (Visitor visitor : visitors) {
+                visitor.viewFeedback(); // Call visitor's method to display their feedback
+            }
+        }
+    }
+
     // Method to sell a ticket to a visitor
     public void sellTicket(Ticket t, Visitor v) {
         processTicket(t, v, true); // Use processTicket to handle selling
