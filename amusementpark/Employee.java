@@ -6,7 +6,7 @@ class Employee extends Person{
     // Declared role and employeeID
     private String role;
     private String employeeID;
-    private LocalDateTime shift;
+    private LocalDateTime shiftTime;
     private boolean onShift;
 
     public Employee(){
@@ -18,11 +18,33 @@ class Employee extends Person{
     }
 
     // Parametarized Constructor
-    public Employee(String name, int age, int id, String role) {
+    public Employee(String name, int age, String employeeID, String role) {
         super(name, age);
         this.employeeID = employeeID;
         this.role = role;
         this.onShift = false;
+    }
+
+    public void shiftIn(){
+        if (onShift){
+            System.out.println("Employee " + this.getName() + " is already on shift.");
+        }
+        else{
+            this.shiftTime = LocalDateTime.now();
+            onShift = true;
+            System.out.println("Employee " + this.getName() + " has started their shift at " + shiftTime); 
+        }
+    }
+
+    public void shiftOut(){
+        if (!onShift){
+            System.out.println("Employee " + this.getName() + " is not currently on shift.");
+        }
+        else{
+            LocalDateTime shiftEndTime = LocalDateTime.now();
+            onShift = false;
+            System.out.println("Employee " + this.getName() + " has ended their shift at " + shiftEndTime);
+        }
     }
 
     // Getter and Setter for EmployeeID and role
