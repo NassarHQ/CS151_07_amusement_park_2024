@@ -1,19 +1,28 @@
 package amusementpark;
-
+import java.time.LocalDateTime;
 // Employee Class
 class Employee extends Person{
 
     // Declared role and employeeID
     private String role;
     private String employeeID;
-    private int id;
+    private LocalDateTime shift;
+    private boolean onShift;
+
+    public Employee(){
+        super();
+        this.employeeID = "-1";
+        this.role = "Unknown";
+        this.onShift = false;
+        
+    }
 
     // Parametarized Constructor
-    public Employee(String name, int age, int id, String role, String employeeID) {
+    public Employee(String name, int age, int id, String role) {
         super(name, age);
-        this.id = id;
-        this.role = role;
         this.employeeID = employeeID;
+        this.role = role;
+        this.onShift = false;
     }
 
     // Getter and Setter for EmployeeID and role
