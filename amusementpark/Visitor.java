@@ -1,5 +1,6 @@
 package amusementpark;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,17 +9,20 @@ public class Visitor extends Person {
     private int height;
     private double weight;
     private List<String> purchaseHistory;
+
     
-    public Visitor(){
+    public Visitor(List<String> purchaseHistory){
         super();
-        this.height = height;
-        this.weight = weight;
+        this.purchaseHistory = purchaseHistory != null ? purchaseHistory : new ArrayList<>(); // Initialize or create a new list;
+        this.height = 0;
+        this.weight = 0.0;
     }
 
-    public Visitor(String name, int age){
+    public Visitor(String name, int age) {
         super (name, age);
-        this.height = height;
-        this.weight = weight;
+        this.purchaseHistory = new ArrayList<>();
+        this.height = 0;
+        this.weight = 0.0;
     }
 
     // Getter for visitor's height
@@ -31,6 +35,8 @@ public class Visitor extends Person {
         if (height <= 0) {
             throw new IllegalArgumentException("Height has to be greater than 0.");
         }
+
+        this.height = height;
 
         System.out.println("Height of " + toString() + " is: " + height +" cm.");
     }
@@ -45,6 +51,8 @@ public class Visitor extends Person {
         if (weight <= 0) {
             throw new IllegalArgumentException("Weight has to be greater than 0.");
         }
+
+        this.weight = weight;
 
         System.out.println("Weight of " + toString() + " is: " + height +" kg.");
     }
@@ -99,10 +107,13 @@ public class Visitor extends Person {
 
     // Method to provide feedback
     public String provideFeedback() {
-        System.out.println("Enter your feedback: " + "\n");
         Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
 
+        System.out.println("Enter your feedback: " + "\n");
+
         String feedback = sc.nextLine();
+
+        sc.close(); // Close scanner to prevent data leaks
 
         return toString() + " has left a feedback: " + feedback + ".\n"
                 + "Thank you for your feedback!";
@@ -110,9 +121,23 @@ public class Visitor extends Person {
 
     // Method to purchase a ticket
     public void purchaseTicket(Ticket t) {
+        if (purchaseHistory.contains(t.getTicketID())) {
+            System.out.println(toString() + " has already purchased ticket ID: " + t.getTicketID());
+            return; // Exit if the ticket has already been purchased by that visitor
+        }
+
         double finalPrice = t.applyDiscount(this); // Apply ticket discount if possible
         System.out.println(toString() + " successfully purchased a ticket. Final price: $" + finalPrice + ".");
-        purchaseHistory.add(t.getTicketID());
+        purchaseHistory.add(t.getTicketID()); // Store the ticket ID to visitor's purchase history
+    }
+
+    // Method to view purchase history
+    public void viewPurchaseHistory() {
+        if (purchaseHistory.isEmpty()) {
+            System.out.println("You haven't purchased any tickets.");
+        } else {
+            System.out.println("Your purchase ticket ID(s): " + purchaseHistory);
+        }
     }
 
 }
