@@ -9,7 +9,7 @@ public class ParkStore {
     private String parkStoreType;
     private double parkStoreRevenue;
     private HashMap<String, Integer> inventories;
-    private List<Visitor> visitors;
+    private  List<Visitor> visitors;
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
@@ -45,8 +45,8 @@ public class ParkStore {
         this.parkStoreName = "";
         this.parkStoreType = "";
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
-        this.inventories = new HashMap<String, Integer>();
-        this.visitors = new ArrayList<Visitor>();
+        this.inventories = new HashMap<>();
+        this.visitors = new ArrayList<>();
 
     }
 
@@ -55,8 +55,8 @@ public class ParkStore {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
-        this.inventories = new HashMap<String, Integer>();
-        this.visitors = new ArrayList<Visitor>();
+        this.inventories = new HashMap<>();
+        this.visitors = new ArrayList<>();
     }
 
     // Constructor with additional initial revenue
@@ -64,8 +64,8 @@ public class ParkStore {
         this.parkStoreName = parkStoreName;
         this.parkStoreType = parkStoreType;
         this.parkStoreRevenue = parkStoreRevenue;  // Initialize with given revenue
-        this.inventories = new HashMap<String, Integer>();
-        this.visitors = new ArrayList<Visitor>();
+        this.inventories = new HashMap<>();
+        this.visitors = new ArrayList<>();
     }
 
     // Getter for parkStoreName
