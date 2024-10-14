@@ -103,12 +103,16 @@ public class Visitor extends Person {
         Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
 
         String feedback = sc.nextLine();
-        sc.close();
 
         return toString() + " has left a feedback: " + feedback + ".\n"
                 + "Thank you for your feedback!";
     }
 
-
+    // Method to purchase a ticket
+    public void purchaseTicket(Ticket t) {
+        double finalPrice = t.applyDiscount(this); // Apply ticket discount if possible
+        System.out.println(toString() + " successfully purchased a ticket. Final price: $" + finalPrice + ".");
+        purchaseHistory.add(t.getTicketID());
+    }
 
 }
