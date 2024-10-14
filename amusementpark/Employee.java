@@ -1,6 +1,10 @@
 package amusementpark;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 // Employee Class
 class Employee extends Person{
 
@@ -55,6 +59,21 @@ class Employee extends Person{
         String report = issueScanner.nextLine();
         park.addIssue(report);
         issueScanner.close();
+    }
+
+    //The employee will make sure every visitor on the ride is of appropriate height
+    //and weight limit is not exceeded
+    public boolean checkRideEligibility(Ride ride){
+
+        List<Visitor> onRide = ride.getOnRide();
+        for (int i = 0; i < onRide.size(); i++){
+            Visitor visitor = onRide.get(i);
+            if (visitor.getAge() < ride.getRideMinHeight()){
+                System.out.println("The ride cannot start yet. Not every person is tall enough for the ride.");
+                return false;
+            }
+        }
+        return true;
     }
 
     // Getter and Setter for EmployeeID and role
