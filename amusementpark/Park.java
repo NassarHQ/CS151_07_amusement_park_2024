@@ -27,6 +27,7 @@ public class Park {
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
     private Set<Ticket> archivedTickets;
+    private ArrayList<String> reportedIssues;
 
     // Constructor for the Park class
     public Park() {
@@ -39,6 +40,7 @@ public class Park {
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
         this.archivedTickets = new HashSet<>();
+        this.reportedIssues = new ArrayList<>();
     }
 
     // Method to add a Person to the park
@@ -193,6 +195,21 @@ public class Park {
             } else {
                 System.out.println("Ticket is not eligible for refund.");
                 return false;
+            }
+        }
+    }
+
+    public void addIssue(String issue){
+        reportedIssues.add(issue);
+        System.out.println("Issue reported: " + issue);
+    }
+
+    public void viewReportedIssues(){
+        System.out.println("Reported Issues:");
+        if (reportedIssues.isEmpty()) System.out.println("None at the moment.");
+        else{
+            for (String str : reportedIssues){
+                System.out.println("- " + str);
             }
         }
     }

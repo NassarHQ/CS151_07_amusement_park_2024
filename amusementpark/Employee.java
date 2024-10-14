@@ -1,5 +1,6 @@
 package amusementpark;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 // Employee Class
 class Employee extends Person{
 
@@ -45,6 +46,15 @@ class Employee extends Person{
             onShift = false;
             System.out.println("Employee " + this.getName() + " has ended their shift at " + shiftEndTime);
         }
+    }
+
+    public void reportIssue(Park park){
+        Scanner issueScanner = new Scanner(System.in);
+        System.out.println("Please describe the issue:");
+        System.out.print(">>");
+        String report = issueScanner.nextLine();
+        park.addIssue(report);
+        issueScanner.close();
     }
 
     // Getter and Setter for EmployeeID and role
