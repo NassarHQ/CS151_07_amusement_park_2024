@@ -1,6 +1,7 @@
 package amusementpark;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Visitor extends Person {
     private String visitorType;
@@ -95,6 +96,19 @@ public class Visitor extends Person {
     public String toString() {
         return "Visitor " + getName();
     }
+
+    // Method to provide feedback
+    public String provideFeedback() {
+        System.out.println("Enter your feedback: " + "\n");
+        Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
+
+        String feedback = sc.nextLine();
+        sc.close();
+
+        return toString() + " has left a feedback: " + feedback + ".\n"
+                + "Thank you for your feedback!";
+    }
+
 
 
 }
