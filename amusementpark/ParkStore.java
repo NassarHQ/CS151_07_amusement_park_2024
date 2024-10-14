@@ -1,9 +1,6 @@
 package amusementpark;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ParkStore {
 
@@ -170,32 +167,17 @@ public class ParkStore {
 
     // Helper method to check for food validation
     private boolean isValidFoodType(String item) {
-        for (String food : allowedFoodTypes) {
-            if (food.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedFoodTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for drink validation
     private boolean isValidDrinkType(String item) {
-        for (String drink : allowedDrinkTypes) {
-            if (drink.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedDrinkTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for souvenir validation
     private boolean isValidSouvenirType(String item) {
-        for (String souvenir : allowedSouvenirTypes) {
-            if (souvenir.equals(item.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.asList(allowedSouvenirTypes).contains(item.toLowerCase());
     }
 
     // Method to display available items, their quantities, and prices
@@ -209,10 +191,10 @@ public class ParkStore {
 
     // Method to view purchase history
     public void viewStorePurchaseHistory() {
-        System.out.println("Store purchase history:" + "\n"
-                            + "Item, Quantity" + "\n"
-                            + "-----" + "\n"
-                            + soldItems);
+        System.out.println("Store purchase history:");
+        for (Pair<String, Integer> soldItem : soldItems) {
+            System.out.println("Item: " + soldItem.key + ", Quantity: " + soldItem.value);
+        }
     }
 
     // Helper class to store duplicate pairs for sold items
