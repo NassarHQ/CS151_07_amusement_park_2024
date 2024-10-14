@@ -27,6 +27,7 @@ public class Park {
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
     private Set<Ticket> archivedTickets;
+    private ArrayList<String> reportedIssues;
 
     // Constructor for the Park class
     public Park() {
@@ -39,6 +40,7 @@ public class Park {
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
         this.archivedTickets = new HashSet<>();
+        this.reportedIssues = new ArrayList<>();
     }
 
     // Method to add a Person to the park
@@ -196,8 +198,8 @@ public class Park {
             }
         }
     }
-
-    // Method to display all feedbacks from visitors
+  
+  // Method to display all feedbacks from visitors
     private void displayAllFeedbacks() {
         System.out.println("Visitor Feedback:");
         if (visitors.isEmpty()) {
@@ -205,6 +207,21 @@ public class Park {
         } else {
             for (Visitor visitor : visitors) {
                 visitor.viewFeedback(); // Call visitor's method to display their feedback
+            }
+        }
+    }
+
+  public void addIssue(String issue){
+        reportedIssues.add(issue);
+        System.out.println("Issue reported: " + issue);
+    }
+
+    public void viewReportedIssues(){
+        System.out.println("Reported Issues:");
+        if (reportedIssues.isEmpty()) System.out.println("None at the moment.");
+        else{
+            for (String str : reportedIssues){
+                System.out.println("- " + str);
             }
         }
     }

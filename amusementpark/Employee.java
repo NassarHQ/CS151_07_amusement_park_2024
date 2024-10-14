@@ -1,19 +1,79 @@
 package amusementpark;
-
+import java.time.LocalDateTime;
+import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 // Employee Class
 class Employee extends Person{
 
     // Declared role and employeeID
     private String role;
     private String employeeID;
-    private int id;
+    private LocalDateTime shiftTime;
+    private boolean onShift;
+
+    public Employee(){
+        super();
+        this.employeeID = "-1";
+        this.role = "Unknown";
+        this.onShift = false;
+        
+    }
 
     // Parametarized Constructor
-    public Employee(String name, int age, int id, String role, String employeeID) {
+    public Employee(String name, int age, String employeeID, String role) {
         super(name, age);
-        this.id = id;
-        this.role = role;
         this.employeeID = employeeID;
+        this.role = role;
+        this.onShift = false;
+    }
+
+    public void shiftIn(){
+        if (onShift){
+            System.out.println("Employee " + this.getName() + " is already on shift.");
+        }
+        else{
+            this.shiftTime = LocalDateTime.now();
+            onShift = true;
+            System.out.println("Employee " + this.getName() + " has started their shift at " + shiftTime); 
+        }
+    }
+
+    public void shiftOut(){
+        if (!onShift){
+            System.out.println("Employee " + this.getName() + " is not currently on shift.");
+        }
+        else{
+            LocalDateTime shiftEndTime = LocalDateTime.now();
+            onShift = false;
+            System.out.println("Employee " + this.getName() + " has ended their shift at " + shiftEndTime);
+        }
+    }
+
+    public void reportIssue(Park park){
+        Scanner issueScanner = new Scanner(System.in);
+        System.out.println("Please describe the issue:");
+        System.out.print(">>");
+        String report = issueScanner.nextLine();
+        park.addIssue(report);
+        issueScanner.close();
+    }
+
+    //The employee will make sure every visitor on the ride is of appropriate height
+    //and weight limit is not exceeded
+    public boolean checkRideEligibility(Ride ride){
+
+        List<Visitor> onRide = ride.getOnRide();
+        for (int i = 0; i < onRide.size(); i++){
+            Visitor visitor = onRide.get(i);
+            if (visitor.getAge() < ride.getRideMinHeight()){
+                System.out.println("The ride cannot start yet. Not every person is tall enough for the ride.");
+                return false;
+            }
+        }
+        return true;
     }
 
     // Getter and Setter for EmployeeID and role
