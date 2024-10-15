@@ -223,7 +223,7 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
     }
   
   // Method to display all feedbacks from visitors
-    private void displayAllFeedbacks() {
+    public void displayAllFeedbacks() {
         System.out.println("Visitor Feedback:");
         if (visitors.isEmpty()) {
             System.out.println("No visitors have provided feedback."); // Message if no visitors
