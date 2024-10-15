@@ -196,8 +196,51 @@ public class AdminUI {
     }
 
     // Method to show feedback from visitors
-    public void showFeedback() {
+    public void showFeedback(Scanner scanner) {
         System.out.println("Displaying all visitor feedback:");
         park.displayAllFeedbacks(); // Call the method from Park to display feedback
+    }
+
+    // Method to show reported issues
+    public void showReports(Scanner scanner) {
+        System.out.println("Displaying all reported issues:");
+        park.viewReportedIssues(); // Call the method from Park to display reported issues
+    }
+
+    // Method to display metrics and details for a specific ride
+    public void checkMetrics() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the name of the ride you want to check:");
+        String rideName = scanner.nextLine();   // Read the ride name
+
+        Ride selectRide = null;
+
+        //Search for the ride in the park's ride list
+        for (Ride ride : park.getRidesList()) {
+            if (ride.getRideName().equalsIgnoreCase(rideName)) {
+                selectedRide = ride;
+                break;
+            }
+        }
+
+        // If the ride is found, display its details and metrics
+        if (selectedRide != null) {
+            //Display ride details
+            System.out.println("Ride Details:");
+            System.out.println(selectedRide); 
+
+            // Check height requirement 
+            System.out.println("Minimum height requirement: " + selectedRide.getRideMinHeight() + "cm");
+
+            // List visitors who meet the height requirement
+            System.out.println("Visitors eligible to ride:");
+            for (Visitor visitor : park.getVisitors()) {
+                if (visitor.getVisitorHeight() >= selectedRide.getRideMinHeight()) {
+                    System.out.println(visitor);
+                }
+            }
+        } else {
+            System.out.println("Ride not found. Please check the name and try again.");
+        }
     }
 }
