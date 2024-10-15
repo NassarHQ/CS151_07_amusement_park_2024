@@ -95,6 +95,8 @@ public class VisitorUI {
 
             case "4":
                 // Buy products from store
+                System.out.println("List of our Stores: " + "\n"
+                                    +
                 break;
             case "5":
                 // Write a feedback
