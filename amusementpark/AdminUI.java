@@ -51,7 +51,7 @@ public class AdminUI {
 
                 case 6:
                     System.out.println("Exiting Admin Menu...");
-
+                    break;
                 default:
                     System.out.println("Invalid choice. Try again.");
 
@@ -96,29 +96,34 @@ public class AdminUI {
 
     // Method to add a ride
     public void addRide() {
-        System.out.println("Enter ride name:");     // Prompt for ride name
-        String name = scanner.nextLine();           // Read ride name
-        System.out.println("Enter ride ID:");
-        String rideID = scanner.nextLine();
-        System.out.println("Enter ride capacity:");
-        int capacity = scanner.nextInt();
-        System.out.println("Enter ride duration (in minutes):");
-        int duration = scanner.nextInt();
-        System.out.println("Enter minimum height (in cm):");
-        int minHeight = scanner.nextInt();
-        System.out.println("Enter maximum weight (in kg):");
-        int maxWeight = scanner.nextInt();
-        scanner.nextLine();  // consume the newline character
+        try {
+            System.out.println("Enter ride name:");     // Prompt for ride name
+            String name = scanner.nextLine();           // Read ride name
+            System.out.println("Enter ride ID:");
+            String rideID = scanner.nextLine();
+            System.out.println("Enter ride capacity:");
+            int capacity = scanner.nextInt();
+            System.out.println("Enter ride duration (in minutes):");
+            int duration = scanner.nextInt();
+            System.out.println("Enter minimum height (in cm):");
+            int minHeight = scanner.nextInt();
+            System.out.println("Enter maximum weight (in kg):");
+            int maxWeight = scanner.nextInt();
+            scanner.nextLine();  // consume the newline character
 
-        // Create a new Ride object using the provided details
-        Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
+            // Create a new Ride object using the provided details
+            Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
 
-        //Try to add the ride to the park
-        if (park.addRide(newRide)) {
-            System.out.println("Ride added successfully."); // Success message
-        } else {
-            System.out.println("Ride could not be added."); // Failure message
-        }
+            //Try to add the ride to the park
+            if (park.addRide(newRide)) {
+                System.out.println("Ride added successfully."); // Success message
+            } else {
+                System.out.println("Ride could not be added."); // Failure message
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter the correct data type.");
+            scanner.nextLine(); // Clear the invalid input
+        } 
     }
 
     // Method to remove an existing ride from the park
