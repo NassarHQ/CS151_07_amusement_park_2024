@@ -120,4 +120,63 @@ public class AdminUI {
             System.out.println("Ride could not be added."); // Failure message
         }
     }
+
+    // Method to remove an existing ride from the park
+    public void removeRide() {
+        System.out.println("Enter the Ride ID of the ride you want to remove:");    // Prompt for ride ID
+        String rideID = scanner.nextLine(); //Read ride ID
+
+        // Find the ride by its ID
+        Ride rideToRemove = null;
+        for (Ride r : park.getRidesList()) {    // Iterate through all rides in the park
+            if (r.getRideID().equals(rideID)) {     // Check if the current ride matches the ID
+                rideToRemove = r;
+                break;      // Exit the loop once the ride is found
+            }
+        }
+
+        // Try to remove the ride if found
+        if (rideToRemove != null && park.removeRide(rideToRemove)) {
+            System.out.println("Ride removed succesfully."); 
+        } else {
+            System.out.println("Ride could not be removed.");   // Ride not found or removal failed
+        }
+    }
+
+    // Method to display details of a ride
+    public void displayRideDetails() {
+        System.out.println("Enter the Ride ID of the ride to display details:");    //Prompt for ride ID
+        String rideID = scanner.nextLine();     // Read ride ID
+
+        // Search for the ride by its ID and display its details
+        for (Ride r : park.getRidesList()) {    //Iterate through all rides in the park
+            if (r.getRideID().equals(rideID)) {     //Check if the current ride matches the ID
+                r.displayRideDetails();
+                return;     // Exit the method once details are displayed
+            }
+
+        }
+        System.out.println("Ride not found");      // Message if ride with the given ID is not found
+    }
+
+    // Method to open or close a ride for maintenance
+    public void openCloseForMaintenance() {
+        System.out.println("Enter the Ride ID of the ride to open/close for maintenance:");     // Prompt for Ride ID
+        String rideID = scanner.nextLine();
+
+        // Search for the ride by its ID
+        for (Ride r : park.getRidesList()) {  // Iterate through all rides in the park
+            if (r.getRideID().equals(rideID)) {  // Check if the current ride matches the ID
+                // Toggle the operational status of the ride
+                if (r.isOperational()) {   // If ride is currently operational
+                    r.setOperational(false);  // Set ride to non-operational (close for maintenance)
+                    System.out.println("Ride closed for maintenance.");  // Success message
+                } else {   // If ride is currently not operational
+                    r.setOperational(true);   // Set ride to operational (open after maintenance)
+                    System.out.println("Ride opened for operation.");  // Success message
+                }
+                return;  // Exit the method once the status is toggled
+            }
+        }
+    }
 }
