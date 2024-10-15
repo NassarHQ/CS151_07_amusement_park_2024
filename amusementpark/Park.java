@@ -248,6 +248,10 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
         }
     }
 
+    public ArrayList<Ride> getRidesList(){
+        return this.rides;
+    }
+
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
     public Set<Visitor> getVisitors() {
         return Collections.unmodifiableSet(visitors);
