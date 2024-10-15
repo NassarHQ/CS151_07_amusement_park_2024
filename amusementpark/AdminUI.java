@@ -50,5 +50,27 @@ public class AdminUI {
         }
     }
 
-    
+    // Main menu for Manage Rides
+    public static void displayRideManagerMenu() {
+        System.out.println("Ride Manager Menu:");
+        System.out.println("1. Add a Ride");
+        System.out.println("2. Remove a Ride");
+        System.out.println("3. Display Ride Details");
+        System.out.println("4. Open/Close Ride for Maintenance");
+        System.out.println("5. Go back");
+    }
+
+    // Method to handle "Manage Rides" option
+    public static void manageRides(Scanner scanner) {
+        while (true) {
+            displayRideManagerMenu();
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addRide(scanner):
+
+            }
+        }
+    }
 }
