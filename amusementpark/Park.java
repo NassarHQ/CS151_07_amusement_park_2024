@@ -198,8 +198,20 @@ public class Park {
             }
         }
     }
+  
+  // Method to display all feedbacks from visitors
+    private void displayAllFeedbacks() {
+        System.out.println("Visitor Feedback:");
+        if (visitors.isEmpty()) {
+            System.out.println("No visitors have provided feedback."); // Message if no visitors
+        } else {
+            for (Visitor visitor : visitors) {
+                visitor.viewFeedback(); // Call visitor's method to display their feedback
+            }
+        }
+    }
 
-    public void addIssue(String issue){
+  public void addIssue(String issue){
         reportedIssues.add(issue);
         System.out.println("Issue reported: " + issue);
     }

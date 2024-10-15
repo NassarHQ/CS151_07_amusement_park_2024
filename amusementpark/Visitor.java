@@ -9,6 +9,8 @@ public class Visitor extends Person {
     private int height;
     private double weight;
     private List<String> purchaseHistory;
+    private String feedback;
+    private boolean hasProvidedFeedback;
 
     
     public Visitor(List<String> purchaseHistory){
@@ -16,6 +18,7 @@ public class Visitor extends Person {
         this.purchaseHistory = purchaseHistory != null ? purchaseHistory : new ArrayList<>(); // Initialize or create a new list;
         this.height = 0;
         this.weight = 0.0;
+        this.hasProvidedFeedback = false;   // Initialize the flag as false
     }
 
     public Visitor(String name, int age) {
@@ -23,6 +26,7 @@ public class Visitor extends Person {
         this.purchaseHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
+        this.hasProvidedFeedback = false;   // Initialize the flag as false
     }
 
     // Getter for visitor's height
@@ -111,12 +115,20 @@ public class Visitor extends Person {
 
         System.out.println("Enter your feedback: " + "\n");
 
-        String feedback = sc.nextLine();
+        feedback = sc.nextLine();
+        this.hasProvidedFeedback = true;    // Set flag to true if visitor has provided feedback
 
-        return toString() + " has left a feedback: " + feedback + ".\n"
-                + "Thank you for your feedback!";
+        return feedback;
     }
 
+    // Method to view feedback
+    public void viewFeedback() {
+        if (hasProvidedFeedback) {
+            System.out.println(toString() + " has provided a feedback: " + feedback);
+        } else {
+            System.out.println(toString() + "hasn't provided any feedbacks.");
+        }
+    }
     // Method to view purchase history
     public void viewPurchaseHistory() {
         if (purchaseHistory.isEmpty()) {
