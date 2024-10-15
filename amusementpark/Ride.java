@@ -27,7 +27,7 @@ class Ride implements ParkInteractables {
         this.rideDuration = 5; // default duration in minutes
         this.rideMinHeight = 120; // default height in cm
         this.rideMaxWeight = 170; // default max weight in kg
-        this.isOperational = false;
+        this.isOperational = true;
         this.hasStarted = false;
         this.rideVisitorQueue = new LinkedList<>();
         this.onRide = new LinkedList<>();
@@ -43,7 +43,7 @@ class Ride implements ParkInteractables {
             this.rideDuration = rideDuration;
             this.rideMinHeight = rideMinHeight;
             this.rideMaxWeight = rideMaxWeight;
-            this.isOperational = false;
+            this.isOperational = true;
             this.hasStarted = false;
             this.rideVisitorQueue = new LinkedList<>();
             this.onRide = new LinkedList<>();
@@ -175,5 +175,16 @@ class Ride implements ParkInteractables {
         }
         System.out.println("Ride is stopping.");
         hasStarted = false;
+    }
+
+    //  A method to check if the ride is operating or not
+    public boolean isOperational() {
+        if (isOperational) {
+            System.out.println("Ride is safe to use");
+            return true;
+        } else {
+            System.out.println("Ride is not safe to use");
+            return false;
+        }
     }
 }
