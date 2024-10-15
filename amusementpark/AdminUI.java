@@ -273,8 +273,8 @@ public class AdminUI {
                 case 6:
                     // Souvernir validation
                     System.out.println("Enter souvenir type to check: ");
-                    String souvernirName = scanner.nextLint();
-                    if (store.isValidSouvenirType) {
+                    String souvernirName = scanner.nextLine();
+                    if (store.isValidSouvenirType()) {
                         System.out.println("Souvenir Type is Valid");
                     } else {
                         System.out.println("Invalid Souvenir Item");
