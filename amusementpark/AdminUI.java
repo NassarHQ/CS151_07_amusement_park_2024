@@ -208,7 +208,7 @@ public class AdminUI {
 
             System.out.println("Enter the store name: ");
             String storeName = scanner.nextLine();
-            ParkStore store = park.findStoreByName(storeName);
+            ParkStore store = findStoreByName(park.getStoresList(), storeName);
 
             if (store == null) {
                 System.out.println("Store not found.");
@@ -226,7 +226,7 @@ public class AdminUI {
                     System.out.println("Enter the new store type (food, drink, souvenir): ");
                     String newStoreType = scanner.nextLine();
                     try {
-                        sotre.setParkStoreType(newStoreType);
+                        store.setParkStoreType(newStoreType);
                         System.out.println("Store type updated successfully");
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
@@ -244,7 +244,7 @@ public class AdminUI {
                         store.addItems(itemName, itemQuantity);
                         System.out.println("Items added successfully");
                     } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage);
+                        System.out.println(e.getMessage());
                     }
                     break;
 
@@ -252,7 +252,7 @@ public class AdminUI {
                     // Food Validation
                     System.out.println("Enter food item to check: ");
                     String foodName = scanner.nextLine();
-                    if (store.isValidFoodType) {
+                    if (store.isValidFoodType(foodName)) {
                         System.out.println("Valid Food Item");
                     } else {
                         System.out.println("Invalid Food Item");
@@ -263,7 +263,7 @@ public class AdminUI {
                     // Drink Validation
                     System.out.println("Enter drink item to check: ");
                     String drinkName = scanner.nextLine();
-                    if (store.isValidDrinkType) {
+                    if (store.isValidDrinkType(drinkName)) {
                         System.out.println("Valid Drink Item");
                     } else {
                         System.out.println("Invalid Drink Item");
@@ -274,7 +274,7 @@ public class AdminUI {
                     // Souvernir validation
                     System.out.println("Enter souvenir type to check: ");
                     String souvernirName = scanner.nextLine();
-                    if (store.isValidSouvenirType()) {
+                    if (store.isValidSouvenirType(souvernirName)) {
                         System.out.println("Souvenir Type is Valid");
                     } else {
                         System.out.println("Invalid Souvenir Item");
