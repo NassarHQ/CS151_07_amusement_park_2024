@@ -42,16 +42,22 @@ public class EmployeeUI {
                 employee.reportIssue(park);
                 break;
             case "4":
-                checkSalary();  //To be done
+            //    checkSalary();  //To be done
                 break;
             case "5":
-                checkSchedule(); //To be done
+            //    checkSchedule(); //To be done
                 break;
             case "6":
                 ArrayList<Ride> rideList = park.getRidesList();
                 System.out.println("Which ride do you want to check?");
                 String r = scanner.nextLine();
-                employee.checkRideEligibility(ride);
+                for (int i = 0; i < rideList.size(); i++){
+                    if (r.equals(rideList.get(i).getRideName())){
+                        Ride tempR = rideList.get(i);
+                        employee.checkRideEligibility(tempR);
+                        break;
+                    }
+                }
                 break;
             case "7":
                 return; // Exit to main menu
