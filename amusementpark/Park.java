@@ -185,7 +185,7 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
             // Remove from available tickets and add to sold tickets
             availableTickets.remove(t); 
             soldTickets.add(t);
-            v.addToPurchaseHistory(t.getTicketID()); // Track the purchase
+            v.addTicketToPurchaseHistory(t); // Track the purchase
             totalRevenue += t.getTicketPrice(); // Add to park's total revenue
             totalTicketsSold++; // Increment ticket count
             System.out.println("Ticket sold successfully!");
