@@ -19,6 +19,19 @@ class Ride implements ParkInteractables {
     private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
     private List<Visitor> onRide; // To keep track of visitors currently on the ride
     
+    // Default constructor for Ride class
+    public Ride() {
+        this.rideName = "Default Ride";
+        this.rideID = "0000";
+        this.rideCapacity = 10; // default capacity
+        this.rideDuration = 5; // default duration in minutes
+        this.rideMinHeight = 120; // default height in cm
+        this.rideMaxWeight = 170; // default max weight in kg
+        this.isOperational = false;
+        this.hasStarted = false;
+        this.rideVisitorQueue = new LinkedList<>();
+        this.onRide = new LinkedList<>();
+    }
 
     // Parametarized Constructor for Ride class
     public Ride(String rideName, String rideID, int rideCapacity,
