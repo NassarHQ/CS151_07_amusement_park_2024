@@ -22,7 +22,7 @@ public class Park {
     // ArrayLists to store sections, rides, and tickets
     private Set<Visitor> visitors;
     private Set<Employee> employees;
-    private ArrayList<ParkStore> parkSections;
+    private ArrayList<ParkStore> stores;
     private ArrayList<Ride> rides;
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
@@ -38,7 +38,7 @@ public class Park {
         this.dailyVisitorGoal = 100;
         this.visitors = new HashSet<>();
         this.employees = new HashSet<>();
-        this.parkSections = new ArrayList<>();
+        this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
@@ -54,7 +54,7 @@ public class Park {
         this.dailyVisitorGoal = dailyVisitorGoal;
         this.visitors = new HashSet<>();
         this.employees = new HashSet<>();
-        this.parkSections = new ArrayList<>();
+        this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
@@ -249,8 +249,14 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
         }
     }
 
+    // Method to get list of rides from the park
     public ArrayList<Ride> getRidesList(){
         return this.rides;
+    }
+
+    // Method to get list of stores from the park
+    public ArrayList<ParkStore> getStoresList() {
+        return this.stores;
     }
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)

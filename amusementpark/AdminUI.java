@@ -208,8 +208,7 @@ public class AdminUI {
     }
 
     // Method to display metrics and details for a specific ride
-    public void checkMetrics() {
-        Scanner scanner = new Scanner(System.in);
+    public void checkMetrics(Scanner scanner) {
         System.out.println("Enter the name of the ride you want to check:");
         String rideName = scanner.nextLine();   // Read the ride name
 
@@ -218,24 +217,24 @@ public class AdminUI {
         //Search for the ride in the park's ride list
         for (Ride ride : park.getRidesList()) {
             if (ride.getRideName().equalsIgnoreCase(rideName)) {
-                selectedRide = ride;
+                selectRide = ride;
                 break;
             }
         }
 
         // If the ride is found, display its details and metrics
-        if (selectedRide != null) {
+        if (selectRide != null) {
             //Display ride details
             System.out.println("Ride Details:");
-            System.out.println(selectedRide); 
+            System.out.println(selectRide); 
 
             // Check height requirement 
-            System.out.println("Minimum height requirement: " + selectedRide.getRideMinHeight() + "cm");
+            System.out.println("Minimum height requirement: " + selectRide.getRideMinHeight() + "cm");
 
             // List visitors who meet the height requirement
             System.out.println("Visitors eligible to ride:");
             for (Visitor visitor : park.getVisitors()) {
-                if (visitor.getVisitorHeight() >= selectedRide.getRideMinHeight()) {
+                if (visitor.getVisitorHeight() >= selectRide.getRideMinHeight()) {
                     System.out.println(visitor);
                 }
             }
