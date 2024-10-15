@@ -44,7 +44,8 @@ public class AdminUI {
 
       case 5:
         checkMetrics(scanner);
-
+        break;
+        
       default:
         System.out.println("Invalid choice. Try again.");
 
