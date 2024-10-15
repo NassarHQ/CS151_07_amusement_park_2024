@@ -179,4 +179,19 @@ public class AdminUI {
             }
         }
     }
+
+    // Method to manage stores in the park
+    public void manageStores(Scanner scanner) {
+        
+    }
+
+    // Helper method to find a store by name
+    private ParkStore findStoreByName(List<ParkStore> stores, String storeName) {
+        // Loop over the List of stores
+        for (ParkStore store: stores) {
+            if (store.getParkStoreName().equalsIgnoreCase(storeName)) {
+                return store;
+            }
+        } return null;
+    }
 }
