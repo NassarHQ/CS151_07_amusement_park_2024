@@ -137,6 +137,16 @@ class Ride implements ParkInteractables {
         rideVisitorQueue.removeAll(visitors);
     }
 
+    // Modify the isOperational method to just return the status
+    public boolean isOperational() {
+        return isOperational;
+    }
+
+    // You can add a method to toggle the operational status
+    public void toggleOperational() {
+        isOperational = !isOperational;
+    }
+
     // Method to display ride metrics
     public void displayRideMetrics(){
         System.out.println("Ride metrics for " + rideName + ":");
@@ -177,14 +187,4 @@ class Ride implements ParkInteractables {
         hasStarted = false;
     }
 
-    //  A method to check if the ride is operating or not
-    public boolean isOperational() {
-        if (isOperational) {
-            System.out.println("Ride is safe to use");
-            return true;
-        } else {
-            System.out.println("Ride is not safe to use");
-            return false;
-        }
-    }
 }

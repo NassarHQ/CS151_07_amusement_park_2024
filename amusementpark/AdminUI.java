@@ -168,15 +168,30 @@ public class AdminUI {
         for (Ride r : park.getRidesList()) {  // Iterate through all rides in the park
             if (r.getRideID().equals(rideID)) {  // Check if the current ride matches the ID
                 // Toggle the operational status of the ride
-                if (r.isOperational()) {   // If ride is currently operational
-                    r.setOperational(false);  // Set ride to non-operational (close for maintenance)
-                    System.out.println("Ride closed for maintenance.");  // Success message
-                } else {   // If ride is currently not operational
-                    r.setOperational(true);   // Set ride to operational (open after maintenance)
-                    System.out.println("Ride opened for operation.");  // Success message
+                if (r.isOperational()) {
+                    r.toggleOperational();  // Set ride to non-operational
+                    System.out.println("Ride closed for maintenance.");
+                } else {
+                    r.toggleOperational();  // Set ride to operational
+                    System.out.println("Ride opened for operation.");
                 }
                 return;  // Exit the method once the status is toggled
             }
         }
+    }
+
+    // Method to manage stores in the park
+    public void manageStores(Scanner scanner) {
+        
+    }
+
+    // Helper method to find a store by name
+    private ParkStore findStoreByName(List<ParkStore> stores, String storeName) {
+        // Loop over the List of stores
+        for (ParkStore store: stores) {
+            if (store.getParkStoreName().equalsIgnoreCase(storeName)) {
+                return store;
+            }
+        } return null;
     }
 }

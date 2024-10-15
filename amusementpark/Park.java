@@ -46,6 +46,7 @@ public class Park {
         this.reportedIssues = new ArrayList<>();
     }
 
+    // Constructors for Park.java
     public Park(String parkName, String parkLocation, double dailyRevenueGoal, int dailyVisitorGoal){
         this.parkName = parkName;
         this.parkLocation = parkLocation;
