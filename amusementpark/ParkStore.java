@@ -9,7 +9,7 @@ public class ParkStore {
     private String parkStoreType;
     private double parkStoreRevenue;
     private HashMap<String, Integer> inventories;
-    private  List<Visitor> visitors;
+    private List<Visitor> visitors;
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
