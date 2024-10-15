@@ -120,4 +120,26 @@ public class AdminUI {
             System.out.println("Ride could not be added."); // Failure message
         }
     }
+
+    // Method to remove an existing ride from the park
+    public void removeRide() {
+        System.out.println("Enter the Ride ID of the ride you want to remove:");    // Prompt for ride ID
+        String rideID = scanner.nextLine(); //Read ride ID
+
+        // Find the ride by its ID
+        Ride rideToRemove = null;
+        for (Ride r : park.getRidesList()) {    // Iterate through all rides in the park
+            if (r.getRideID().equals(rideID)) {     // Check if the current ride matches the ID
+                rideToRemove = r;
+                break;      // Exit the loop once the ride is found
+            }
+        }
+
+        // Try to remove the ride if found
+        if (rideToRemove != null && park.removeRide(rideToRemove)) {
+            System.out.println("Ride removed succesfully."); 
+        } else {
+            System.out.println("Ride could not be removed.");   // Ride not found or removal failed
+        }
+    }
 }
