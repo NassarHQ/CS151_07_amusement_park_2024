@@ -1,5 +1,7 @@
 package amusementpark;
 
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -188,7 +190,122 @@ public class AdminUI {
 
     // Method to manage stores in the park
     public void manageStores(Scanner scanner) {
-        
+        while(true) {
+            System.out.println("Store Manager Menu:");
+            System.out.println("1. Get Store Type");
+            System.out.println("2. Set Store Type");
+            System.out.println("3. Add Items to Store");
+            System.out.println("4. Check Food Validation");
+            System.out.println("5. Check Drink Validation");
+            System.out.println("6. Check Souvenir Validation");
+            System.out.println("7. Display Available Items");
+            System.out.println("8. View Store Purchase History");
+            System.out.println("9. Get Visitors in Store");
+            System.out.println("10. Go back");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            System.out.println("Enter the store name: ");
+            String storeName = scanner.nextLine();
+            ParkStore store = park.findStoreByName(storeName);
+
+            if (store == null) {
+                System.out.println("Store not found.");
+                continue;
+            }
+
+            switch (choice) {
+                case 1: 
+                    // Get and display the store type
+                    System.out.println("Store type: " + store.getParkStoreType());
+                    break;
+
+                case 2:
+                    // Set the store type
+                    System.out.println("Enter the new store type (food, drink, souvenir): ");
+                    String newStoreType = scanner.nextLine();
+                    try {
+                        sotre.setParkStoreType(newStoreType);
+                        System.out.println("Store type updated successfully");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case 3:
+                    // Add items to the Store
+                    System.out.println("Enter item name: ");
+                    String itemName = scanner.nextLine();
+                    System.out.println("Enter item quantity: ");
+                    int itemQuantity = scanner.nextInt();
+                    scanner.nextLine();
+                    try {
+                        store.addItems(itemName, itemQuantity);
+                        System.out.println("Items added successfully");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage);
+                    }
+                    break;
+
+                case 4:
+                    // Food Validation
+                    System.out.println("Enter food item to check: ");
+                    String foodName = scanner.nextLine();
+                    if (store.isValidFoodType) {
+                        System.out.println("Valid Food Item");
+                    } else {
+                        System.out.println("Invalid Food Item");
+                    }
+                    break;
+
+                case 5: 
+                    // Drink Validation
+                    System.out.println("Enter drink item to check: ");
+                    String drinkName = scanner.nextLine();
+                    if (store.isValidDrinkType) {
+                        System.out.println("Valid Drink Item");
+                    } else {
+                        System.out.println("Invalid Drink Item");
+                    }
+                    break;
+
+                case 6:
+                    // Souvernir validation
+                    System.out.println("Enter souvenir type to check: ");
+                    String souvernirName = scanner.nextLint();
+                    if (store.isValidSouvenirType) {
+                        System.out.println("Souvenir Type is Valid");
+                    } else {
+                        System.out.println("Invalid Souvenir Item");
+                    }
+                    break;
+
+                case 7:
+                    // Display available items in store
+                    store.displayAvailableItems();
+                    break;
+                
+                case 8:
+                    // View store purchase history
+                    store.viewStorePurchaseHistory();
+                    break;
+
+                case 9:
+                    // Get visitors in store
+                    store.getVisitorsInStore();
+                    break;
+                
+                case 10:
+                    // Go back to previous menu
+                    return;
+
+                default:
+                    // default case
+                    System.out.println("Invalid Selection. Please Try Again.");
+                    break;
+            }
+        }
     }
 
     // Helper method to find a store by name
