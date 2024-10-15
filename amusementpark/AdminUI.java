@@ -142,4 +142,22 @@ public class AdminUI {
             System.out.println("Ride could not be removed.");   // Ride not found or removal failed
         }
     }
+
+    // Method to display details of a ride
+    public void displayRideDetails() {
+        System.out.println("Enter the Ride ID of the ride to display details:");    //Prompt for ride ID
+        String rideID = scanner.nextLine();     // Read ride ID
+
+        // Search for the ride by its ID and display its details
+        for (Ride r : park.getRidesList()) {    //Iterate through all rides in the park
+            if (r.getRideID().equals(rideID)) {     //Check if the current ride matches the ID
+                r.displayRideDetails();
+                return;     // Exit the method once details are displayed
+            }
+
+        }
+        System.out.println("Ride not found");      // Message if ride with the given ID is not found
+    }
+
+    // 
 }
