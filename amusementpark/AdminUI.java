@@ -194,4 +194,10 @@ public class AdminUI {
             }
         } return null;
     }
+
+    // Method to show feedback from visitors
+    public void showFeedback() {
+        System.out.println("Displaying all visitor feedback:");
+        park.displayAllFeedbacks(); // Call the method from Park to display feedback
+    }
 }
