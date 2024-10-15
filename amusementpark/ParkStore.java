@@ -13,19 +13,19 @@ public class ParkStore {
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
-    private final String[] allowedStoreTypes = {"food", "drink", "souvenir"};
+    public final String[] allowedStoreTypes = {"food", "drink", "souvenir"};
 
     // Allowed food types
-    private final String[] allowedFoodTypes = {"sausage", "tacos", "cotton candy", "burger", "fries"};
+    public final String[] allowedFoodTypes = {"sausage", "tacos", "cotton candy", "burger", "fries"};
 
     // Allowed drink types
-    private final String[] allowedDrinkTypes = {"soda", "coke", "water"};
+    public final String[] allowedDrinkTypes = {"soda", "coke", "water"};
 
     // Allowed souvenir types
-    private final String[] allowedSouvenirTypes = {"hat", "keychain", "t-shirt", "magnet"};
+    public final String[] allowedSouvenirTypes = {"hat", "keychain", "t-shirt", "magnet"};
 
     // A hash map to store prices of each item
-    private final Map<String, Double> itemPrices = new HashMap<>() {{
+    public final Map<String, Double> itemPrices = new HashMap<>() {{
         put("sausage", 5.0);
         put("tacos", 3.5);
         put("cotton candy", 2.0);
