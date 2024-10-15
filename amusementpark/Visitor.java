@@ -8,14 +8,16 @@ public class Visitor extends Person {
     private String visitorType;
     private int height;
     private double weight;
-    private List<String> purchaseHistory;
+    private List<String> purchaseTicketHistory;
+    private List<String> purchaseProductHistory;
     private String feedback;
     private boolean hasProvidedFeedback;
 
     
-    public Visitor(List<String> purchaseHistory){
+    public Visitor(List<String> purchaseTicketHistory){
         super();
-        this.purchaseHistory = purchaseHistory != null ? purchaseHistory : new ArrayList<>(); // Initialize or create a new list;
+        this.purchaseTicketHistory = purchaseTicketHistory != null ? purchaseTicketHistory : new ArrayList<>(); // Initialize or create a new list;
+        this.purchaseProductHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
@@ -23,7 +25,8 @@ public class Visitor extends Person {
 
     public Visitor(String name, int age) {
         super (name, age);
-        this.purchaseHistory = new ArrayList<>();
+        this.purchaseTicketHistory = new ArrayList<>();
+        this.purchaseProductHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
@@ -130,25 +133,40 @@ public class Visitor extends Person {
         }
     }
     // Method to view purchase history
-    public void viewPurchaseHistory() {
-        if (purchaseHistory.isEmpty()) {
+    public void viewPurchaseTicketHistory() {
+        if (purchaseTicketHistory.isEmpty()) {
             System.out.println("You haven't purchased any tickets.");
         } else {
-            System.out.println("Your purchase ticket ID(s): " + purchaseHistory);
+            System.out.println("Your purchase ticket ID(s): " + purchaseTicketHistory);
         }
     }
 
-    // Method to add purchase to history
-    public void addToPurchaseHistory(String ticketID) {
-        if (!purchaseHistory.contains(ticketID)) {
-            purchaseHistory.add(ticketID); // Add the ticket ID to purchase history
-            System.out.println("Ticket ID " + ticketID + " added to purchase history for " + toString() + ".");
+    // Method to add purchased ticket ID(s) to purchase history
+    public List<String> addTicketToPurchaseHistory(Ticket t) {
+        if (!purchaseTicketHistory.contains(t.getTicketID())) {
+            purchaseTicketHistory.add(t.getTicketID()); // Add the ticket ID to purchase history
         }
+        return purchaseTicketHistory;
     }
+
+    // Method to add purchased store products to purchase history
+    public List<String> addProductToPurchaseHistory(ParkStore store, String item, int quantity) {
+        try {
+            // Call the ParkStore's sellItems method
+            store.sellItems(this, item, quantity);
+
+            // If the sale is successful, add the item and quantity to the visitor's purchase history
+            purchaseProductHistory.add(quantity + "x " + item);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Purchase failed: " + e.getMessage());
+        }
+        return purchaseProductHistory;
+    }
+
 
     // Method to check if the visitor has purchased a specific ticket
     public boolean hasPurchased(String ticketID) {
-        return purchaseHistory.contains(ticketID); // Return true if ticket ID is in purchase history
+        return purchaseTicketHistory.contains(ticketID); // Return true if ticket ID is in purchase history
     }
 
     // Method to upgrade membership

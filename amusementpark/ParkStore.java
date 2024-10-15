@@ -124,7 +124,7 @@ public class ParkStore {
 
         double price = itemPrices.get(item.toLowerCase());
         parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
-        soldItems.add(new Pair<>(item.toLowerCase(), quantity));  // Add sold items into a list
+        soldItems.add(new Pair<>(item.toLowerCase(), quantity));  // Add sold items into a list to keep track of sold items and quantities
 
         // Add visitor to list of visited visitors
         if (!visitors.contains(v)) {
@@ -136,6 +136,7 @@ public class ParkStore {
 
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
+
     }
 
     // Method to add items
