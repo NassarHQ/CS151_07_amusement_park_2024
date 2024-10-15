@@ -58,7 +58,7 @@ class Employee extends Person{
         System.out.print(">>");
         String report = issueScanner.nextLine();
         park.addIssue(report);
-        issueScanner.close();
+        //issueScanner.close();
     }
 
     //The employee will make sure every visitor on the ride is of appropriate height

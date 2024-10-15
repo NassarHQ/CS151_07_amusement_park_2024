@@ -8,10 +8,10 @@ import java.util.Set;
 public class Park {
 
     // Instance variables holding park's name and location
-    private final String parkName = "Ride & Seek"; // Name of the Park
-    private final String parkLocation = "666 Roller Coaster Avenue"; // Location of the Park
-    private final double dailyRevenueGoal = 5000.0;
-    private final int dailyVisitorGoal = 100;
+    private String parkName; // Name of the Park
+    private String parkLocation; // Location of the Park
+    private double dailyRevenueGoal;
+    private int dailyVisitorGoal;
 
     // Variables to store daily metrics
     private double totalRevenue;   // Stores total revenue
@@ -31,8 +31,11 @@ public class Park {
 
     // Constructor for the Park class
     public Park() {
-
         // Initialize the collections
+        this.parkName = "Ride & Seek";
+        this.parkLocation = "666 Roller Coaster Avenue";
+        this.dailyRevenueGoal = 5000.00;
+        this.dailyVisitorGoal = 100;
         this.visitors = new HashSet<>();
         this.employees = new HashSet<>();
         this.parkSections = new ArrayList<>();
@@ -41,6 +44,22 @@ public class Park {
         this.soldTickets = new HashSet<>();
         this.archivedTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
+    }
+
+    public Park(String parkName, String parkLocation, double dailyRevenueGoal, int dailyVisitorGoal){
+        this.parkName = parkName;
+        this.parkLocation = parkLocation;
+        this.dailyRevenueGoal = dailyRevenueGoal;
+        this.dailyVisitorGoal = dailyVisitorGoal;
+        this.visitors = new HashSet<>();
+        this.employees = new HashSet<>();
+        this.parkSections = new ArrayList<>();
+        this.rides = new ArrayList<>();
+        this.availableTickets = new HashSet<>();
+        this.soldTickets = new HashSet<>();
+        this.archivedTickets = new HashSet<>();
+        this.reportedIssues = new ArrayList<>();
+
     }
 
     // Method to add a Person to the park
@@ -153,50 +172,53 @@ public class Park {
         System.out.println("Tickets Sold Today: " + totalTicketsSold);
     }
 
-    // Modular method to handle ticket transactions (sell or refund)
-    private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
-        if (t == null || v == null) {
-            System.out.println("Invalid ticket or visitor.");
+// Modular method to handle ticket transactions (sell or refund)
+private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
+    if (t == null || v == null) {
+        System.out.println("Invalid ticket or visitor.");
+        return false;
+    }
+
+    if (isSelling) { // Process a sale
+        // Check if the ticket is available for purchase
+        if (availableTickets.contains(t)) {
+            // Remove from available tickets and add to sold tickets
+            availableTickets.remove(t); 
+            soldTickets.add(t);
+            v.addToPurchaseHistory(t.getTicketID()); // Track the purchase
+            totalRevenue += t.getTicketPrice(); // Add to park's total revenue
+            totalTicketsSold++; // Increment ticket count
+            System.out.println("Ticket sold successfully!");
+            return true;
+        } else {
+            System.out.println("This ticket is not available for purchase.");
             return false;
         }
-
-        // Process a sale
-        if (isSelling) {
-            // Check if the ticket is available for purchase
-            if (availableTickets.contains(t)) {
-                // Check if the visitor's card has enough balance and is valid
-                if (v.getCard().isValid(t.getTicketPrice())) {
-                    availableTickets.remove(t); // Remove from available tickets
-                    soldTickets.add(t); // Add to sold tickets
-                    v.getCard().deductAmount(t.getTicketPrice()); // Deduct from visitor's balance
-                    v.addToPurchaseHistory(t.getTicketID()); // Track the purchase
-                    totalRevenue += t.getTicketPrice(); // Add to park's total revenue
-                    totalTicketsSold++; // Increment the ticket count
-                    System.out.println("Ticket sold successfully!");
-                    return true;
-                } else {
-                    System.out.println("Insufficient funds or invalid card.");
-                    return false;
-                }
-            } else {
-                System.out.println("This ticket is not available for purchase.");
-                return false;
-            }
-        } else { // Process a refund
-            // Check if the ticket exists in soldTickets and visitor owns it
-            if (soldTickets.contains(t) && v.hasPurchased(t.getTicketID())) {
-                soldTickets.remove(t); // Remove from sold tickets
-                availableTickets.add(t); // Add the ticket back to available tickets
-                v.getCard().refundAmount(t.getTicketPrice()); // Refund balance to visitor    
-                totalRevenue -= t.getTicketPrice(); // Subtract from park's total revenue
-                totalTicketsSold--; // Decrement the ticket count
-                System.out.println("Ticket refunded successfully!");
-                return true;
-            } else {
-                System.out.println("Ticket is not eligible for refund.");
-                return false;
-            }
+    } else { 
+        // Check if the ticket exists in soldTickets and visitor owns it
+        if (soldTickets.contains(t) && v.hasPurchased(t.getTicketID())) {
+            // Remove from sold tickets and add back to available tickets
+            soldTickets.remove(t);
+            availableTickets.add(t);
+            totalRevenue -= t.getTicketPrice(); // Subtract from park's total revenue
+            totalTicketsSold--; // Decrement ticket count
+            System.out.println("Ticket refunded successfully!");
+            return true;
+        } else {
+            System.out.println("Ticket is not eligible for refund.");
+            return false;
         }
+    }
+}
+
+    // Method to sell a ticket to a visitor
+    public void sellTicket(Ticket t, Visitor v) {
+        processTicket(t, v, true); // Use processTicket to handle selling
+    }
+
+    // Method to refund a ticket to a visitor
+    public void refundTicket(Ticket t, Visitor v) {
+        processTicket(t, v, false); // Use processTicket to handle refunding
     }
   
   // Method to display all feedbacks from visitors
@@ -206,7 +228,7 @@ public class Park {
             System.out.println("No visitors have provided feedback."); // Message if no visitors
         } else {
             for (Visitor visitor : visitors) {
-                visitor.viewFeedback(); // Call visitor's method to display their feedback
+                visitor.provideFeedback(); // Call visitor's method to display their feedback
             }
         }
     }
@@ -219,21 +241,11 @@ public class Park {
     public void viewReportedIssues(){
         System.out.println("Reported Issues:");
         if (reportedIssues.isEmpty()) System.out.println("None at the moment.");
-        else{
+        else {
             for (String str : reportedIssues){
                 System.out.println("- " + str);
             }
         }
-    }
-
-    // Method to sell a ticket to a visitor
-    public void sellTicket(Ticket t, Visitor v) {
-        processTicket(t, v, true); // Use processTicket to handle selling
-    }
-
-    // Method to refund a ticket to a visitor
-    public void refundTicket(Ticket t, Visitor v) {
-        processTicket(t, v, false); // Use processTicket to handle refunding
     }
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
