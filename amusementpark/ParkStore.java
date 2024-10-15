@@ -184,17 +184,18 @@ public class ParkStore {
     }
 
     // Helper method to check for food validation
-    private boolean isValidFoodType(String item) {
+    //Test comment making public
+    public boolean isValidFoodType(String item) {
         return Arrays.asList(allowedFoodTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for drink validation
-    private boolean isValidDrinkType(String item) {
+    public boolean isValidDrinkType(String item) {
         return Arrays.asList(allowedDrinkTypes).contains(item.toLowerCase());
     }
 
     // Helper method to check for souvenir validation
-    private boolean isValidSouvenirType(String item) {
+    public boolean isValidSouvenirType(String item) {
         return Arrays.asList(allowedSouvenirTypes).contains(item.toLowerCase());
     }
 
