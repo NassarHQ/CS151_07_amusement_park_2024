@@ -15,8 +15,9 @@ public class EmployeeUI {
     }
 
     public void displayMenu(){
-        while (true){
-            System.out.println("Employee Menu:");
+        boolean exitMenu = false;
+        while (!exitMenu){
+            System.out.println("\nEmployee Menu:");
             System.out.println("1. Clock in");
             System.out.println("2. Clock out");
             System.out.println("3. Make a report");
@@ -24,13 +25,14 @@ public class EmployeeUI {
             System.out.println("5. Check Schedule");
             System.out.println("6. View Ride Eligibility");
             System.out.println("7. Exit to Main Menu");
+            System.out.print("\nPlease select an option (1-4): ");
             
             String choice = scanner.nextLine();
-            handleMenuChoice(choice);
+            exitMenu = handleMenuChoice(choice);
         }
     }
 
-    private void handleMenuChoice(String choice){
+    private boolean handleMenuChoice(String choice){
         switch (choice) {
             case "1":
                 employee.shiftIn();
@@ -48,22 +50,55 @@ public class EmployeeUI {
             //    checkSchedule(); //To be done
                 break;
             case "6":
-                ArrayList<Ride> rideList = park.getRidesList();
-                System.out.println("Which ride do you want to check?");
-                String r = scanner.nextLine();
-                for (int i = 0; i < rideList.size(); i++){
-                    if (r.equals(rideList.get(i).getRideName())){
-                        Ride tempR = rideList.get(i);
-                        employee.checkRideEligibility(tempR);
-                        break;
-                    }
-                }
+                checkRideEligibility();
                 break;
             case "7":
-                return; // Exit to main menu
+                return true; // Exit to main menu
             default:
                 System.out.println("Invalid option. Please try again.");
                 break;
+        }
+        return false;
+    }
+
+    private Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
+        for (Ride ride : rideList) {
+            if (ride.getRideName().equalsIgnoreCase(rideName)) {
+                return ride;
+            }
+        }
+        return null;
+    }
+    private void checkRideEligibility() {
+        ArrayList<Ride> rideList = park.getRidesList();
+        
+        if (rideList.isEmpty()) {
+            System.out.println("There are no rides to check at this moment.");
+            return;
+        }
+
+        while (true) {
+            System.out.println("Enter the name of the ride you want to check (or type 'cancel' to go back):");
+            String rideName = scanner.nextLine();
+
+            if (rideName.equalsIgnoreCase("cancel")) {
+                System.out.println("Cancelled checking ride eligibility.");
+                return;
+            }
+
+            Ride selectedRide = findRideByName(rideName, rideList);
+
+            if (selectedRide != null) {
+                boolean isEligible = employee.checkRideEligibility(selectedRide);
+                if (isEligible) {
+                    System.out.println("Ride eligibility check passed for: " + selectedRide.getRideName());
+                } else {
+                    System.out.println("Ride eligibility check failed. Some visitors do not meet the requirements.");
+                }
+                break;  // Exit after checking one ride
+            } else {
+                System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
+            }
         }
     }
 
