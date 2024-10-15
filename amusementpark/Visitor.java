@@ -132,12 +132,21 @@ public class Visitor extends Person {
             System.out.println(toString() + "hasn't provided any feedbacks.");
         }
     }
-    // Method to view purchase history
+    // Method to view ticket purchase history
     public void viewPurchaseTicketHistory() {
         if (purchaseTicketHistory.isEmpty()) {
             System.out.println("You haven't purchased any tickets.");
         } else {
             System.out.println("Your purchase ticket ID(s): " + purchaseTicketHistory);
+        }
+    }
+
+    // Method to view product purchase history
+    public void viewPurchaseProductHistory() {
+        if (purchaseProductHistory.isEmpty()) {
+            System.out.println("You haven't purchased any products.");
+        } else {
+            System.out.println("Your purchase products: " + purchaseProductHistory);
         }
     }
 
