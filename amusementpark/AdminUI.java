@@ -13,7 +13,7 @@ public class AdminUI {
     }
     
     // Main menu for Admin
-    public static void displayAdminMenu(){
+    public void displayAdminMenu(){
         while (true) {
             System.out.println("Admin Menu:");
             System.out.println("1. Manage Rides");
