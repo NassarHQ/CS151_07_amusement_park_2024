@@ -139,6 +139,16 @@ public class ParkStore {
 
     }
 
+    // Getter for inventory
+    public HashMap<String, Integer> getInventories() {
+        return inventories;
+    }
+
+    // Setter for inventory
+    public void setInventories() {
+        this.inventories = inventories;
+    }
+
     // Method to add items
     public void addItems(String item, int quantity) {
         if (quantity <= 0) {
