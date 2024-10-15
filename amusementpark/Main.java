@@ -7,11 +7,12 @@ public class Main {
         
         //Initialize some stuff for the sake of testing
         Scanner scanner = new Scanner(System.in);
-       /*  Park park = new Park();
-        Employee employee = new Employee("John Doe", 25, "1304", "Ride Operator");
-        Visitor visitor = new Visitor("Test", 32);
+        Park park = new Park();
+        Employee employee = new Employee("John Doe", 25, "1304", "manager");
+       /*   Visitor visitor = new Visitor("Test", 32);
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
         park.addRide(incredi);  RYANS TESTING STUFF */
+        
         
         System.out.println("Welcome to the Amusement Park Management System!\n");
         

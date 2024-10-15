@@ -21,11 +21,11 @@ public class EmployeeUI {
             System.out.println("1. Clock in");
             System.out.println("2. Clock out");
             System.out.println("3. Make a report");
-            System.out.println("4. Check Salary");
+            System.out.println("4. Check Salary Info");
             System.out.println("5. Check Schedule");
             System.out.println("6. View Ride Eligibility");
             System.out.println("7. Exit to Main Menu");
-            System.out.print("\nPlease select an option (1-4): ");
+            System.out.print("\nPlease select an option (1-7): ");
             
             String choice = scanner.nextLine();
             exitMenu = handleMenuChoice(choice);
@@ -44,10 +44,14 @@ public class EmployeeUI {
                 employee.reportIssue(park);
                 break;
             case "4":
-            //    checkSalary();  //To be done
+                System.out.println("\nEmployee " + employee.getName() + " salary info: ");
+                System.out.println("Their position is " + employee.getRole());
+                System.out.println("Their monthly salary is: $" + employee.calculateSalary());
                 break;
             case "5":
-            //    checkSchedule(); //To be done
+                System.out.println("\nEmployee " + employee.getName() + " schedule");
+                System.out.println("You will be working on the following dates: \n");
+                employee.printWorkSchedule();
                 break;
             case "6":
                 checkRideEligibility();
