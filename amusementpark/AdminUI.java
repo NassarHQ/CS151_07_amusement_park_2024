@@ -3,86 +3,58 @@ package amusementpark;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class AdminUI {
 
     private Park park;        // Instance of the Park to interact with
     private Scanner scanner;  // Scanner for user input
+    private PrintHelper printHelper; // PrintHelper instance for printing menus and messages
 
-    // Constructor to initialize AdminUI with a Park object and Scanner for input
-    public AdminUI(Park park) {
+    // Constructor to initialize AdminUI with a Park object, PrintHelper, and Scanner for input
+    public AdminUI(Park park, PrintHelper printHelper) {
         this.park = park;
+        this.printHelper = printHelper;
         this.scanner = new Scanner(System.in);
     }
 
     // Main menu for Admin - allows the admin to choose different operations
     public void displayAdminMenu() {
-        while (true) {      // Infinite loop to keep the menu running until the exit
-            System.out.println("\n============================");
-            System.out.println("\tAdmin Menu");
-            System.out.println("============================");
-            System.out.println("1. Manage Rides");
-            System.out.println("2. Manage Stores");
-            System.out.println("3. Show visitor feedback");
-            System.out.println("4. Show employee reports");
-            System.out.println("5. Check Park metrics");
-            System.out.println("6. Exit");
-            System.out.println("============================");
-
-            // Get the admin's choice
+        while (true) {
+            printHelper.printAdminMenu(); // Using PrintHelper to display menu
             int choice = scanner.nextInt();
 
-            // Handle the admin's choice
             switch (choice) {
                 case 1:
-                    manageRides(scanner);
+                    manageRides();
                     break;
-
                 case 2:
-                    manageStores(scanner);
+                    manageStores();
                     break;
-
                 case 3:
-                    showFeedback(scanner);
+                    showFeedback();
                     break;
-
                 case 4:
-                    showReports(scanner);
+                    showReports();
                     break;
-
                 case 5:
-                    checkMetrics(scanner);
+                    checkMetrics();
                     break;
-
                 case 6:
-                    System.out.println("Exiting Admin Menu...Goodbye!");
-                    break;
-
+                    System.out.println("Exiting Admin Menu... Goodbye!");
+                    return; // Exit the menu
                 default:
                     System.out.println("\nInvalid choice. Try again.");
-
             }
         }
     }
 
     // Main menu for Manage Rides
-    public void manageRides(Scanner scanner) {
+    public void manageRides() {
         while (true) {
-            System.out.println("\n============================");
-            System.out.println("     Ride Manager Menu");
-            System.out.println("============================");
-            System.out.println("1. Add a Ride");
-            System.out.println("2. Remove a Ride");
-            System.out.println("3. Display Ride Details");
-            System.out.println("4. Open/Close Ride for Maintenance");
-            System.out.println("5. Go back");
-            System.out.println("============================");
-
+            printHelper.printRideManagerMenu(); // Using PrintHelper to display Ride Manager menu
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the leftover newline character from previous input
+            scanner.nextLine(); // Consume the leftover newline character
 
-            // Handle the admin's choice for Ride Management
             switch (choice) {
                 case 1:
                     addRide();  // Call method to add a ride
@@ -91,110 +63,118 @@ public class AdminUI {
                     removeRide();   // Call method to remove a ride
                     break;
                 case 3:
-                    displayRideDetails();   //Call method to display ride details
+                    displayRideDetails();   // Call method to display ride details
                     break;
                 case 4:
                     openCloseForMaintenance();  // Call method to open/close ride for maintenance
                     break;
                 case 5:
-                    return; // Exit to prevoius menu
+                    return; // Exit to previous menu
                 default:
                     System.out.println("\nInvalid choice. Please try again.");
-            }     
-        }
-    }
-
-    // Method to add a ride
-    public void addRide() {
-        try {
-            System.out.println("\n--- Add a Ride ---");
-            System.out.print("Enter ride name:");   // Prompt for ride name
-            String name = scanner.nextLine();           // Read ride name
-            System.out.print("Enter ride ID:");
-            String rideID = scanner.nextLine();
-            System.out.print("Enter ride capacity:");
-            int capacity = scanner.nextInt();
-            System.out.print("Enter ride duration (in minutes):");
-            int duration = scanner.nextInt();
-            System.out.print("Enter minimum height (in cm):");
-            int minHeight = scanner.nextInt();
-            System.out.print("Enter maximum weight (in kg):");
-            int maxWeight = scanner.nextInt();
-            scanner.nextLine();  // consume the newline character
-
-            // Create a new Ride object using the provided details
-            Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
-
-            //Try to add the ride to the park
-            if (park.addRide(newRide)) {
-                // Success message
-                System.out.println("\nRide successfully added: " + name + ", " + rideID);  
-            } else {
-                // Failure message
-                System.out.println("Ride could not be added: " + name + ", " + rideID);  
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter the correct data type.");
-            scanner.nextLine(); // Clear the invalid input
-        } 
-    }
-
-   // Method to remove an existing ride from the park
-public void removeRide() {
-    System.out.println("\n--- Remove a Ride ---");
-    System.out.print("Enter the Ride ID to be removed: ");
-    String rideID = scanner.nextLine();
-
-    // Find the ride by its ID and remove it
-    for (Ride r : park.getRidesList()) { 
-        if (r.getRideID().equals(rideID)) {
-            // Simply call park's removeRide() method, which will handle the logging
-            park.removeRide(r);
-            return; 
         }
     }
-    System.out.println("Ride not found."); 
+
+   // Method to add a ride
+public void addRide() {
+    try {
+        System.out.println("\n--- Add a Ride ---");
+
+        // Get the ride name
+        String name = ValidationHelper.getValidString(scanner, "Enter ride name: ");
+
+        // Get the ride ID
+        String rideID = ValidationHelper.getValidString(scanner, "Enter ride ID: ");
+
+        // Get the ride capacity
+        System.out.print("Enter ride capacity: ");
+        int capacity = ValidationHelper.validatePositiveInt(scanner.nextInt(), "ride capacity");
+        scanner.nextLine(); // Consume newline character
+
+        // Get the ride duration
+        System.out.print("Enter ride duration (in minutes): ");
+        int duration = ValidationHelper.validatePositiveInt(scanner.nextInt(), "ride duration");
+        scanner.nextLine(); // Consume newline character
+
+        // Get the minimum height
+        System.out.print("Enter minimum height (in cm): ");
+        int minHeight = ValidationHelper.validatePositiveInt(scanner.nextInt(), "minimum height");
+        scanner.nextLine(); // Consume newline character
+
+        // Get the maximum weight
+        System.out.print("Enter maximum weight (in kg): ");
+        int maxWeight = ValidationHelper.validatePositiveInt(scanner.nextInt(), "maximum weight");
+        scanner.nextLine(); // Consume newline character
+
+        // Validate all inputs are correct before creating the ride
+        if (capacity == -1 || duration == -1 || minHeight == -1 || maxWeight == -1) {
+            System.out.println("Invalid inputs provided. Ride could not be added.");
+            return;
+        }
+
+        // Create a new Ride object
+        Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
+
+        // Try to add the ride to the park
+        if (park.addRide(newRide)) {
+            printHelper.printSuccessMessage("Ride", name, rideID, "added");
+        } else {
+            printHelper.printErrorMessage("Ride", name, rideID, "could not be added");
+        }
+    } catch (InputMismatchException e) {
+        System.out.println("Invalid input. Please enter the correct data type.");
+        scanner.nextLine(); // Clear the invalid input
+    }
 }
 
-    // Method to display details of a ride
-    public void displayRideDetails() {
-        System.out.print("Enter ride ID to be displayed: ");    //Prompt for ride ID
-        String rideID = scanner.nextLine();     // Read ride ID
+       // Method to remove a ride
+       public void removeRide() {
+        String rideID = ValidationHelper.getValidString(scanner, "Enter the Ride ID to be removed: ");
 
-        // Search for the ride by its ID and display its details
-        for (Ride r : park.getRidesList()) {    //Iterate through all rides in the park
-            if (r.getRideID().equals(rideID)) {     //Check if the current ride matches the ID
-                r.displayRideDetails();
-                return;     // Exit the method once details are displayed
+        for (Ride r : park.getRidesList()) {
+            if (r.getRideID().equals(rideID)) {
+                if (park.removeRide(r)) {
+                    printHelper.printSuccessMessage("Ride", r.getRideName(), r.getRideID(), "removed");
+                } else {
+                    printHelper.printErrorMessage("Ride", r.getRideName(), r.getRideID(), "could not be removed");
+                }
+                return;
             }
-
         }
-        System.out.println("\nRide not found.");    // Message if ride with the given ID is not found
+        System.out.println("Ride not found.");
+    }
+
+    // Method to display ride details
+    public void displayRideDetails() {
+        String rideID = ValidationHelper.getValidString(scanner, "Enter ride ID to be displayed: ");
+
+        for (Ride r : park.getRidesList()) {
+            if (r.getRideID().equals(rideID)) {
+                printHelper.printRideDetails(r);
+                return;
+            }
+        }
+        System.out.println("Ride not found.");
     }
 
     // Method to open or close a ride for maintenance
     public void openCloseForMaintenance() {
-        System.out.print("\nEnter the Ride ID of the ride to open/close for maintenance: ");     // Prompt for Ride ID
-        String rideID = scanner.nextLine();
+        String rideID = ValidationHelper.getValidString(scanner, "Enter the Ride ID of the ride to open/close for maintenance: ");
 
-        // Search for the ride by its ID
-        for (Ride r : park.getRidesList()) {  // Iterate through all rides in the park
-            if (r.getRideID().equals(rideID)) {  // Check if the current ride matches the ID
-                // Toggle the operational status of the ride
-                if (r.isOperational()) {
-                    r.toggleOperational();  // Set ride to non-operational
-                    System.out.println("Ride closed for maintenance.");
-                } else {
-                    r.toggleOperational();  // Set ride to operational
-                    System.out.println("Ride opened for operation.");
-                }
-                return;  // Exit the method once the status is toggled
+        for (Ride r : park.getRidesList()) {
+            if (r.getRideID().equals(rideID)) {
+                r.toggleOperational();
+                printHelper.printMaintenanceStatus(r);
+                return;
             }
         }
+        System.out.println("Ride not found. Please check the Ride ID.");
     }
 
+
     // Method to manage stores in the park
-    public void manageStores(Scanner scanner) {
+    public void manageStores() {
         while(true) {
             System.out.println("Store Manager Menu:");
             System.out.println("1. Get Store Type");
@@ -324,25 +304,24 @@ public void removeRide() {
     }
 
     // Method to show feedback from visitors
-    public void showFeedback(Scanner scanner) {
+    public void showFeedback() {
         System.out.println("Displaying all visitor feedback:");
         park.displayAllFeedbacks(); // Call the method from Park to display feedback
     }
 
     // Method to show reported issues
-    public void showReports(Scanner scanner) {
+    public void showReports() {
         System.out.println("Displaying all reported issues:");
         park.viewReportedIssues(); // Call the method from Park to display reported issues
     }
 
-    // Method to display metrics and details for a specific ride
-    public void checkMetrics(Scanner scanner) {
-        System.out.println("Enter the name of the ride you want to check:");
-        String rideName = scanner.nextLine();   // Read the ride name
+     // Method to display metrics and details for a specific ride
+     public void checkMetrics() {
+        String rideName = ValidationHelper.getValidString(scanner, "Enter the name of the ride you want to check: ");
 
         Ride selectRide = null;
 
-        //Search for the ride in the park's ride list
+        // Search for the ride in the park's ride list
         for (Ride ride : park.getRidesList()) {
             if (ride.getRideName().equalsIgnoreCase(rideName)) {
                 selectRide = ride;
@@ -352,20 +331,7 @@ public void removeRide() {
 
         // If the ride is found, display its details and metrics
         if (selectRide != null) {
-            //Display ride details
-            System.out.println("Ride Details:");
-            System.out.println(selectRide); 
-
-            // Check height requirement 
-            System.out.println("Minimum height requirement: " + selectRide.getRideMinHeight() + "cm");
-
-            // List visitors who meet the height requirement
-            System.out.println("Visitors eligible to ride:");
-            for (Visitor visitor : park.getVisitors()) {
-                if (visitor.getVisitorHeight() >= selectRide.getRideMinHeight()) {
-                    System.out.println(visitor);
-                }
-            }
+            printHelper.printRideDetails(selectRide);
         } else {
             System.out.println("Ride not found. Please check the name and try again.");
         }
