@@ -89,119 +89,74 @@ public class Park {
         p.removeFromPark(this);
     }
 
-// Utility method to print ride-related messages
-private void printRideMessage(String action, Ride r, boolean success) {
-    // Determine the success or failure of the action
+// Utility method to print generic action-related messages for rides or tickets
+public void printActionMessage(String entityType, String entityNameOrID, boolean success, String additionalMessage) {
     String status = success ? "successfully" : "unsuccessfully";
     System.out.println("\n================================");
-    System.out.printf(" Ride %s: %s (ID: %s)\n", action, r.getRideName(), r.getRideID());
-    System.out.println("================================");
-    System.out.printf(" Capacity:                %d\n", r.getRideCapacity());
-    System.out.printf(" Duration:                %d minutes\n", r.getRideDuration());
-    System.out.printf(" Minimum Height:          %d cm\n", r.getRideMinHeight());
-    System.out.printf(" Maximum Weight:          %d kg\n", r.getRideMaxWeight());
+    System.out.printf(" %s %s: %s\n", entityType, additionalMessage, entityNameOrID);
     System.out.println("--------------------------------");
-    System.out.println(" Status: " + status + " " + action + " in the park.");
+    System.out.printf(" Status: %s %s\n", status, additionalMessage);
     System.out.println("================================\n");
 }
 
 
-
-    // Utility method to print store-related messages
-    private void printStoreMessage(String action, ParkStore s, boolean success) {
-        // Determine the success or failure of the action
-        String status = success ? "successfully" : "unsuccessfully";
-        System.out.println("Store: " + s.getParkStoreName() + " was " + status + " " + action + " in the park.");
+private <T> boolean manageEntity(T entity, ArrayList<T> list, String entityName, boolean add) {
+    if (entity == null) {
+        System.out.println("Invalid " + entityName + ". Cannot perform operations.");
+        return false;
     }
 
+    String action = add ? "added" : "removed";
 
-    // Helper method to avoid redundancy when adding and removing rides
-    private boolean manageRide(Ride r, boolean add) {
-        // Check if Ride object is null
-        if (r == null) {
-            System.out.println("Invalid Ride. Cannot perform operations.");
+    if (add) {
+        if (list.contains(entity)) {
+            System.out.printf("The %s is already in the park.\n", entityName);
             return false;
         }
-
-        // Adding a ride
-        if (add) {
-            // Check if the ride is already in the park
-            if (rides.contains(r)) {
-                // If found, print message saying it was already added
-                printRideMessage("added", r, false);
-                return false;
-            }
-            // Else, add the ride to the park
-            rides.add(r);
-            printRideMessage("added", r, true);
-            return true;
-
-        } else { // Removing a ride
-            // Check if the ride is already in the park
-            if (!rides.contains(r)) {
-                printRideMessage("removed", r, false);
-                return false;
-            }
-            // If found, remove the ride from the park
-            rides.remove(r);
-            printRideMessage("removed", r, true);
-            return true;
-        }
-    }
-
-    // Public method to add a ride using the helper method
-    public boolean addRide(Ride r) {
-        return manageRide(r, true); // Call helper method with add set to true
-    }
-
-    // Public method to remove a ride using the helper method
-    public boolean removeRide(Ride r) {
-        return manageRide(r, false); // Call helper method with add set to false
-    }
-
-    // Helper method to avoid redundancy when adding and removing rides
-    private boolean manageStore(ParkStore s, boolean add) {
-        // Check if Ride object is null
-        if (s == null) {
-            System.out.println("Invalid Store. Cannot perform operations.");
+        list.add(entity);
+        System.out.printf("The %s was successfully %s in the park.\n", entityName, action);
+        return true;
+    } else {
+        if (!list.contains(entity)) {
+            System.out.printf("The %s is not found in the park.\n", entityName);
             return false;
         }
-
-        // Adding a store
-        if (add) {
-            // Check if the ride is already in the park
-            if (stores.contains(s)) {
-                // If found, print message saying it was already added
-                printStoreMessage("added", s, false);
-                return false;
-            }
-            // Else, add the ride to the park
-            stores.add(s);
-            printStoreMessage("added", s, true);
-            return true;
-
-        } else { // Removing a ride
-            // Check if the ride is already in the park
-            if (!stores.contains(s)) {
-                printStoreMessage("removed", s, false);
-                return false;
-            }
-            // If found, remove the ride from the park
-            stores.remove(s);
-            printStoreMessage("removed", s, true);
-            return true;
-        }
+        list.remove(entity);
+        System.out.printf("The %s was successfully %s from the park.\n", entityName, action);
+        return true;
     }
+}
 
-    // Public method to add a ride using the helper method
-    public boolean addStore(ParkStore s) {
-        return manageStore(s, true); // Call helper method with add set to true
-    }
+// Manage rides using the generic method
+private boolean manageRide(Ride r, boolean add) {
+    return manageEntity(r, rides, "ride", add);
+}
 
-    // Public method to remove a ride using the helper method
-    public boolean removeStore(ParkStore s) {
-        return manageStore(s, false); // Call helper method with add set to false
-    }
+// Manage stores using the generic method
+private boolean manageStore(ParkStore s, boolean add) {
+    return manageEntity(s, stores, "store", add);
+}
+
+// Public method to add a ride
+public boolean addRide(Ride r) {
+    return manageRide(r, true);  // Call manageRide with true to add
+}
+
+// Public method to remove a ride
+public boolean removeRide(Ride r) {
+    return manageRide(r, false);  // Call manageRide with false to remove
+}
+
+// Public method to add a store
+public boolean addStore(ParkStore s) {
+    return manageStore(s, true);  // Call manageStore with true to add
+}
+
+// Public method to remove a store
+public boolean removeStore(ParkStore s) {
+    return manageStore(s, false);  // Call manageStore with false to remove
+}
+
 
     // Calculate park metrics (total revenue, visitors, and tickets sold)
     public void calculateParkMetric() {
@@ -243,47 +198,47 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
         return false;
     }
 
+    String action = isSelling ? "sold" : "refunded";
+
     if (isSelling) { // Process a sale
-        // Check if the ticket is available for purchase
         if (availableTickets.contains(t)) {
-            // Remove from available tickets and add to sold tickets
-            availableTickets.remove(t); 
+            availableTickets.remove(t);
             soldTickets.add(t);
-            v.addTicketToPurchaseHistory(t); // Track the purchase
-            totalRevenue += t.getTicketPrice(); // Add to park's total revenue
-            totalTicketsSold++; // Increment ticket count
-            System.out.println("Ticket sold successfully!");
+            v.addTicketToPurchaseHistory(t);
+            totalRevenue += t.getTicketPrice();
+            totalTicketsSold++;
+            printActionMessage("Ticket", t.getTicketID(), true, action);
             return true;
         } else {
-            System.out.println("This ticket is not available for purchase.");
+            printActionMessage("Ticket", t.getTicketID(), false, "not available for purchase");
             return false;
         }
-    } else { 
-        // Check if the ticket exists in soldTickets and visitor owns it
+    } else {
         if (soldTickets.contains(t) && v.hasPurchased(t.getTicketID())) {
-            // Remove from sold tickets and add back to available tickets
             soldTickets.remove(t);
             availableTickets.add(t);
-            totalRevenue -= t.getTicketPrice(); // Subtract from park's total revenue
-            totalTicketsSold--; // Decrement ticket count
-            System.out.println("Ticket refunded successfully!");
+            totalRevenue -= t.getTicketPrice();
+            totalTicketsSold--;
+            printActionMessage("Ticket", t.getTicketID(), true, action);
             return true;
         } else {
-            System.out.println("Ticket is not eligible for refund.");
+            printActionMessage("Ticket", t.getTicketID(), false, "not eligible for refund");
             return false;
         }
     }
 }
 
-    // Method to sell a ticket to a visitor
-    public void sellTicket(Ticket t, Visitor v) {
-        processTicket(t, v, true); // Use processTicket to handle selling
-    }
 
-    // Method to refund a ticket to a visitor
-    public void refundTicket(Ticket t, Visitor v) {
-        processTicket(t, v, false); // Use processTicket to handle refunding
-    }
+// Method to sell a ticket to a visitor
+public void sellTicket(Ticket t, Visitor v) {
+    processTicket(t, v, true); // Use processTicket to handle selling
+}
+
+// Method to refund a ticket to a visitor
+public void refundTicket(Ticket t, Visitor v) {
+    processTicket(t, v, false); // Use processTicket to handle refunding
+}
+
   
   // Method to display all feedbacks from visitors
     public void displayAllFeedbacks() {
