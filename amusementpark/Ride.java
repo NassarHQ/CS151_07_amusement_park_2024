@@ -103,7 +103,7 @@ class Ride implements ParkInteractables {
         this.rideMaxWeight = rideMaxWeight;
     }
 
-    // Getter for rideVisitorQueue
+    // Getter and setter for rideVisitorQueue
     public Queue<Visitor> getRideVisitorQueue() {
         return rideVisitorQueue;
     }
