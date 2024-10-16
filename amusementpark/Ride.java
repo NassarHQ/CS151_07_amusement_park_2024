@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-class Ride implements ParkInteractables {
+public class Ride implements ParkInteractables {
 
     // Declaring variables needed for rides
     private String rideName;
