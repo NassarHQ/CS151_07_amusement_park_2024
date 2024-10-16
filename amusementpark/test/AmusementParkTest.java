@@ -8,5 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AmusementParkTest {
-    private Employee employee; 
+
+    // Instances for testing
+    private Employee employee;
+    private Visitor visitor;
+    private Ticket ticket;
+    private Ride ride;
+    private Park park;
+    
+    
 }
