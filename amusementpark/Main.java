@@ -9,6 +9,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Park park = new Park();
         Employee employee = new Employee("John Doe", 25, "1304", "manager");
+        Visitor visitor = new Visitor("John", 28);
+        ParkStore store = new ParkStore("foody", "food");
+        park.addStore(store);
+        store.addItems("burger", 30);
        /*   Visitor visitor = new Visitor("Test", 32);
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
         park.addRide(incredi);  RYANS TESTING STUFF */
@@ -28,7 +32,8 @@ public class Main {
 
         switch (response){
             case "1":
-                System.out.println("Visitor menu"); //Call visitor UI stuff
+                VisitorUI visitorUI = new VisitorUI(park, visitor);
+                visitorUI.displayMenu();
                 break;
             case "2":
               //  System.out.println("Employee Menu"); //Call employee UI STUFF
@@ -42,7 +47,7 @@ public class Main {
             case "4":
                 System.out.println("Do you want to exit? Type `EXIT` if you do");
                 response = scanner.nextLine();
-                if (response.toLowerCase().equals("exit")){
+                if (response.equalsIgnoreCase("exit")){
                     System.out.println("Goodbye!");
                     scanner.close();
                     return;

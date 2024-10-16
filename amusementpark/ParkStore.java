@@ -9,7 +9,7 @@ public class ParkStore {
     private String parkStoreType;
     private double parkStoreRevenue;
     private HashMap<String, Integer> inventories;
-    private  List<Visitor> visitors;
+    private List<Visitor> visitors;
     private ArrayList<Pair<String, Integer>> soldItems;
 
     // Allowed store types
@@ -47,6 +47,7 @@ public class ParkStore {
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
         this.inventories = new HashMap<>();
         this.visitors = new ArrayList<>();
+        this.soldItems = new ArrayList<>();
 
     }
 
@@ -57,6 +58,7 @@ public class ParkStore {
         this.parkStoreRevenue = 0.0;   // Initialize store's revenue to 0.0
         this.inventories = new HashMap<>();
         this.visitors = new ArrayList<>();
+        this.soldItems = new ArrayList<>();
     }
 
     // Constructor with additional initial revenue
@@ -111,15 +113,17 @@ public class ParkStore {
     // Method to sell items
     public void sellItems(Visitor v, String item, int quantity) {
         if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero.");
+            System.out.println("Quantity must be greater than zero. Please enter a valid quantity.");
+            return;  // Exit the method to allow the program to continue
         }
 
         if (!inventories.containsKey(item.toLowerCase()) || quantity > inventories.get(item.toLowerCase())) {
-            throw new IllegalArgumentException(
+            System.out.println(
                     !inventories.containsKey(item.toLowerCase()) ?
                             "Item is not available for sale." :
                             "Not enough quantity of " + item + " for sale."
             );
+            return;  // Exit the method to allow the program to continue
         }
 
         double price = itemPrices.get(item.toLowerCase());
@@ -155,8 +159,8 @@ public class ParkStore {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
 
-        switch (parkStoreType) {
-            case "Food":
+        switch (parkStoreType.toLowerCase()) {
+            case "food":
                 if (isValidFoodType(item.toLowerCase())) {
                     // Use lambda function to update the quantity of added items
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
@@ -164,14 +168,14 @@ public class ParkStore {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
                 }
                 break;
-            case "Drink":
+            case "drink":
                 if (isValidDrinkType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
                 }
                 break;
-            case "Souvenir":
+            case "souvenir":
                 if (isValidSouvenirType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
@@ -201,15 +205,13 @@ public class ParkStore {
 
     // Method to display available items, their quantities, and prices
     public void displayAvailableItems() {
-        System.out.println("Available items in " + this.parkStoreName + ":");
-
         if (inventories.isEmpty()) {
             System.out.println("No items available.");
             return;  // Exit the method if there are no items
         }
 
         for (String item : inventories.keySet()) {
-            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item));
+            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each");
         }
     }
 

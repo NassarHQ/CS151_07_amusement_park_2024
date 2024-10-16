@@ -89,12 +89,31 @@ public class Park {
         p.removeFromPark(this);
     }
 
-    // Utility method to print ride-related messages
-    private void printRideMessage(String action, Ride r, boolean success) {
+// Utility method to print ride-related messages
+private void printRideMessage(String action, Ride r, boolean success) {
+    // Determine the success or failure of the action
+    String status = success ? "successfully" : "unsuccessfully";
+    System.out.println("\n================================");
+    System.out.printf(" Ride %s: %s (ID: %s)\n", action, r.getRideName(), r.getRideID());
+    System.out.println("================================");
+    System.out.printf(" Capacity:                %d\n", r.getRideCapacity());
+    System.out.printf(" Duration:                %d minutes\n", r.getRideDuration());
+    System.out.printf(" Minimum Height:          %d cm\n", r.getRideMinHeight());
+    System.out.printf(" Maximum Weight:          %d kg\n", r.getRideMaxWeight());
+    System.out.println("--------------------------------");
+    System.out.println(" Status: " + status + " " + action + " in the park.");
+    System.out.println("================================\n");
+}
+
+
+
+    // Utility method to print store-related messages
+    private void printStoreMessage(String action, ParkStore s, boolean success) {
         // Determine the success or failure of the action
         String status = success ? "successfully" : "unsuccessfully";
-        System.out.println("Ride: " + r.getRideName() + " was " + status + " " + action + " in the park.");
+        System.out.println("Store: " + s.getParkStoreName() + " was " + status + " " + action + " in the park.");
     }
+
 
     // Helper method to avoid redundancy when adding and removing rides
     private boolean manageRide(Ride r, boolean add) {
@@ -138,6 +157,50 @@ public class Park {
     // Public method to remove a ride using the helper method
     public boolean removeRide(Ride r) {
         return manageRide(r, false); // Call helper method with add set to false
+    }
+
+    // Helper method to avoid redundancy when adding and removing rides
+    private boolean manageStore(ParkStore s, boolean add) {
+        // Check if Ride object is null
+        if (s == null) {
+            System.out.println("Invalid Store. Cannot perform operations.");
+            return false;
+        }
+
+        // Adding a store
+        if (add) {
+            // Check if the ride is already in the park
+            if (stores.contains(s)) {
+                // If found, print message saying it was already added
+                printStoreMessage("added", s, false);
+                return false;
+            }
+            // Else, add the ride to the park
+            stores.add(s);
+            printStoreMessage("added", s, true);
+            return true;
+
+        } else { // Removing a ride
+            // Check if the ride is already in the park
+            if (!stores.contains(s)) {
+                printStoreMessage("removed", s, false);
+                return false;
+            }
+            // If found, remove the ride from the park
+            stores.remove(s);
+            printStoreMessage("removed", s, true);
+            return true;
+        }
+    }
+
+    // Public method to add a ride using the helper method
+    public boolean addStore(ParkStore s) {
+        return manageStore(s, true); // Call helper method with add set to true
+    }
+
+    // Public method to remove a ride using the helper method
+    public boolean removeStore(ParkStore s) {
+        return manageStore(s, false); // Call helper method with add set to false
     }
 
     // Calculate park metrics (total revenue, visitors, and tickets sold)
@@ -254,9 +317,23 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
         return this.rides;
     }
 
+    // Method to display all rides from the park
+    public void displayAllRides() {
+        for (Ride ride : rides) {
+            System.out.println(ride.getRideName());
+        }
+    }
+
     // Method to get list of stores from the park
-    public ArrayList<ParkStore> getStoresList() {
+    public ArrayList<ParkStore> getStoresList(){
         return this.stores;
+    }
+
+    // Method to display all stores from the park
+    public void displayAllStores() {
+        for (ParkStore store : stores) {
+            System.out.println(store.getParkStoreName());
+        }
     }
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
