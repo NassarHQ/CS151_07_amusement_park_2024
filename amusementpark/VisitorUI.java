@@ -13,7 +13,7 @@ public class VisitorUI {
     private String chosenItem;
     private int quantity;
 
-    public VisitorUI(Park park) {  //Only one constructor here. This makes the most sense.
+    public VisitorUI(Park park, Visitor visitor) {  //Only one constructor here. This makes the most sense.
         this.scanner = new Scanner(System.in);
         this.visitor = visitor;
         this.park = park;

@@ -155,8 +155,8 @@ public class ParkStore {
             throw new IllegalArgumentException("Quantity must be greater than zero.");
         }
 
-        switch (parkStoreType) {
-            case "Food":
+        switch (parkStoreType.toLowerCase()) {
+            case "food":
                 if (isValidFoodType(item.toLowerCase())) {
                     // Use lambda function to update the quantity of added items
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
@@ -164,14 +164,14 @@ public class ParkStore {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
                 }
                 break;
-            case "Drink":
+            case "drink":
                 if (isValidDrinkType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
                     throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
                 }
                 break;
-            case "Souvenir":
+            case "souvenir":
                 if (isValidSouvenirType(item.toLowerCase())) {
                     inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
                 } else {
