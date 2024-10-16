@@ -47,7 +47,7 @@ public class Main {
             case "4":
                 System.out.println("Do you want to exit? Type `EXIT` if you do");
                 response = scanner.nextLine();
-                if (response.toLowerCase().equals("exit")){
+                if (response.equalsIgnoreCase("exit")){
                     System.out.println("Goodbye!");
                     scanner.close();
                     return;

@@ -125,8 +125,9 @@ public class VisitorUI {
     public void checkoutStores() {
         while (true) {
             // Buy products from store
-            System.out.println("List of our Stores: " + "\n"
-                    + park.getStoresList());
+            System.out.println("List of our Stores: ");
+            park.displayAllStores();    // Display all stores to visitors using method from Park class
+            System.out.println("\n");   // Print new line for displaying purpose
 
             System.out.println("Choose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
             String chosenStore = scanner.nextLine();     // Read user's input for chosen store
@@ -140,9 +141,10 @@ public class VisitorUI {
             boolean storeFound = false;  // Initialize the flag to false
 
             // Loop through the list of stores to check if any store matches the user's input
-            for (ParkStore store : park.getStoresList()) {
-                if (chosenStore.equalsIgnoreCase(store.getParkStoreName())) {
-                    System.out.println("Available items from " + store.getParkStoreName() + ":" + "\n");
+            for (ParkStore s : park.getStoresList()) {
+                if (chosenStore.equalsIgnoreCase(s.getParkStoreName())) {
+                    store = s;  // Set the object store to s from the list
+                    System.out.println("Available items from " + store.getParkStoreName() + ":");
                     store.displayAvailableItems();
                     storeFound = true; // Set flag to true as the ride is found
 
@@ -161,14 +163,16 @@ public class VisitorUI {
 
     public void buyProductsFromStore() {
         while (true) {
-            System.out.println("Enter the item you want to buy (or type 'cancel' to go back to Visitor Menu)");
+            System.out.println("Enter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
             chosenItem = scanner.nextLine();
 
             if (chosenItem.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to Visitor Menu" + "\n"
+                System.out.println("Return to List of our Stores" + "\n"
                         + "-----");
                 return;  // Go back to visitor menu if user type 'cancel'
             }
+
+            boolean itemFound = false;  // Initialize the flag to false
 
             // Loop through inventories of the store to check for item
             for (String item : store.getInventories().keySet()) {
@@ -177,6 +181,7 @@ public class VisitorUI {
                     // Ask for quantity if item is valid
                     System.out.println("Enter the quantity you want to buy: ");
                     quantity = scanner.nextInt();
+                    scanner.nextLine();  // Consume newline after the int input
 
                     try {
                         store.sellItems(visitor, chosenItem, quantity);   // Use sellItems from ParkStore to sell items
@@ -184,6 +189,12 @@ public class VisitorUI {
                         System.out.println("Invalid input. Please try again.");
                     }
                 }
+
+                itemFound = true;
+            }
+
+            if (!itemFound) {
+                System.out.println("Invalid Item. Please try again.");
             }
         }
     }

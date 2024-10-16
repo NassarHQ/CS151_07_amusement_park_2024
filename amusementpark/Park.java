@@ -306,9 +306,23 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
         return this.rides;
     }
 
+    // Method to display all rides from the park
+    public void displayAllRides() {
+        for (Ride ride : rides) {
+            System.out.println(ride.getRideName());
+        }
+    }
+
     // Method to get list of stores from the park
-    public ArrayList<ParkStore> getStoresList() {
+    public ArrayList<ParkStore> getStoresList(){
         return this.stores;
+    }
+
+    // Method to display all stores from the park
+    public void displayAllStores() {
+        for (ParkStore store : stores) {
+            System.out.println(store.getParkStoreName());
+        }
     }
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
