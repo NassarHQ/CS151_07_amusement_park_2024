@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class EmployeeUI {
     private Scanner scanner;
     private Employee employee;
@@ -44,9 +45,9 @@ public class EmployeeUI {
                 employee.reportIssue(park);
                 break;
             case "4":
-                System.out.println("\nEmployee " + employee.getName() + " salary info: ");
-                System.out.println("Their position is " + employee.getRole());
-                System.out.println("Their monthly salary is: $" + employee.calculateSalary());
+                System.out.println("\nEmployee " + employee.getName() + " salary info ");
+                System.out.println("This is their monthly wage:");
+                employee.checkSalary();
                 break;
             case "5":
                 System.out.println("\nEmployee " + employee.getName() + " schedule");
