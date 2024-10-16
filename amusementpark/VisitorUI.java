@@ -201,12 +201,14 @@ public class VisitorUI {
 
     public void writeFeedback() {
         visitor.provideFeedback();
+        System.out.println("Thank you for your feedback.\n");
     }
 
     public void viewPurchaseHistory() {
-        System.out.println("Visitor " + visitor.getName() + " purchase history: \n");
+        System.out.println(visitor.getName() + "'s purchase history:\n");
         visitor.viewPurchaseTicketHistory();
         visitor.viewPurchaseProductHistory();
+        System.out.println("\n");
     }
 }
 
