@@ -207,7 +207,7 @@ public class AdminUI {
             scanner.nextLine(); 
 
             System.out.println("Enter the store name: ");
-            String storeName = scanner.nexx spotLine();
+            String storeName = scanner.nextLine();
             ParkStore store = findStoreByName(park.getStoresList(), storeName);
 
             if (store == null) {
