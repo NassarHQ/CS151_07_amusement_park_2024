@@ -44,7 +44,8 @@ public class PrintHelper {
         System.out.println("\n============================");
         System.out.println("Ride Name:               " + ride.getRideName());
         System.out.println("Ride ID:                 " + ride.getRideID());
-        System.out.println("Operational Status:      " + (ride.isOperational() ? "Operational" : "Not operational"));        System.out.println("============================");
+        System.out.println("Operational Status:      " + (ride.isOperational() ? "Operational" : "Not operational"));
+        System.out.println("============================");
     }
 
     // Method to print ride maintenance status
