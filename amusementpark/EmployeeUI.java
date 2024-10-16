@@ -2,15 +2,7 @@ package amusementpark;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-/*
- Notes for myself when coming back:
- Think about clock in/clock out - > Should it keep track of how long you've been working for?
- Ride eligibility is something that should be discussed with prof
- Do I need to be able to exit from anywhere in the program?
- Possible feature: Alter schedule (Request days off)
- Fix salary info formatting?
- 
- */
+
 
 public class EmployeeUI {
     private Scanner scanner;
@@ -53,9 +45,9 @@ public class EmployeeUI {
                 employee.reportIssue(park);
                 break;
             case "4":
-                System.out.println("\nEmployee " + employee.getName() + " salary info: ");
-                System.out.println("Their position is: " + employee.getRole());
-                System.out.println("Their monthly salary is: $" + employee.calculateSalary());
+                System.out.println("\nEmployee " + employee.getName() + " salary info ");
+                System.out.println("This is their monthly wage:");
+                employee.checkSalary();
                 break;
             case "5":
                 System.out.println("\nEmployee " + employee.getName() + " schedule");

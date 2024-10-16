@@ -173,7 +173,8 @@ class Employee extends Person{
     }
 
     public void checkSalary() {
-        System.out.println("Salary for " + this.getName() + " (" + this.role + "): $" + this.salary);
+        //System.out.println("Salary for " + this.getName() + " (" + this.role + "): $" + this.salary);
+        System.out.printf("Salary for %s (%s): $%.2f%n", this.getName(), this.role, this.salary);
     }
 
     
