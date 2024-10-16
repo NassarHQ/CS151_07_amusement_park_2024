@@ -34,7 +34,7 @@ class Employee extends Person{
 
         @Override
         public String toString() {
-            return date + " (" + shift + ")";
+            return "* "+ date + " (" + shift + ")";
         }
     }
     private List<WorkDay> workSchedule;
@@ -132,9 +132,14 @@ class Employee extends Person{
 
     public void reportIssue(Park park){
         Scanner issueScanner = new Scanner(System.in);
-        System.out.println("Please describe the issue:");
-        System.out.print(">>");
+        System.out.print("Please describe the issue you'd like to report");
+        System.out.println(" (Type `cancel` if you'd like to return):");
+        System.out.print("> ");
         String report = issueScanner.nextLine();
+        if (report.equalsIgnoreCase("cancel")) {
+            System.out.println("Issue reporting canceled. Returning to the Employee Menu.");
+            return; // Exit the method and go back to the employee menu
+        }
         park.addIssue(report);
         //issueScanner.close();
     }

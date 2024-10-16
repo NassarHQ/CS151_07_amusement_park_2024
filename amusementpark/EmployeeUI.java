@@ -18,7 +18,9 @@ public class EmployeeUI {
     public void displayMenu(){
         boolean exitMenu = false;
         while (!exitMenu){
-            System.out.println("\nEmployee Menu:");
+            System.out.println("\n============================");
+            System.out.println("\tEmployee Menu:");
+            System.out.println("============================");
             System.out.println("1. Clock in");
             System.out.println("2. Clock out");
             System.out.println("3. Make a report");
@@ -26,6 +28,7 @@ public class EmployeeUI {
             System.out.println("5. Check Schedule");
             System.out.println("6. View Ride Eligibility");
             System.out.println("7. Exit to Main Menu");
+            System.out.println("============================");
             System.out.print("\nPlease select an option (1-7): ");
             
             String choice = scanner.nextLine();
@@ -50,8 +53,8 @@ public class EmployeeUI {
                 employee.checkSalary();
                 break;
             case "5":
-                System.out.println("\nEmployee " + employee.getName() + " schedule");
-                System.out.println("You will be working on the following dates: \n");
+                System.out.println("\nEmployee " + employee.getName());
+                System.out.println("You will be working on the following dates:");
                 employee.printWorkSchedule();
                 break;
             case "6":
