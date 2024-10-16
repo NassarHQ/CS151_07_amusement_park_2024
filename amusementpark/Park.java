@@ -89,65 +89,51 @@ public class Park {
         p.removeFromPark(this);
     }
 
-// Utility method to print ride-related messages
-private void printRideMessage(String action, Ride r, boolean success) {
-    // Determine the success or failure of the action
+// Utility method to print generic action-related messages for rides or stores
+public void printActionMessage(String action, String rideName, String rideID, boolean success, String additionalMessage) {
     String status = success ? "successfully" : "unsuccessfully";
     System.out.println("\n================================");
-    System.out.printf(" Ride %s: %s (ID: %s)\n", action, r.getRideName(), r.getRideID());
-    System.out.println("================================");
-    System.out.printf(" Capacity:                %d\n", r.getRideCapacity());
-    System.out.printf(" Duration:                %d minutes\n", r.getRideDuration());
-    System.out.printf(" Minimum Height:          %d cm\n", r.getRideMinHeight());
-    System.out.printf(" Maximum Weight:          %d kg\n", r.getRideMaxWeight());
+    System.out.printf(" Ride %s: %s (ID: %s)\n", action, rideName, rideID);
     System.out.println("--------------------------------");
-    System.out.println(" Status: " + status + " " + action + " in the park.");
+    System.out.printf(" Status: %s %s\n", status, additionalMessage);
     System.out.println("================================\n");
 }
 
-
-
-    // Utility method to print store-related messages
-    private void printStoreMessage(String action, ParkStore s, boolean success) {
-        // Determine the success or failure of the action
-        String status = success ? "successfully" : "unsuccessfully";
-        System.out.println("Store: " + s.getParkStoreName() + " was " + status + " " + action + " in the park.");
+private boolean manageRide(Ride r, boolean add) {
+    // Check if Ride object is null
+    if (r == null) {
+        System.out.println("Invalid Ride. Cannot perform operations.");
+        return false;
     }
 
+    String action = add ? "added" : "removed";
 
-    // Helper method to avoid redundancy when adding and removing rides
-    private boolean manageRide(Ride r, boolean add) {
-        // Check if Ride object is null
-        if (r == null) {
-            System.out.println("Invalid Ride. Cannot perform operations.");
+    // Adding a ride
+    if (add) {
+        // Check if the ride is already in the park
+        if (rides.contains(r)) {
+            // If found, print message saying it was already added
+            printActionMessage(action, r.getRideName(), r.getRideID(), false, "already in the park");
             return false;
         }
+        // Else, add the ride to the park
+        rides.add(r);
+        printActionMessage(action, r.getRideName(), r.getRideID(), true, "");
+        return true;
 
-        // Adding a ride
-        if (add) {
-            // Check if the ride is already in the park
-            if (rides.contains(r)) {
-                // If found, print message saying it was already added
-                printRideMessage("added", r, false);
-                return false;
-            }
-            // Else, add the ride to the park
-            rides.add(r);
-            printRideMessage("added", r, true);
-            return true;
-
-        } else { // Removing a ride
-            // Check if the ride is already in the park
-            if (!rides.contains(r)) {
-                printRideMessage("removed", r, false);
-                return false;
-            }
-            // If found, remove the ride from the park
-            rides.remove(r);
-            printRideMessage("removed", r, true);
-            return true;
+    } else { // Removing a ride
+        // Check if the ride is already in the park
+        if (!rides.contains(r)) {
+            printActionMessage(action, r.getRideName(), r.getRideID(), false, "not found in the park");
+            return false;
         }
+        // If found, remove the ride from the park
+        rides.remove(r);
+        printActionMessage(action, r.getRideName(), r.getRideID(), true, "");
+        return true;
     }
+}
+
 
     // Public method to add a ride using the helper method
     public boolean addRide(Ride r) {

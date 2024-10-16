@@ -110,8 +110,10 @@ public class AdminUI {
             System.out.println("\n--- Add a Ride ---");
             System.out.print("Enter ride name:");   // Prompt for ride name
             String name = scanner.nextLine();           // Read ride name
+
             System.out.print("Enter ride ID:");
             String rideID = scanner.nextLine();
+
             System.out.print("Enter ride capacity:");
             int capacity = scanner.nextInt();
             System.out.print("Enter ride duration (in minutes):");
@@ -145,6 +147,7 @@ public void removeRide() {
     System.out.print("Enter the Ride ID to be removed: ");
     String rideID = scanner.nextLine();
 
+    Ride rideToRemove = null;
     // Find the ride by its ID and remove it
     for (Ride r : park.getRidesList()) { 
         if (r.getRideID().equals(rideID)) {
@@ -172,26 +175,26 @@ public void removeRide() {
         System.out.println("\nRide not found.");    // Message if ride with the given ID is not found
     }
 
-    // Method to open or close a ride for maintenance
-    public void openCloseForMaintenance() {
-        System.out.print("\nEnter the Ride ID of the ride to open/close for maintenance: ");     // Prompt for Ride ID
-        String rideID = scanner.nextLine();
+// Method to open or close a ride for maintenance
+public void openCloseForMaintenance() {
+    System.out.print("\nEnter the Ride ID of the ride to open/close for maintenance: ");     // Prompt for Ride ID
+    String rideID = scanner.nextLine();
 
-        // Search for the ride by its ID
-        for (Ride r : park.getRidesList()) {  // Iterate through all rides in the park
-            if (r.getRideID().equals(rideID)) {  // Check if the current ride matches the ID
-                // Toggle the operational status of the ride
-                if (r.isOperational()) {
-                    r.toggleOperational();  // Set ride to non-operational
-                    System.out.println("Ride closed for maintenance.");
-                } else {
-                    r.toggleOperational();  // Set ride to operational
-                    System.out.println("Ride opened for operation.");
-                }
-                return;  // Exit the method once the status is toggled
-            }
+    // Search for the ride by its ID
+    for (Ride r : park.getRidesList()) {  // Iterate through all rides in the park
+        if (r.getRideID().equals(rideID)) {  // Check if the current ride matches the ID
+            boolean isOperationalBefore = r.isOperational();
+            r.toggleOperational();  // Toggle operational status
+            boolean isSuccess = !isOperationalBefore;  // If it was operational before, closing was successful
+            String action = isOperationalBefore ? "closed for maintenance" : "opened for operation";
+            // Call the printActionMessage
+            park.printActionMessage(action, r.getRideName(), r.getRideID(), true, action);
+            return;  // Exit the method once the status is toggled
         }
     }
+    System.out.println("Ride not found. Please check the Ride ID.");
+}
+
 
     // Method to manage stores in the park
     public void manageStores(Scanner scanner) {
