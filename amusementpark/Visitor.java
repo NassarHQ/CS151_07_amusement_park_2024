@@ -14,9 +14,9 @@ public class Visitor extends Person {
     private boolean hasProvidedFeedback;
 
     
-    public Visitor(List<String> purchaseTicketHistory){
+    public Visitor(){
         super();
-        this.purchaseTicketHistory = purchaseTicketHistory != null ? purchaseTicketHistory : new ArrayList<>(); // Initialize or create a new list;
+        this.purchaseTicketHistory = new ArrayList<>(); // Initialize or create a new list;
         this.purchaseProductHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
