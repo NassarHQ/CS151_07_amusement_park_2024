@@ -19,13 +19,16 @@ public class AdminUI {
     // Main menu for Admin - allows the admin to choose different operations
     public void displayAdminMenu() {
         while (true) {      // Infinite loop to keep the menu running until the exit
-            System.out.println("Admin Menu:");
+            System.out.println("\n============================");
+            System.out.println("\tAdmin Menu");
+            System.out.println("============================");
             System.out.println("1. Manage Rides");
             System.out.println("2. Manage Stores");
             System.out.println("3. Show visitor feedback");
             System.out.println("4. Show employee reports");
             System.out.println("5. Check Park metrics");
             System.out.println("6. Exit");
+            System.out.println("============================");
 
             // Get the admin's choice
             int choice = scanner.nextInt();
@@ -53,10 +56,11 @@ public class AdminUI {
                     break;
 
                 case 6:
-                    System.out.println("Exiting Admin Menu...");
+                    System.out.println("Exiting Admin Menu...Goodbye!");
                     break;
+
                 default:
-                    System.out.println("Invalid choice. Try again.");
+                    System.out.println("\nInvalid choice. Try again.");
 
             }
         }
@@ -65,12 +69,15 @@ public class AdminUI {
     // Main menu for Manage Rides
     public void manageRides(Scanner scanner) {
         while (true) {
-            System.out.println("Ride Manager Menu:");
+            System.out.println("\n============================");
+            System.out.println("     Ride Manager Menu");
+            System.out.println("============================");
             System.out.println("1. Add a Ride");
             System.out.println("2. Remove a Ride");
             System.out.println("3. Display Ride Details");
             System.out.println("4. Open/Close Ride for Maintenance");
             System.out.println("5. Go back");
+            System.out.println("============================");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the leftover newline character from previous input
@@ -92,7 +99,7 @@ public class AdminUI {
                 case 5:
                     return; // Exit to prevoius menu
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }     
         }
     }
@@ -100,17 +107,18 @@ public class AdminUI {
     // Method to add a ride
     public void addRide() {
         try {
-            System.out.println("Enter ride name:");     // Prompt for ride name
+            System.out.println("\n--- Add a Ride ---");
+            System.out.print("Enter ride name:");   // Prompt for ride name
             String name = scanner.nextLine();           // Read ride name
-            System.out.println("Enter ride ID:");
+            System.out.print("Enter ride ID:");
             String rideID = scanner.nextLine();
-            System.out.println("Enter ride capacity:");
+            System.out.print("Enter ride capacity:");
             int capacity = scanner.nextInt();
-            System.out.println("Enter ride duration (in minutes):");
+            System.out.print("Enter ride duration (in minutes):");
             int duration = scanner.nextInt();
-            System.out.println("Enter minimum height (in cm):");
+            System.out.print("Enter minimum height (in cm):");
             int minHeight = scanner.nextInt();
-            System.out.println("Enter maximum weight (in kg):");
+            System.out.print("Enter maximum weight (in kg):");
             int maxWeight = scanner.nextInt();
             scanner.nextLine();  // consume the newline character
 
@@ -119,9 +127,11 @@ public class AdminUI {
 
             //Try to add the ride to the park
             if (park.addRide(newRide)) {
-                System.out.println("Ride added successfully."); // Success message
+                // Success message
+                System.out.println("\nRide successfully added: " + name + ", " + rideID);  
             } else {
-                System.out.println("Ride could not be added."); // Failure message
+                // Failure message
+                System.out.println("Ride could not be added: " + name + ", " + rideID);  
             }
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter the correct data type.");
@@ -129,31 +139,26 @@ public class AdminUI {
         } 
     }
 
-    // Method to remove an existing ride from the park
-    public void removeRide() {
-        System.out.println("Enter the Ride ID of the ride you want to remove:");    // Prompt for ride ID
-        String rideID = scanner.nextLine(); //Read ride ID
+   // Method to remove an existing ride from the park
+public void removeRide() {
+    System.out.println("\n--- Remove a Ride ---");
+    System.out.print("Enter the Ride ID to be removed: ");
+    String rideID = scanner.nextLine();
 
-        // Find the ride by its ID
-        Ride rideToRemove = null;
-        for (Ride r : park.getRidesList()) {    // Iterate through all rides in the park
-            if (r.getRideID().equals(rideID)) {     // Check if the current ride matches the ID
-                rideToRemove = r;
-                break;      // Exit the loop once the ride is found
-            }
-        }
-
-        // Try to remove the ride if found
-        if (rideToRemove != null && park.removeRide(rideToRemove)) {
-            System.out.println("Ride removed succesfully."); 
-        } else {
-            System.out.println("Ride could not be removed.");   // Ride not found or removal failed
+    // Find the ride by its ID and remove it
+    for (Ride r : park.getRidesList()) { 
+        if (r.getRideID().equals(rideID)) {
+            // Simply call park's removeRide() method, which will handle the logging
+            park.removeRide(r);
+            return; 
         }
     }
+    System.out.println("Ride not found."); 
+}
 
     // Method to display details of a ride
     public void displayRideDetails() {
-        System.out.println("Enter the Ride ID of the ride to display details:");    //Prompt for ride ID
+        System.out.print("Enter ride ID to be displayed: ");    //Prompt for ride ID
         String rideID = scanner.nextLine();     // Read ride ID
 
         // Search for the ride by its ID and display its details
@@ -164,12 +169,12 @@ public class AdminUI {
             }
 
         }
-        System.out.println("Ride not found");      // Message if ride with the given ID is not found
+        System.out.println("\nRide not found.");    // Message if ride with the given ID is not found
     }
 
     // Method to open or close a ride for maintenance
     public void openCloseForMaintenance() {
-        System.out.println("Enter the Ride ID of the ride to open/close for maintenance:");     // Prompt for Ride ID
+        System.out.print("\nEnter the Ride ID of the ride to open/close for maintenance: ");     // Prompt for Ride ID
         String rideID = scanner.nextLine();
 
         // Search for the ride by its ID

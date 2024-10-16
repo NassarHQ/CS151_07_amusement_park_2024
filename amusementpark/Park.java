@@ -89,12 +89,23 @@ public class Park {
         p.removeFromPark(this);
     }
 
-    // Utility method to print ride-related messages
-    private void printRideMessage(String action, Ride r, boolean success) {
-        // Determine the success or failure of the action
-        String status = success ? "successfully" : "unsuccessfully";
-        System.out.println("Ride: " + r.getRideName() + " was " + status + " " + action + " in the park.");
-    }
+// Utility method to print ride-related messages
+private void printRideMessage(String action, Ride r, boolean success) {
+    // Determine the success or failure of the action
+    String status = success ? "successfully" : "unsuccessfully";
+    System.out.println("\n================================");
+    System.out.printf(" Ride %s: %s (ID: %s)\n", action, r.getRideName(), r.getRideID());
+    System.out.println("================================");
+    System.out.printf(" Capacity:                %d\n", r.getRideCapacity());
+    System.out.printf(" Duration:                %d minutes\n", r.getRideDuration());
+    System.out.printf(" Minimum Height:          %d cm\n", r.getRideMinHeight());
+    System.out.printf(" Maximum Weight:          %d kg\n", r.getRideMaxWeight());
+    System.out.println("--------------------------------");
+    System.out.println(" Status: " + status + " " + action + " in the park.");
+    System.out.println("================================\n");
+}
+
+
 
     // Utility method to print store-related messages
     private void printStoreMessage(String action, ParkStore s, boolean success) {

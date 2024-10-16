@@ -148,22 +148,28 @@ class Ride implements ParkInteractables {
     }
 
     // Method to display ride metrics
-    public void displayRideMetrics(){
-        System.out.println("Ride metrics for " + rideName + ":");
-        System.out.println("Capacity: " + rideCapacity);
-        System.out.println("Duration: " + rideDuration + " minutes");
-        System.out.println("Minimum height requirement: " + rideMinHeight + " cm");
-        System.out.println("Maximum weight allowed: " + rideMaxWeight + " kg");
-    }
+public void displayRideMetrics() {
+    System.out.println("\n============================");
+    System.out.println("   Ride Metrics for " + rideName);
+    System.out.println("============================");
+    System.out.printf("Capacity:                %d%n", rideCapacity);
+    System.out.printf("Duration:                %d minutes%n", rideDuration);
+    System.out.printf("Minimum Height:          %d cm%n", rideMinHeight);
+    System.out.printf("Maximum Weight:          %d kg%n", rideMaxWeight);
+    System.out.println("============================\n");
+}
 
-    // Method to display ride details
-    public void displayRideDetails(){
-        System.out.println("Ride details: ");
-        System.out.println("Ride Name: " + rideName);
-        System.out.println("Ride ID: " + rideID);
-        System.out.println("Current operational status: " + (isOperational ? "Operational" : "Not operational"));
-        System.out.println("Ride started: " + (hasStarted ? "Yes" : "No"));
-    }
+// Method to display ride details
+public void displayRideDetails() {
+    System.out.println("\n============================");
+    System.out.println("       Ride Details");
+    System.out.println("============================");
+    System.out.printf("Ride Name:               %s%n", rideName);
+    System.out.printf("Ride ID:                 %s%n", rideID);
+    System.out.printf("Operational Status:      %s%n", (isOperational ? "Operational" : "Not operational"));
+    System.out.printf("Ride Started:            %s%n", (hasStarted ? "Yes" : "No"));
+    System.out.println("============================\n");
+}
 
     // Interface to start ride
     @Override
