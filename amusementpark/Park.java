@@ -61,32 +61,63 @@ public class Park {
 
     // Method to add a Person to the park
     public void addPerson(Person p) {
-
         // Check if the object of Person is null
         if (p == null) {
-            // Print an error message if object p is null
             System.out.println("Invalid person. Cannot add null.");
-            return;
+            return; // Exit the method if p is null
         }
-        // Add the person to the park
-        p.addToPark(this);
-        visitors.add((Visitor) p);
+
+        // Use instanceof to determine the type of Person
+        if (p instanceof Visitor visitor) {
+            // Check if the visitor is already in the park
+            if (visitors.contains(visitor)) {
+                System.out.println(visitor.toString() + " is already in the park.");
+                return; // Exit the method if the visitor is already present
+            } else {
+                visitors.add(visitor); // Add the visitor to the park's list
+                visitor.addedToPark(this); // Call the Visitor's method to add to the park
+            }
+        } else if (p instanceof Employee employee) {
+            // Check if the employee is already in the park
+            if (employees.contains(employee)) {
+                System.out.println(employee.toString() + " is already in the park.");
+                return; // Exit the method if the employee is already present
+            } else {
+                employees.add(employee); // Add the employee to the park's list
+                employee.addedToPark(this); // Call the Employee's method to add to the park
+            }
+        } else {
+            // Handle other types of Person if necessary
+            System.out.println(p.getName() + " is not a valid type to add to the park.");
+        }
     }
+
+
 
     // Method to remove a Person from the park
     public void removePerson(Person p) {
-
         // Check if the object of Person is null
         if (p == null) {
             // Print an error message if object p is null
             System.out.println("Invalid person. Cannot remove null.");
             return;
         }
-        // Remove the person from the park
-        p.removeFromPark(this);
+
+        // Use instanceof to determine the type of Person
+        if (p instanceof Visitor visitor) {
+            // Call the Visitor's method to remove from the park
+            visitor.removedFromPark(this);
+        } else if (p instanceof Employee employee) {
+            // Call the Employee's method to remove from the park
+            employee.removedFromPark(this); // Assuming you have a similar method in Employee
+        } else {
+            // Handle other types of Person if necessary
+            System.out.println(p.getName() + " is not a valid type to remove from the park.");
+        }
     }
 
-// Utility method to print generic action-related messages for rides or tickets
+
+    // Utility method to print generic action-related messages for rides or tickets
 public void printActionMessage(String entityType, String entityNameOrID, boolean success, String additionalMessage) {
     String status = success ? "successfully" : "unsuccessfully";
     System.out.println("\n================================");

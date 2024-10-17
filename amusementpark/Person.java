@@ -32,8 +32,8 @@ public abstract class Person {
     }
 
     // Abstract methods that subclasses (Visitor, Employee) must implement
-    public abstract void addToPark(Park park); // Adds the person to the park
-    public abstract void removeFromPark(Park park); // Removes the person from the park
+    public abstract void addedToPark(Park park); // Adds the person to the park
+    public abstract void removedFromPark(Park park); // Removes the person from the park
 
 
     //This should print out whether you are Visitor OR Employee
