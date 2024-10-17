@@ -126,6 +126,7 @@ public class Employee extends Person{
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the date (yyyy-mm-dd) you wish to request off or type 'cancel' to return:");
         String input = scanner.nextLine();
+        exitProgram(input.trim());
 
         if (input.equalsIgnoreCase("cancel")) {
             System.out.println("Request canceled. Returning to menu.");
@@ -198,6 +199,7 @@ public class Employee extends Person{
         System.out.println(" (Type `cancel` if you'd like to return):");
         System.out.print("> ");
         String report = issueScanner.nextLine();
+        exitProgram(report.trim());
         if (report.equalsIgnoreCase("cancel")) {
             System.out.println("Issue reporting canceled. Returning to the Employee Menu.");
             return; // Exit the method and go back to the employee menu
