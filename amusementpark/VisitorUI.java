@@ -58,7 +58,7 @@ public class VisitorUI {
                 case "exit":
                     exitProgram(choice.trim());
                 default:
-                    System.err.println("Invalid option. Please try again.");
+                    System.out.println("Invalid option. Please try again.");
                     break;
             }
         }
@@ -85,9 +85,9 @@ public class VisitorUI {
             park.displayAllRides();
 
             System.out.println("\nEnter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
-            String chosenRide = scanner.nextLine().trim();     // Read user's input for chosen ride
+            String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
 
-            exitProgram(chosenRide);
+            exitProgram(chosenRide.trim());
 
             if (chosenRide.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to Visitor Menu");
@@ -107,7 +107,7 @@ public class VisitorUI {
 
             // If the ride was not found, inform the user
             if (!rideFound) {
-                System.err.println("Invalid ride. Please try again.");
+                System.out.println("Invalid ride. Please try again.");
             }
         }
     }
@@ -117,6 +117,7 @@ public class VisitorUI {
             System.out.println("You haven't purchased any tickets to enter the park. Please purchase a ticket first.");
             return;
         }
+
         while (true) {
             // Buy products from store
             System.out.println("\n============================");
@@ -125,13 +126,13 @@ public class VisitorUI {
             park.displayAllStores();    // Display all stores to visitors using method from Park class
 
             System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
-            String chosenStore = scanner.nextLine().trim();     // Read user's input for chosen store
+            String chosenStore = scanner.nextLine().trim();  // Trim the input for better accuracy
 
-            exitProgram(chosenStore);
+            exitProgram(chosenStore);  // Exit if user inputs the exit command
 
             if (chosenStore.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to Visitor Menu");
-                return;  // Go back to visitor menu if user type 'cancel'
+                return;  // Go back to visitor menu if user types 'cancel'
             }
 
             boolean storeFound = false;  // Initialize the flag to false
@@ -139,14 +140,13 @@ public class VisitorUI {
             // Loop through the list of stores to check if any store matches the user's input
             for (ParkStore s : park.getStoresList()) {
                 if (chosenStore.equalsIgnoreCase(s.getParkStoreName())) {
-                    store = s;  // Set the object store to s from the list
+                    store = s;  // Set the object store to the chosen store from the list
                     System.out.println("Available items from " + store.getParkStoreName() + ":");
                     store.displayAvailableItems();
-                    storeFound = true; // Set flag to true as the ride is found
+                    storeFound = true;  // Set flag to true as the store is found
 
-                    buyProductsFromStore();
-
-                    break; // Exit the loop once a match is found
+                    buyProductsFromStore();  // Move to the product buying process
+                    return;  // Exit the store selection after successful purchase
                 }
             }
 
@@ -159,46 +159,49 @@ public class VisitorUI {
 
     public void buyProductsFromStore() {
         while (true) {
+            // Ask the user for the item to buy
             System.out.println("\nEnter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
-            chosenItem = scanner.nextLine();
+            String chosenItem = scanner.nextLine();  // Trim user input
 
-            exitProgram(chosenItem.trim());
+            exitProgram(chosenItem.trim());  // Exit if user inputs the exit command
 
             if (chosenItem.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to List of our Stores");
-                return;  // Go back to list of stores if user type 'cancel'
+                return;  // Exit back to the store selection
             }
 
+            boolean itemFound = false;
 
-            // Loop through inventories of the store to check for item
+            // Loop through the store's inventory to find the chosen item
             for (String item : store.getInventories().keySet()) {
                 if (chosenItem.equalsIgnoreCase(item)) {
-                    boolean itemFound = false;  // Initialize the flag to false
+                    itemFound = true;
 
-                    // Keep asking for the quantity until a valid integer is provided
-                    while (!itemFound) {
+                    // Ask the user for the quantity
+                    while (true) {
                         System.out.println("\nEnter the quantity you want to buy: ");
-                        String quantityString = scanner.nextLine().trim();
+                        String quantityString = scanner.nextLine();  // Read quantity
 
-                        exitProgram(quantityString.trim());
+                        exitProgram(quantityString.trim());  // Exit if user inputs the exit command
+
                         try {
-                            quantity = Integer.parseInt(quantityString);
-                            // Call sellItems to process the purchase
-                            store.sellItems(visitor, chosenItem, quantity);
-
-                            itemFound = true;  // Exit the loop if valid input is given
-
+                            int quantity = Integer.parseInt(quantityString);  // Parse the quantity
+                            store.sellItems(visitor, chosenItem, quantity);  // Process the purchase
+                            return;  // Exit after a successful purchase
                         } catch (NumberFormatException e) {
-                            System.err.println("Invalid quantity. Please try again");
-                            scanner.nextLine();  // Clear the invalid input
+                            System.out.println("Invalid quantity. Please try again.");
                         }
                     }
-                } else {
-                    System.err.println("Invalid item. Please try again.");
                 }
+            }
+
+            // If the item was not found, inform the user
+            if (!itemFound) {
+                System.out.println("Invalid item. Please try again.");
             }
         }
     }
+
 
     public void writeFeedback() {
         if (!visitor.getTicketPurchased()) {
@@ -228,7 +231,7 @@ public class VisitorUI {
                 visitor.setName(name);
                 break;  // Exit the loop if the name is valid
             } else {
-                System.err.println("Invalid name. Please enter only letters.");
+                System.out.println("Invalid name. Please enter only letters.");
             }
         }
     }
@@ -244,14 +247,14 @@ public class VisitorUI {
             try {
                 int userInput = Integer.parseInt(input);  // Parse string to integer
                 if (userInput <= 0) {
-                    throw new IllegalArgumentException("Invalid input. Please enter a valid integer.");
+                    throw new IllegalArgumentException("Invalid input. Please enter a valid number.");
                 }
                 return userInput;  // Return valid input
 
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a valid integer.");
+                System.out.println("Invalid input. Please enter a valid number.");
             } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -287,9 +290,9 @@ public class VisitorUI {
                 break;  // Exit the loop if age is valid
 
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input. Please enter a valid integer.");
+                System.out.println("Invalid input. Please enter a valid number.");
             } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
