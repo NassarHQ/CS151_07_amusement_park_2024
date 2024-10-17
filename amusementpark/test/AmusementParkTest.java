@@ -137,4 +137,30 @@ public class AmusementParkTest {
         ride.addRider(extraVisitor);  // Try to add another visitor
         assertFalse(ride.getOnRide().contains(extraVisitor)); // Verify extra visitor was not added
     }
+
+    // --------- Park Tests ---------
+
+    @Test
+    public void testAddRideToPark() {
+        // Test adding a ride to the park
+        park.addRide(ride);
+        assertTrue(park.getRides().contains(ride)); // Verify ride is in the park's ride list
+    }
+
+    @Test
+    public void testDailyRevenueCalculation() {
+        // Test daily revenue calculation
+        visitor.addToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
+        park.addVisitor(visitor);
+        park.calculateDailyRevenue(); // Calculate revenue based on visitors
+        assertEquals(50.0, park.getDailyRevenue(), 0.01); // Verify daily revenue
+    }
+
+    @Test
+    public void testRemoveRideFromPark() {
+        // Test removing a ride from the park
+        park.addRide(ride);
+        park.removeRide(ride);
+        assertFalse(park.getRides().contains(ride)); // Verify ride is not in the park's ride list
+    }
 }
