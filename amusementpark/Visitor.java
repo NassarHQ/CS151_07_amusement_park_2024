@@ -116,7 +116,7 @@ public class Visitor extends Person {
     public String provideFeedback() {
         Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
 
-        System.out.println("Enter your feedback: " + "\n");
+        System.out.println("Enter your feedback: ");
 
         feedback = sc.nextLine();
         this.hasProvidedFeedback = true;    // Set flag to true if visitor has provided feedback

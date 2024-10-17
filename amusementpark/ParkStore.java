@@ -112,19 +112,19 @@ public class ParkStore {
 
     // Method to sell items
     public void sellItems(Visitor v, String item, int quantity) {
+
+        boolean itemFound = false;   // Initialize flag to false
+
         if (quantity <= 0) {
-            System.out.println("Quantity must be greater than zero. Please enter a valid quantity.");
+            System.out.println("Quantity must be greater than zero. Please try again.\n");
             return;  // Exit the method to allow the program to continue
         }
 
-        if (!inventories.containsKey(item.toLowerCase()) || quantity > inventories.get(item.toLowerCase())) {
-            System.out.println(
-                    !inventories.containsKey(item.toLowerCase()) ?
-                            "Item is not available for sale." :
-                            "Not enough quantity of " + item + " for sale."
-            );
+        if (quantity > inventories.get(item.toLowerCase())) {
+            System.out.println("Not enough quantity of " + item + " for sale.\n");
             return;  // Exit the method to allow the program to continue
         }
+
 
         double price = itemPrices.get(item.toLowerCase());
         parkStoreRevenue += (price * quantity);  // Add price of sold item into revenue
@@ -136,7 +136,7 @@ public class ParkStore {
         }
 
         System.out.println(v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
-                           "Total price is $" + price * quantity + ".");
+                           "Total price is $" + price * quantity + ".\n");
 
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
@@ -206,12 +206,12 @@ public class ParkStore {
     // Method to display available items, their quantities, and prices
     public void displayAvailableItems() {
         if (inventories.isEmpty()) {
-            System.out.println("No items available.");
+            System.out.println("No items available.\n");
             return;  // Exit the method if there are no items
         }
 
         for (String item : inventories.keySet()) {
-            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each");
+            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each\n");
         }
     }
 
