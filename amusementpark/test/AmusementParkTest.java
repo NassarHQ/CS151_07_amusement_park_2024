@@ -72,9 +72,14 @@ public class AmusementParkTest {
 
     @Test
     public void testVisitorAddTicketToPurchaseHistory() {
+        // Assuming the ticket has a ticketID, like "TICKET123"
+        String ticketID = ticket.getTicketID();
+
         // Test adding ticket to visitor's purchase history
         visitor.addTicketToPurchaseHistory(ticket);
-        assertTrue(visitor.getPurchaseTicketHistory().contains(ticket)); // Verify ticket is in purchase history
+
+        // Verify that the purchase history contains the ticket ID (String)
+        assertTrue(visitor.getPurchaseTicketHistory().contains(ticketID));
     }
     
     @Test
