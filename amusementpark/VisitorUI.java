@@ -62,25 +62,9 @@ public class VisitorUI {
     }
 
     public void buyTickets() {
-        while (true) {
-            try {
-                System.out.println("\nEnter the number of tickets you want to buy: ");
-                int numberOfTickets = scanner.nextInt();    // Read the user's input
+       Ticket.displayTicketInfo();
+       park.sellTicket(visitor);
 
-                exitProgram(String.valueOf(numberOfTickets));
-
-                if (numberOfTickets < 0) {
-                    // Throw exception if number of tickets is smaller than 0
-                    throw new IllegalArgumentException("Number of tickets has to be greater than 0.");
-                }
-                break;  // Break if found a valid integer
-            } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
-            } catch (InputMismatchException e) {  // Catch the mismatch exception for input
-                System.err.println("Invalid number of tickets. Please try again.");
-                scanner.next(); // Clear the invalid input
-            }
-        }
     }
 
     public void checkoutRides() {

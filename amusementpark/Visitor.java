@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Visitor extends Person {
-    private String visitorType;
     private double height;
     private double weight;
     private List<String> purchaseTicketHistory;
