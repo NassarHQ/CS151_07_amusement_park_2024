@@ -108,6 +108,42 @@ public class Employee extends Person{
         }
     }
 
+    public void requestDayOff() {
+        if (workSchedule.isEmpty()) {
+            System.out.println("You have no scheduled workdays to request off.");
+            return;
+        }
+
+        System.out.println("Here is your current schedule:");
+        printWorkSchedule();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the date (yyyy-mm-dd) you wish to request off or type 'cancel' to return:");
+        String input = scanner.nextLine();
+
+        if (input.equalsIgnoreCase("cancel")) {
+            System.out.println("Request canceled. Returning to menu.");
+            return;
+        }
+
+        LocalDate requestedDayOff;
+        try {
+            requestedDayOff = LocalDate.parse(input); // Parse the input to a LocalDate
+        } catch (Exception e) {
+            System.out.println("Invalid date format. Please use yyyy-mm-dd.");
+            return;
+        }
+
+        // Find and remove the requested day off
+        boolean dayRemoved = workSchedule.removeIf(workDay -> workDay.date.equals(requestedDayOff));
+
+        if (dayRemoved) {
+            System.out.println("Day off approved! " + requestedDayOff + " has been removed from your schedule.");
+        } else {
+            System.out.println("You are not scheduled to work on " + requestedDayOff + ".");
+        }
+    }
+
     public void shiftIn(){
         if (onShift){
             System.out.println("Employee " + this.getName() + " is already on shift.");
