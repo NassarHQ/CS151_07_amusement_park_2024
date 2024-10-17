@@ -138,14 +138,7 @@ public class Visitor extends Person {
         return feedback;
     }
 
-    // Method to view feedback
-    public void viewFeedback() {
-        if (hasProvidedFeedback) {
-            System.out.println(toString() + " has provided a feedback: " + feedback);
-        } else {
-            System.out.println(toString() + "hasn't provided any feedbacks.");
-        }
-    }
+
     // Method to view ticket purchase history
     public void viewPurchaseTicketHistory() {
         if (purchaseTicketHistory.isEmpty()) {
@@ -165,17 +158,15 @@ public class Visitor extends Person {
     }
 
     // Method to add purchased ticket ID(s) to purchase history
-    public List<String> addTicketToPurchaseHistory(Ticket t) {
+    public void addTicketToPurchaseHistory(Ticket t) {
         if (!purchaseTicketHistory.contains(t.getTicketID())) {
-            purchaseTicketHistory.add(t.getTicketID()); // Add the ticket ID to purchase history
+            purchaseTicketHistory.add(t.getTicketID());
         }
-        return purchaseTicketHistory;
     }
 
     // Method to add purchased store products to purchase history
-    public List<String> addItemToPurchaseHistory(String item, int quantity) {
+    public void addItemToPurchaseHistory(String item, int quantity) {
         purchaseItemHistory.add(quantity + "x " + item);
-        return purchaseItemHistory;
     }
 
 
