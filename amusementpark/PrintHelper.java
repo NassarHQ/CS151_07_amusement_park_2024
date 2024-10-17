@@ -29,15 +29,42 @@ public class PrintHelper {
         System.out.println("============================");
     }
 
-    // Method to print success messages
-    public void printSuccessMessage(String entityType, String name, String id, String action) {
-        System.out.println("\n" + entityType + " " + name + " (ID: " + id + ") " + action + " successfully.");
+    // Method to print sotre manager menu
+    public void printStoreManagerMenu() {
+        System.out.println("\n============================");
+        System.out.println("     Store Manager Menu");
+        System.out.println("============================");
+        System.out.println("1. Add new store");
+        System.out.println("2. Remove existing store");
+        System.out.println("3. Get Store Type");
+        System.out.println("4. Add Items to Store");
+        System.out.println("5. Check Food Validation");
+        System.out.println("6. Check Drink Validation");
+        System.out.println("7. Check Souvenir Validation");
+        System.out.println("8. Display Available Items");
+        System.out.println("9. View Store Purchase History");
+        System.out.println("10.Get Visitors in Store");
+        System.out.println("11.Go back");
+        System.out.println("============================");
     }
 
-    // Method to print error messages
-    public void printErrorMessage(String entityType, String name, String id, String error) {
+ // Method to print success messages
+ public void printSuccessMessage(String entityType, String name, String id, String action) {
+    if (id == null || id.isEmpty()) {  // If no ID is provided, skip the ID part
+        System.out.println("\n" + entityType + " " + name + " " + action + " successfully.");
+    } else {
+        System.out.println("\n" + entityType + " " + name + " (ID: " + id + ") " + action + " successfully.");
+    }
+}
+
+// Method to print error messages
+public void printErrorMessage(String entityType, String name, String id, String error) {
+    if (id == null || id.isEmpty()) {  // If no ID is provided, skip the ID part
+        System.out.println("\nError: " + entityType + " " + name + " " + error + ".");
+    } else {
         System.out.println("\nError: " + entityType + " " + name + " (ID: " + id + ") " + error + ".");
     }
+}
 
     // Method to print ride details
     public void printRideDetails(Ride ride) {

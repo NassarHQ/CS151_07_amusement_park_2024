@@ -7,8 +7,6 @@ import java.util.Scanner;
 public class AdminUI {
 
     private Park park;        // Instance of the Park to interact with
-    private Scanner scanner;  // Scanner for user input
-    private PrintHelper printHelper; // PrintHelper instance for printing menus and messages
 
     // Constructor to initialize AdminUI with a Park object, PrintHelper, and Scanner for input
     public AdminUI(Park park, PrintHelper printHelper) {
@@ -81,42 +79,15 @@ public void addRide() {
     try {
         System.out.println("\n--- Add a Ride ---");
 
-        // Get the ride name
         String name = ValidationHelper.getValidString(scanner, "Enter ride name: ");
-
-        // Get the ride ID
         String rideID = ValidationHelper.getValidString(scanner, "Enter ride ID: ");
+        int capacity = ValidationHelper.getValidPositiveInt(scanner, "ride capacity");
+        int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration");
+        int minHeight = ValidationHelper.getValidPositiveInt(scanner, "minimum height");
+        int maxWeight = ValidationHelper.getValidPositiveInt(scanner, "maximum weight");
 
-        // Get the ride capacity
-        System.out.print("Enter ride capacity: ");
-        int capacity = ValidationHelper.validatePositiveInt(scanner.nextInt(), "ride capacity");
-        scanner.nextLine(); // Consume newline character
-
-        // Get the ride duration
-        System.out.print("Enter ride duration (in minutes): ");
-        int duration = ValidationHelper.validatePositiveInt(scanner.nextInt(), "ride duration");
-        scanner.nextLine(); // Consume newline character
-
-        // Get the minimum height
-        System.out.print("Enter minimum height (in cm): ");
-        int minHeight = ValidationHelper.validatePositiveInt(scanner.nextInt(), "minimum height");
-        scanner.nextLine(); // Consume newline character
-
-        // Get the maximum weight
-        System.out.print("Enter maximum weight (in kg): ");
-        int maxWeight = ValidationHelper.validatePositiveInt(scanner.nextInt(), "maximum weight");
-        scanner.nextLine(); // Consume newline character
-
-        // Validate all inputs are correct before creating the ride
-        if (capacity == -1 || duration == -1 || minHeight == -1 || maxWeight == -1) {
-            System.out.println("Invalid inputs provided. Ride could not be added.");
-            return;
-        }
-
-        // Create a new Ride object
         Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
 
-        // Try to add the ride to the park
         if (park.addRide(newRide)) {
             printHelper.printSuccessMessage("Ride", name, rideID, "added");
         } else {
@@ -124,9 +95,10 @@ public void addRide() {
         }
     } catch (InputMismatchException e) {
         System.out.println("Invalid input. Please enter the correct data type.");
-        scanner.nextLine(); // Clear the invalid input
+        scanner.nextLine();  // Clear invalid input
     }
 }
+
 
        // Method to remove a ride
        public void removeRide() {
@@ -172,135 +144,180 @@ public void addRide() {
         System.out.println("Ride not found. Please check the Ride ID.");
     }
 
+    private PrintHelper printHelper = new PrintHelper();
+    private Scanner scanner = new Scanner(System.in);
 
-    // Method to manage stores in the park
+    // Manage Stores Menu
     public void manageStores() {
-        while(true) {
-            System.out.println("Store Manager Menu:");
-            System.out.println("1. Get Store Type");
-            System.out.println("2. Set Store Type");
-            System.out.println("3. Add Items to Store");
-            System.out.println("4. Check Food Validation");
-            System.out.println("5. Check Drink Validation");
-            System.out.println("6. Check Souvenir Validation");
-            System.out.println("7. Display Available Items");
-            System.out.println("8. View Store Purchase History");
-            System.out.println("9. Get Visitors in Store");
-            System.out.println("10. Go back");
+        while (true) {
+            printHelper.printStoreManagerMenu();
+            int choice = ValidationHelper.getValidMenuChoice(scanner, 12);
+            if (choice == 12) return;  // Go back to Admin Menu
+            handleStoreOptions(choice);
+        }
+    }
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); 
+    // Make an object instance of ParkStore
+    ParkStore store = new ParkStore();
 
-            System.out.println("Enter the store name: ");
-            String storeName = scanner.nextLine();
-            ParkStore store = findStoreByName(park.getStoresList(), storeName);
+    // Handle store options
+    private void handleStoreOptions(int choice) {
+        switch (choice) {
+            case 1 -> addStore();
+            case 2 -> removeStore();
+            case 3 -> getStoreType();
+            case 4 -> addItemsToStore();
+            case 5 -> validateItemInStore("food", store::isValidFoodType);
+            case 6 -> validateItemInStore("drink", store::isValidDrinkType);
+            case 7 -> validateItemInStore("souvenir", store::isValidSouvenirType);
+            case 8 -> displayStoreItems();
+            case 9 -> viewStorePurchaseHistory();
+            case 10 -> getVisitorsInStore();
+            default -> printHelper.printErrorMessage("Selection", "", "", "invalid. Please try again.");
+        }
+    }
 
-            if (store == null) {
-                System.out.println("Store not found.");
-                continue;
+    // Add a store
+    private void addStore() {
+        String newStoreName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        String storeType = ValidationHelper.getValidatedStoreType(scanner);
+
+        try {
+            ParkStore newStore = new ParkStore(newStoreName, storeType);
+            if (park.addStore(newStore)) {
+                printHelper.printSuccessMessage("Store", newStoreName, "", "added");
+            } else {
+                printHelper.printErrorMessage("Store", newStoreName, "", "already exists");
             }
+        } catch (IllegalArgumentException e) {
+            printHelper.printErrorMessage("Store", newStoreName, "", e.getMessage());
+        }
+    }
 
-            switch (choice) {
-                case 1: 
-                    // Get and display the store type
-                    System.out.println("Store type: " + store.getParkStoreType());
-                    break;
+    // Remove a store
+    private void removeStore() {
+        String storeNameToRemove = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore storeToRemove = findStoreByName(storeNameToRemove);
 
-                case 2:
-                    // Set the store type
-                    System.out.println("Enter the new store type (food, drink, souvenir): ");
-                    String newStoreType = scanner.nextLine();
-                    try {
-                        store.setParkStoreType(newStoreType);
-                        System.out.println("Store type updated successfully");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+        if (storeToRemove != null && park.removeStore(storeToRemove)) {
+            printHelper.printSuccessMessage("Store", storeNameToRemove, "", "removed");
+        } else {
+            printHelper.printErrorMessage("Store", storeNameToRemove, "", "not found or could not be removed");
+        }
+    }
 
-                case 3:
-                    // Add items to the Store
-                    System.out.println("Enter item name: ");
-                    String itemName = scanner.nextLine();
-                    System.out.println("Enter item quantity: ");
-                    int itemQuantity = scanner.nextInt();
-                    scanner.nextLine();
-                    try {
-                        store.addItems(itemName, itemQuantity);
-                        System.out.println("Items added successfully");
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+    // Get store type
+    private void getStoreType() {
+        String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore store = findStoreByName(storeName);
 
-                case 4:
-                    // Food Validation
-                    System.out.println("Enter food item to check: ");
-                    String foodName = scanner.nextLine();
-                    if (store.isValidFoodType(foodName)) {
-                        System.out.println("Valid Food Item");
-                    } else {
-                        System.out.println("Invalid Food Item");
-                    }
-                    break;
+        if (store != null) {
+            printHelper.printSuccessMessage("Store Type", store.getParkStoreName(), "", store.getParkStoreType());
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
+        }
+    }
 
-                case 5: 
-                    // Drink Validation
-                    System.out.println("Enter drink item to check: ");
-                    String drinkName = scanner.nextLine();
-                    if (store.isValidDrinkType(drinkName)) {
-                        System.out.println("Valid Drink Item");
-                    } else {
-                        System.out.println("Invalid Drink Item");
-                    }
+    // Add items to the store based on the store type
+    private void addItemsToStore() {
+        String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore store = findStoreByName(storeName);
+    
+        if (store != null) {
+            String storeType = store.getParkStoreType();  // Get the type of store (food, drink, or souvenir)
+    
+            // Dynamically show allowed items based on store type
+            switch (storeType.toLowerCase()) {
+                case "food":
+                    System.out.println("Allowed food items: " + String.join(", ", store.allowedFoodTypes));
                     break;
-
-                case 6:
-                    // Souvernir validation
-                    System.out.println("Enter souvenir type to check: ");
-                    String souvernirName = scanner.nextLine();
-                    if (store.isValidSouvenirType(souvernirName)) {
-                        System.out.println("Souvenir Type is Valid");
-                    } else {
-                        System.out.println("Invalid Souvenir Item");
-                    }
+                case "drink":
+                    System.out.println("Allowed drink items: " + String.join(", ", store.allowedDrinkTypes));
                     break;
-
-                case 7:
-                    // Display available items in store
-                    store.displayAvailableItems();
+                case "souvenir":
+                    System.out.println("Allowed souvenir items: " + String.join(", ", store.allowedSouvenirTypes));
                     break;
-                
-                case 8:
-                    // View store purchase history
-                    store.viewStorePurchaseHistory();
-                    break;
-
-                case 9:
-                    // Get visitors in store
-                    store.getVisitorsInStore();
-                    break;
-                
-                case 10:
-                    // Go back to previous menu
-                    return;
-
                 default:
-                    // default case
-                    System.out.println("Invalid Selection. Please Try Again.");
-                    break;
+                    System.out.println("Unknown store type.");
+                    return;  // Exit if store type is invalid
             }
+    
+            // Ask for item details
+            String itemName = ValidationHelper.getValidString(scanner, "Enter item name: ");
+            int itemQuantity = ValidationHelper.getValidPositiveInt(scanner, "item quantity");
+    
+            // Try adding items to the store
+            try {
+                store.addItems(itemName, itemQuantity);  // Use the addItems method from ParkStore
+                printHelper.printSuccessMessage("Item", itemName, "", "added to store");
+            } catch (IllegalArgumentException e) {
+                printHelper.printErrorMessage("Item", itemName, "", e.getMessage());  // Show error if item is not valid
+            }
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
+        }
+    }
+
+    // Validate food, drink, or souvenir items
+    private void validateItemInStore(String itemType, java.util.function.Predicate<String> validator) {
+        String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore store = findStoreByName(storeName);
+
+        if (store != null) {
+            String itemName = ValidationHelper.getValidString(scanner, "Enter " + itemType + " item to check: ");
+            if (validator.test(itemName)) {
+                printHelper.printSuccessMessage(itemType, itemName, "", "validated");
+            } else {
+                printHelper.printErrorMessage(itemType, itemName, "", "invalid");
+            }
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
+        }
+    }
+
+// Display available items
+private void displayStoreItems() {
+    String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+    ParkStore store = findStoreByName(storeName);
+
+    if (store != null) {
+        store.displayAvailableItems();
+    } else {
+        printHelper.printErrorMessage("Store", storeName, "", "not found");
+    }
+}
+
+
+    // View store purchase history
+    private void viewStorePurchaseHistory() {
+        String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore store = findStoreByName(storeName);
+
+        if (store != null) {
+            store.viewStorePurchaseHistory();
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
+        }
+    }
+
+    // Get visitors in store
+    private void getVisitorsInStore() {
+        String storeName = ValidationHelper.getValidString(scanner, "Enter the store name: ");
+        ParkStore store = findStoreByName(storeName);
+
+        if (store != null) {
+            store.getVisitorsInStore();
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
     }
 
     // Helper method to find a store by name
-    private ParkStore findStoreByName(List<ParkStore> stores, String storeName) {
-        // Loop over the List of stores
-        for (ParkStore store: stores) {
-            if (store.getParkStoreName().equalsIgnoreCase(storeName)) {
-                return store;
-            }
-        } return null;
+    private ParkStore findStoreByName(String storeName) {
+        return park.getStoresList().stream()
+                .filter(store -> store.getParkStoreName().equalsIgnoreCase(storeName))
+                .findFirst()
+                .orElse(null);
     }
 
     // Method to show feedback from visitors
