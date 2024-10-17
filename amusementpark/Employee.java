@@ -55,8 +55,8 @@ public class Employee extends Person{
     }
 
     // Parametarized Constructor
-    public Employee(String name, int age, String employeeID, String role) {
-        super(name, age);
+    public Employee(String name, int age, String username, String password, String employeeID, String role) {
+        super(name, age, username, password);
         this.employeeID = employeeID;
         this.role = role;
         this.onShift = false;
