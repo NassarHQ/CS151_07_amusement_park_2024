@@ -24,18 +24,18 @@ public class Visitor extends Person {
         this.ticketPurchased = false; // Initialize the flag as false
     }
 
-    public Visitor(String name, int age) {
-        super (name, age);
+    public Visitor(String name, int age, String username, String password) {
+        super(name, age, username, password);  // Call the parameterized constructor of Person
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
         this.height = 0.0;
         this.weight = 0.0;
-        this.hasProvidedFeedback = false;   // Initialize the flag as false
-        this.ticketPurchased = false; // Initialize the flag as false
+        this.hasProvidedFeedback = false;
+        this.ticketPurchased = false;
     }
 
-    public Visitor(String name, int age, double height, double weight) {
-        super(name, age); // Call the parent class constructor
+    public Visitor(String name, int age, double height, double weight, String username, String password) {
+        super(name, age, username, password); // Call the parent class constructor
         this.height = height;
         this.weight = weight;
         this.purchaseTicketHistory = new ArrayList<>();
@@ -193,4 +193,14 @@ public class Visitor extends Person {
             throw new IllegalArgumentException(field + " has to be greater than 0.");
         }
     }
+
+    @Override
+    public void viewProfile() {
+        System.out.println("Name: " + getName());
+        System.out.println("Age: " + getAge());
+        System.out.println("Username: " + getUsername());
+        System.out.println("Height: " + height);
+        System.out.println("Weight: " + weight);
+    }
+
 }

@@ -292,4 +292,25 @@ public class Employee extends Person{
     public String toString() {
         return "Employee " + getName() + ", with ID: " + getEmployeeID();
     }
+
+    @Override //Not done yet its temporary stuffs
+    public void viewProfile(){
+        System.out.println("\n------------------ EMPLOYEE PROFILE ------------------");
+        System.out.printf("Name           : %s%n", getName());
+        System.out.printf("Age            : %d%n", getAge());
+        System.out.printf("Role           : %s%n", getRole());
+        System.out.printf("Employee ID    : %s%n", getEmployeeID());
+        System.out.printf("On Shift       : %s%n", onShift ? "Yes" : "No");
+        
+        // Check if the employee has a work schedule
+        if (workSchedule.isEmpty()) {
+            System.out.println("No work scheduled for the next 7 days.");
+        } else {
+            for (WorkDay workDay : workSchedule) {
+                System.out.println(workDay); // Display the work schedule
+            }
+        }
+        System.out.println("------------------------------------------------------\n");
+    }
+
 }
