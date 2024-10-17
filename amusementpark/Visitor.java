@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Visitor extends Person {
     private String visitorType;
-    private int height;
+    private double height;
     private double weight;
     private List<String> purchaseTicketHistory;
     private List<String> purchaseItemHistory;
@@ -18,7 +18,7 @@ public class Visitor extends Person {
         super();
         this.purchaseTicketHistory = new ArrayList<>(); // Initialize or create a new list;
         this.purchaseItemHistory = new ArrayList<>();
-        this.height = 0;
+        this.height = 0.0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
     }
@@ -27,7 +27,7 @@ public class Visitor extends Person {
         super (name, age);
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
-        this.height = 0;
+        this.height = 0.0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
     }
@@ -42,7 +42,7 @@ public class Visitor extends Person {
     }    
 
     // Getter for visitor's height
-    public int getVisitorHeight() {
+    public double getVisitorHeight() {
         return height;
     }
 
@@ -173,7 +173,7 @@ public class Visitor extends Person {
     }
 
     // Method to add purchased store products to purchase history
-    public List<String> addItemToPurchaseHistory(ParkStore store, String item, int quantity) {
+    public List<String> addItemToPurchaseHistory(String item, int quantity) {
         purchaseItemHistory.add(quantity + "x " + item);
         return purchaseItemHistory;
     }

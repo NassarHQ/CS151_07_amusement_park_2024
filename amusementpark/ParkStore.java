@@ -141,6 +141,9 @@ public class ParkStore {
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
 
+        // Add the purchase to visitor's purchase history
+        v.addItemToPurchaseHistory(item, quantity);
+
     }
 
     // Getter for inventory
