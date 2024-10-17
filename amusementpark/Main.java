@@ -11,23 +11,22 @@ public class Main {
         Employee employee = new Employee("John Doe", 25, "1304", "manager");
         Visitor visitor = new Visitor("John", 28);
         ParkStore store = new ParkStore("foody", "food");
+        ParkStore store1 = new ParkStore("drunk", "drink");
         park.addStore(store);
+        park.addStore(store1);
         store.addItems("burger", 30);
+        store1.addItems("coke", 12);
        /*   Visitor visitor = new Visitor("Test", 32);
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
         park.addRide(incredi);  RYANS TESTING STUFF */
         
         
-        System.out.println("Welcome to the Amusement Park Management System!\n");
+        System.out.println("Welcome to the Amusement Park Management System!");
         
         while (true){
 
-        System.out.println("Main Menu:");
-        System.out.println("1. Visitor");
-        System.out.println("2. Employee");
-        System.out.println("3. Admin");
-        System.out.println("4. Exit");
-        System.out.print("\nPlease select an option (1-4): ");
+        PrintHelper.printMainMenu();    // Call printMainMenu() to print out Main Menu
+
         String response = scanner.nextLine();
 
         switch (response){

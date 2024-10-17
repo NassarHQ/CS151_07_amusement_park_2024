@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.LocalDateTime;
 
 // Employee Class
-class Employee extends Person{
+public class Employee extends Person{
 
     // Declared role and employeeID
     private String role;
