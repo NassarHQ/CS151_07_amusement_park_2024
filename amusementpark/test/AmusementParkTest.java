@@ -20,7 +20,7 @@ public class AmusementParkTest {
     @Before
     public void setUp() {
         employee = new Employee("John Doe", 30, "E123", "Manager");
-        visitor = new Visitor("Jane Doe", 25, 170, 70);
+        visitor = new Visitor("Jane Doe", 25, 170, 70, "usn1", "psw1");
         ticket = new Ticket(50.0, "T123");
         ride = new Ride("Roller Coaster", "0001", 20, 60, 150, 200);
         park = new Park();
@@ -63,7 +63,7 @@ public class AmusementParkTest {
     @Test
     public void testEmployeeCheckRideEligibility() {
         // Test ride eligibility check
-        visitor = new Visitor("Visitor", 12, 130, 50);  // Invalid height for the ride
+        visitor = new Visitor("Visitor", 12, 130, 50, "usn11", "psw11");  // Invalid height for the ride
         ride.addRider(visitor);
         assertFalse(employee.checkRideEligibility(ride)); // Expect false due to height restriction
     }
@@ -147,11 +147,11 @@ public class AmusementParkTest {
     public void testRideCapacity() {
         // Test that the ride can't exceed its capacity
         for (int i = 0; i < ride.getRideCapacity(); i++) {
-            ride.addRider(new Visitor("Visitor" + i, 20, 160, 70)); // Add visitors
+            ride.addRider(new Visitor("Visitor" + i, 20, 160, 70, "usn2", "psw2")); // Add visitors
         }
         assertEquals(ride.getRideCapacity(), ride.getOnRide().size()); // Verify capacity is met
 
-        Visitor extraVisitor = new Visitor("Extra Visitor", 25, 170, 75);
+        Visitor extraVisitor = new Visitor("Extra Visitor", 25, 170, 75, "usn3", "psw3");
         ride.addRider(extraVisitor);  // Try to add another visitor
         assertFalse(ride.getOnRide().contains(extraVisitor)); // Verify extra visitor was not added
     }
@@ -167,7 +167,7 @@ public class AmusementParkTest {
 
     @Test
     public void testDailyRevenueCalculation() {
-        Visitor visitor = new Visitor("John Doe", 30, 180, 85); // Example: A child visitor
+        Visitor visitor = new Visitor("John Doe", 30, 180, 85, "usn4", "pwd4"); // Example: A child visitor
         double ticketPrice = 100.0;
         ticket.setTicketPrice(ticketPrice); // Set initial price for the ticket
 
