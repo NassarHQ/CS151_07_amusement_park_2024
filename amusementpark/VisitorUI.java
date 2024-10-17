@@ -10,8 +10,6 @@ public class VisitorUI {
     private Park park;
     private Ride ride;
     private ParkStore store;
-    private String chosenItem;
-    private int quantity;
 
     public VisitorUI(Park park) {  //Only one constructor here. This makes the most sense.
         this.scanner = new Scanner(System.in);
@@ -71,7 +69,7 @@ public class VisitorUI {
         } else {
             if (park.sellTicket(visitor)) {
                 visitor.setTicketPurchased(true);
-                park.addPerson(visitor);
+                park.addVisitor(visitor);
             }
         }
     }

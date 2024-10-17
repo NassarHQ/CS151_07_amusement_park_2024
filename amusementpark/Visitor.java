@@ -171,7 +171,7 @@ public class Visitor extends Person {
 
     // Method to add purchased ticket ID(s) to purchase history
     public void addTicketToPurchaseHistory(Ticket t) {
-        if (!purchaseTicketHistory.contains(t.getTicketID())) {
+        if (hasPurchased(t.getTicketID())) {
             purchaseTicketHistory.add(t.getTicketID());
         }
     }
