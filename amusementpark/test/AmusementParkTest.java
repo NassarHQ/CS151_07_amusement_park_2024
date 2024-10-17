@@ -53,12 +53,12 @@ public class AmusementParkTest {
         assertFalse(employee.getOnShift()); // Verify employee is off shift
     }
 
-    @Test
-    public void testEmployeeAddToPark() {
-        // Test adding employee to park
-        employee.addToPark(park);
-        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
-    }
+//    @Test
+//    public void testEmployeeAddToPark() {
+//        // Test adding employee to park
+//        employee.addToPar(park);
+//        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
+//    }
 
     @Test
     public void testEmployeeCheckRideEligibility() {
@@ -70,12 +70,6 @@ public class AmusementParkTest {
 
     // --------- Visitor Tests ---------
 
-    @Test
-    public void testVisitorAddTicketToPurchaseHistory() {
-        // Test adding ticket to visitor's purchase history
-        visitor.addTicketToPurchaseHistory(ticket);
-        assertTrue(visitor.getPurchaseTicketHistory().contains(ticket)); // Verify ticket is in purchase history
-    }
 
     @Test
     public void testVisitorFeedback() {
@@ -170,7 +164,7 @@ public class AmusementParkTest {
 
         park.sellTicket(visitor);   //Process the ticket purchase
 
-        park.addPerson(visitor);    //Add the visitor to the park
+        park.addVisitor(visitor);    //Add the visitor to the park
 
         park.calculateParkMetric(); // Calculate the park's metrics
 

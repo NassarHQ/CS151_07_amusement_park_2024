@@ -1,7 +1,6 @@
 package amusementpark;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Scanner;
@@ -22,8 +21,8 @@ public class Park {
 
     // HashSets to store visitors and employees.
     // ArrayLists to store sections, rides, and tickets
-    private Set<Visitor> visitors;
-    private Set<Employee> employees;
+    private ArrayList<Visitor> visitors;
+    private ArrayList<Employee> employees;
     private ArrayList<ParkStore> stores;
     private ArrayList<Ride> rides;
     private Set<Ticket> soldTickets;
@@ -36,8 +35,8 @@ public class Park {
         this.parkLocation = "666 Roller Coaster Avenue";
         this.dailyRevenueGoal = 5000.00;
         this.dailyVisitorGoal = 100;
-        this.visitors = new HashSet<>();
-        this.employees = new HashSet<>();
+        this.visitors = new ArrayList<>();
+        this.employees = new ArrayList<>();
         this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.soldTickets = new HashSet<>();
@@ -50,8 +49,8 @@ public class Park {
         this.parkLocation = parkLocation;
         this.dailyRevenueGoal = dailyRevenueGoal;
         this.dailyVisitorGoal = dailyVisitorGoal;
-        this.visitors = new HashSet<>();
-        this.employees = new HashSet<>();
+        this.visitors = new ArrayList<>();
+        this.employees = new ArrayList<>();
         this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
         this.soldTickets = new HashSet<>();
@@ -59,131 +58,103 @@ public class Park {
 
     }
 
-    // Method to add a Person to the park
-    public void addPerson(Person p) {
-        // Check if the object of Person is null
-        if (p == null) {
-            System.out.println("Invalid person. Cannot add null.");
-            return; // Exit the method if p is null
-        }
-
-        // Use instanceof to determine the type of Person
-        if (p instanceof Visitor visitor) {
-            // Check if the visitor is already in the park
-            if (visitors.contains(visitor)) {
-                System.out.println(visitor.toString() + " is already in the park.");
-                return; // Exit the method if the visitor is already present
-            } else {
-                visitors.add(visitor); // Add the visitor to the park's list
-                visitor.addedToPark(this); // Call the Visitor's method to add to the park
-            }
-        } else if (p instanceof Employee employee) {
-            // Check if the employee is already in the park
-            if (employees.contains(employee)) {
-                System.out.println(employee.toString() + " is already in the park.");
-                return; // Exit the method if the employee is already present
-            } else {
-                employees.add(employee); // Add the employee to the park's list
-                employee.addedToPark(this); // Call the Employee's method to add to the park
-            }
-        } else {
-            // Handle other types of Person if necessary
-            System.out.println(p.getName() + " is not a valid type to add to the park.");
-        }
-    }
-
-
-
-    // Method to remove a Person from the park
-    public void removePerson(Person p) {
-        // Check if the object of Person is null
-        if (p == null) {
-            // Print an error message if object p is null
-            System.out.println("Invalid person. Cannot remove null.");
-            return;
-        }
-
-        // Use instanceof to determine the type of Person
-        if (p instanceof Visitor visitor) {
-            // Call the Visitor's method to remove from the park
-            visitor.removedFromPark(this);
-        } else if (p instanceof Employee employee) {
-            // Call the Employee's method to remove from the park
-            employee.removedFromPark(this); // Assuming you have a similar method in Employee
-        } else {
-            // Handle other types of Person if necessary
-            System.out.println(p.getName() + " is not a valid type to remove from the park.");
-        }
-    }
-
-
     // Utility method to print generic action-related messages for rides or tickets
-public void printActionMessage(String entityType, String entityNameOrID, boolean success, String additionalMessage) {
-    String status = success ? "successfully" : "unsuccessfully";
-    System.out.println("\n================================");
-    System.out.printf(" %s %s: %s\n", entityType, additionalMessage, entityNameOrID);
-    System.out.println("--------------------------------");
-    System.out.printf(" Status: %s %s\n", status, additionalMessage);
-    System.out.println("================================\n");
-}
-
-
-private <T> boolean manageEntity(T entity, ArrayList<T> list, String entityName, boolean add) {
-    if (entity == null) {
-        System.out.println("Invalid " + entityName + ". Cannot perform operations.");
-        return false;
+    public void printActionMessage(String entityType, String entityNameOrID, boolean success, String additionalMessage) {
+        String status = success ? "successfully" : "unsuccessfully";
+        System.out.println("\n================================");
+        System.out.printf(" %s %s: %s\n", entityType, additionalMessage, entityNameOrID);
+        System.out.println("--------------------------------");
+        System.out.printf(" Status: %s %s\n", status, additionalMessage);
+        System.out.println("================================\n");
     }
 
-    String action = add ? "added" : "removed";
 
-    if (add) {
-        if (list.contains(entity)) {
-            System.out.printf("The %s is already in the park.\n", entityName);
+    private <T> boolean manageEntity(T entity, ArrayList<T> list, String entityName, boolean add) {
+        if (entity == null) {
+            System.out.println("Invalid " + entityName + ". Cannot perform operations.");
             return false;
         }
-        list.add(entity);
-        System.out.printf("The %s was successfully %s in the park.\n", entityName, action);
-        return true;
-    } else {
-        if (!list.contains(entity)) {
-            System.out.printf("The %s is not found in the park.\n", entityName);
-            return false;
+
+        String action = add ? "added" : "removed";
+
+        if (add) {
+            if (list.contains(entity)) {
+                System.out.printf("The %s is already in the park.\n", entityName);
+                return false;
+            }
+            list.add(entity);
+            System.out.printf("The %s was successfully %s in the park.\n", entityName, action);
+            return true;
+        } else {
+            if (!list.contains(entity)) {
+                System.out.printf("The %s is not found in the park.\n", entityName);
+                return false;
+            }
+            list.remove(entity);
+            System.out.printf("The %s was successfully %s from the park.\n", entityName, action);
+            return true;
         }
-        list.remove(entity);
-        System.out.printf("The %s was successfully %s from the park.\n", entityName, action);
-        return true;
     }
-}
 
-// Manage rides using the generic method
-private boolean manageRide(Ride r, boolean add) {
-    return manageEntity(r, rides, "ride", add);
-}
+    // Manage visitors using the generic method
+    private boolean manageVisitor(Visitor v, boolean add) {
+        return manageEntity(v, visitors, "visitor", add);
+    }
 
-// Manage stores using the generic method
-private boolean manageStore(ParkStore s, boolean add) {
-    return manageEntity(s, stores, "store", add);
-}
+    // Manage employees using the generic method
+    private boolean manageEmployee(Employee e, boolean add) {
+        return manageEntity(e, employees, "employee", add);
+    }
 
-// Public method to add a ride
-public boolean addRide(Ride r) {
-    return manageRide(r, true);  // Call manageRide with true to add
-}
+    // Manage rides using the generic method
+    private boolean manageRide(Ride r, boolean add) {
+        return manageEntity(r, rides, "ride", add);
+    }
 
-// Public method to remove a ride
-public boolean removeRide(Ride r) {
-    return manageRide(r, false);  // Call manageRide with false to remove
-}
+    // Manage stores using the generic method
+    private boolean manageStore(ParkStore s, boolean add) {
+        return manageEntity(s, stores, "store", add);
+    }
 
-// Public method to add a store
-public boolean addStore(ParkStore s) {
-    return manageStore(s, true);  // Call manageStore with true to add
-}
+    // Public method to add a ride
+    public boolean addRide(Ride r) {
+        return manageRide(r, true);  // Call manageRide with true to add
+    }
 
-// Public method to remove a store
-public boolean removeStore(ParkStore s) {
-    return manageStore(s, false);  // Call manageStore with false to remove
-}
+    // Public method to remove a ride
+    public boolean removeRide(Ride r) {
+        return manageRide(r, false);  // Call manageRide with false to remove
+    }
+
+    // Public method to add a visitor
+    public boolean addVisitor(Visitor v) {
+        return manageVisitor(v, true);  // Call manageVisitor with true to add
+    }
+
+    // Public method to remove a visitor
+    public boolean removeVisitor(Visitor v) {
+        return manageVisitor(v, false);  // Call manageVisitor with false to remove
+    }
+
+    // Public method to add an employee
+    public boolean addEmployee(Employee e) {
+        return manageEmployee(e, true);  // Call manageEmployee with true to add
+    }
+
+    // Public method to remove a visitor
+    public boolean removeEmployee(Employee e) {
+        return manageEmployee(e, false);  // Call manageEmployee with false to remove
+    }
+
+    // Public method to add a store
+    public boolean addStore(ParkStore s) {
+        return manageStore(s, true);  // Call manageStore with true to add
+    }
+
+    // Public method to remove a store
+    public boolean removeStore(ParkStore s) {
+        return manageStore(s, false);  // Call manageStore with false to remove
+    }
 
 
     // Calculate park metrics (total revenue, visitors, and tickets sold)
@@ -304,12 +275,12 @@ public boolean removeStore(ParkStore s) {
     }
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
-    public Set<Visitor> getVisitors() {
+    public ArrayList<Visitor> getVisitors() {
         return visitors;
     }
 
     // Getter for employees (returns an unmodifiable set to prevent outside modification)
-    public Set<Employee> getEmployees() {
+    public ArrayList<Employee> getEmployees() {
         return employees;
     }
 
