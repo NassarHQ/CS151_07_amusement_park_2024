@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Scanner;
 
 public class Park {
 
@@ -223,9 +224,34 @@ public boolean removeStore(ParkStore s) {
 
 
 // Method to sell a ticket to a visitor
-public void sellTicket(Visitor v, double price) {
-    Ticket newTicket = generateTicket(price);  // Generate a new ticket when selling
-    processTicket(newTicket, v, true);  // Process the sale
+public void sellTicket(Visitor v) {
+    // Define a base price for the ticket (for example $100.00)
+    double basePrice = 100.00;
+
+    // Generate a new ticket with the base price
+    Ticket newTicket = generateTicket(basePrice);
+
+    // Apply discount based on the visitor's category
+    double finalPrice = newTicket.applyDiscount(v);
+
+    // Display the price details to the visitor
+    System.out.printf("Base Ticket Price: $%.2f\n", basePrice);
+    System.out.printf("Final Ticket Price after discount: $%.2f\n", finalPrice);
+
+    // Simulate confirmation (e.g., input from visitor)
+    System.out.println("Would you like to proceed with the purchase? (yes/no)");
+    Scanner scanner = new Scanner(System.in);
+    String response = scanner.nextLine();
+
+    if (response.equalsIgnoreCase("yes")) {
+        // Update the ticket price to the discounted price
+        newTicket.setTicketPrice(finalPrice);
+
+        // Process the sale
+        processTicket(newTicket, v, true);
+    } else {
+        System.out.println("Purchase cancelled.");
+    }
 }
 
 // Method to refund a ticket to a visitor
