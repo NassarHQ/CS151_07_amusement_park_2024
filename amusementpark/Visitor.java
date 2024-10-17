@@ -24,6 +24,16 @@ public class Visitor extends Person {
         this.ticketPurchased = false; // Initialize the flag as false
     }
 
+    public Visitor(String name, int age) {
+        super (name, age);
+        this.purchaseTicketHistory = new ArrayList<>();
+        this.purchaseItemHistory = new ArrayList<>();
+        this.height = 0.0;
+        this.weight = 0.0;
+        this.hasProvidedFeedback = false;   // Initialize the flag as false
+        this.ticketPurchased = false; // Initialize the flag as false
+    }
+
     public Visitor(String name, int age, String username, String password) {
         super(name, age, username, password);  // Call the parameterized constructor of Person
         this.purchaseTicketHistory = new ArrayList<>();
