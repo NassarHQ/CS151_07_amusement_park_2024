@@ -6,6 +6,7 @@ public class Ticket implements Discountable {
     private boolean isUsed; // Check if the ticket has been used
     private boolean isRefunded; // Check if the ticket has been refunded
     private static int ticketCounter = 0;
+    private static final double BASE_PRICE = 100.00;
 
     public Ticket(double ticketPrice, String ticketID){
         this.ticketPrice = ticketPrice;
@@ -57,6 +58,15 @@ public class Ticket implements Discountable {
         // Generate a unique ticket ID using the static counter
         String ticketID = "TICKET" + (++ticketCounter);  // Increment the counter and create the ticket ID
         return new Ticket(price, ticketID);  // Create and return a new Ticket object
+    }
+
+    public static void displayTicketInfo() {
+        System.out.println("Ticket Pricing Information:");
+        System.out.println("---------------------------");
+        System.out.printf("Adult Ticket Price: $%.2f\n", BASE_PRICE);
+        System.out.printf("Child Ticket Price: $%.2f (50%% discount)\n", BASE_PRICE * 0.5);
+        System.out.printf("Senior Ticket Price: $%.2f (25%% discount)\n", BASE_PRICE * 0.75);
+        System.out.println("---------------------------");
     }
 
 
