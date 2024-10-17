@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.Random;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDateTime;
+import static amusementpark.Main.exitProgram;
+
 
 // Employee Class
 public class Employee extends Person{
@@ -253,7 +254,7 @@ public class Employee extends Person{
 
     @Override
     // Method to add Person to park
-    public void addToPark(Park park) {
+    public void addedToPark(Park park) {
 
         // add the employee from the park employee set
         // this refers to the current instance of employee
@@ -268,7 +269,7 @@ public class Employee extends Person{
 
     @Override
     // Method to remove person from Park
-    public void removeFromPark(Park park) {
+    public void removedFromPark(Park park) {
         // remove the employee from the park employee set
         // this refers to the current  instance of employee
         if (park.getEmployees().remove(this)) {
