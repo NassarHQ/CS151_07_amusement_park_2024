@@ -13,7 +13,7 @@ public class Visitor extends Person {
     private String feedback;
     private boolean hasProvidedFeedback;
 
-    
+
     public Visitor(){
         super();
         this.purchaseTicketHistory = new ArrayList<>(); // Initialize or create a new list;
@@ -39,7 +39,7 @@ public class Visitor extends Person {
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
         this.hasProvidedFeedback = false; // Initialize the flag as false
-    }    
+    }
 
     // Getter for visitor's height
     public double getVisitorHeight() {
@@ -48,13 +48,8 @@ public class Visitor extends Person {
 
     // Setter for visitor's height
     public void setVisitorHeight(int height) {
-        if (height <= 0) {
-            throw new IllegalArgumentException("Height has to be greater than 0.");
-        }
-
+        validatePositiveNumber(height, "Height");
         this.height = height;
-
-        System.out.println("Height of " + toString() + " is: " + height +" cm.");
     }
 
     // Getter for visitor's weight
@@ -64,19 +59,14 @@ public class Visitor extends Person {
 
     // Setter for visitor's weight
     public void setVisitorWeight(double weight) {
-        if (weight <= 0) {
-            throw new IllegalArgumentException("Weight has to be greater than 0.");
-        }
-
+        validatePositiveNumber(height, "Weight");
         this.weight = weight;
-
-        System.out.println("Weight of " + toString() + " is: " + weight +" kg.");
     }
 
     // Getter to retrieve purchase ticket history
     public List<String> getPurchaseTicketHistory() {
         return purchaseTicketHistory;
-    }    
+    }
 
     //Getter for feedback
     public String getFeedback() {
@@ -138,9 +128,8 @@ public class Visitor extends Person {
 
     // Method to provide feedback
     public String provideFeedback() {
-        Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
-
         System.out.println("Enter your feedback: ");
+        Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
 
         feedback = sc.nextLine();
         this.hasProvidedFeedback = true;    // Set flag to true if visitor has provided feedback
@@ -185,8 +174,10 @@ public class Visitor extends Person {
         return purchaseTicketHistory.contains(ticketID); // Return true if ticket ID is in purchase history
     }
 
-    // Method to upgrade membership
-    //public boolean upgradeMembership(String newType, double cost) {
-    // TO BE IMPLEMENTED
-    // }
+    // Helper method to validate positive number
+    private void validatePositiveNumber(double number, String field) {
+        if (number <= 0) {
+            throw new IllegalArgumentException(field + " has to be greater than 0.");
+        }
+    }
 }

@@ -59,7 +59,7 @@ public class PrintHelper {
         System.out.println("\n============================");
         System.out.println("\tVisitor Menu");
         System.out.println("============================");
-        System.out.println("1. Buy Tickets");
+        System.out.println("1. Buy a Ticket");
         System.out.println("2. View Rides");
         System.out.println("3. Queue for a Ride");
         System.out.println("4. Buy Items from Store");

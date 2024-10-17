@@ -21,6 +21,11 @@ public class VisitorUI {
 
     public void displayMenu() {
 
+        askVisitorName();
+        askVisitorAge();
+        askVisitorHeight();
+        askVisitorWeight();
+
         while (true) {   // Infinite loop to keep the menu running until EXIT
 
             PrintHelper.printVisitorMenu(); // Call printVisitorMenu from PrintHelper class to print out Visitor Menu
@@ -58,18 +63,18 @@ public class VisitorUI {
     public void buyTickets() {
         while (true) {
             try {
-                System.out.println("Enter the number of tickets you want to buy: ");
+                System.out.println("\nEnter the number of tickets you want to buy: ");
                 int numberOfTickets = scanner.nextInt();    // Read the user's input
 
                 if (numberOfTickets < 0) {
                     // Throw exception if number of tickets is smaller than 0
-                    throw new IllegalArgumentException("Number of tickets has to be greater than 0.\n");
+                    throw new IllegalArgumentException("Number of tickets has to be greater than 0.");
                 }
                 break;  // Break if found a valid integer
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
             } catch (InputMismatchException e) {  // Catch the mismatch exception for input
-                System.err.println("Invalid number of tickets. Please try again.\n");
+                System.err.println("Invalid number of tickets. Please try again.");
                 scanner.next(); // Clear the invalid input
             }
         }
@@ -78,16 +83,16 @@ public class VisitorUI {
     public void checkoutRides() {
         while (true) {
             // Print out the park's rides
-            System.out.println("List of our Rides:\n");
+            System.out.println("\n============================");
+            System.out.println("\tList of our Rides");
+            System.out.println("============================");
             park.displayAllRides();
-            System.out.println("\n");   // Print new line for displaying purpose
 
-            System.out.println("Enter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
+            System.out.println("\nEnter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
             String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
 
             if (chosenRide.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to Visitor Menu" + "\n"
-                        + "-----");
+                System.out.println("Return to Visitor Menu");
                 return;  // Go back to visitor menu if user type 'cancel'
             }
 
@@ -104,7 +109,7 @@ public class VisitorUI {
 
             // If the ride was not found, inform the user
             if (!rideFound) {
-                System.err.println("Invalid ride. Please try again.\n");
+                System.err.println("Invalid ride. Please try again.");
             }
         }
     }
@@ -112,15 +117,16 @@ public class VisitorUI {
     public void checkoutStores() {
         while (true) {
             // Buy products from store
-            System.out.println("List of our Stores: ");
+            System.out.println("\n============================");
+            System.out.println("\tList of our Stores");
+            System.out.println("============================");
             park.displayAllStores();    // Display all stores to visitors using method from Park class
 
-            System.out.println("Choose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)\n");
+            System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
             String chosenStore = scanner.nextLine();     // Read user's input for chosen store
 
             if (chosenStore.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to Visitor Menu" + "\n"
-                        + "-----");
+                System.out.println("Return to Visitor Menu");
                 return;  // Go back to visitor menu if user type 'cancel'
             }
 
@@ -142,19 +148,18 @@ public class VisitorUI {
 
             // If the store was not found, inform the user
             if (!storeFound) {
-                System.out.println("Invalid store. Please try again.\n");
+                System.out.println("Invalid store. Please try again.");
             }
         }
     }
 
     public void buyProductsFromStore() {
         while (true) {
-            System.out.println("Enter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
+            System.out.println("\nEnter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
             chosenItem = scanner.nextLine();
 
             if (chosenItem.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to List of our Stores" + "\n"
-                        + "-----");
+                System.out.println("Return to List of our Stores");
                 return;  // Go back to list of stores if user type 'cancel'
             }
 
@@ -166,7 +171,7 @@ public class VisitorUI {
 
                     // Keep asking for the quantity until a valid integer is provided
                     while (!itemFound) {
-                        System.out.println("Enter the quantity you want to buy: ");
+                        System.out.println("\nEnter the quantity you want to buy: ");
                         try {
                             quantity = scanner.nextInt();  // Read the quantity
                             scanner.nextLine();  // Consume the newline character
@@ -177,12 +182,12 @@ public class VisitorUI {
                             itemFound = true;  // Exit the loop if valid input is given
 
                         } catch (InputMismatchException e) {
-                            System.err.println("Invalid quantity. Please try again\n");
+                            System.err.println("Invalid quantity. Please try again");
                             scanner.nextLine();  // Clear the invalid input
                         }
                     }
                 } else {
-                    System.err.println("Invalid item. Please try again.\n");
+                    System.err.println("Invalid item. Please try again.");
                 }
 
             }
@@ -199,19 +204,57 @@ public class VisitorUI {
         visitor.viewPurchaseItemHistory();
     }
 
-//    // Method to ask for user's info
-//    public void checkWeight() {
-//        while (true) {
-//            System.out.println("\n Enter your weight in kg: ");
-//            try {
-//                visitor.setVisitorWeight(scanner.nextDouble());  // Read the weight
-//                scanner.nextLine();  // Consume the newline character
-//
-//            } catch (InputMismatchException e) {
-//                System.err.println("Invalid weight. Please try again\n");
-//            }
-//        }
-//    }
+    // Method to ask for visitor's name
+    public void askVisitorName() {
+        while (true) {
+            System.out.println("\nEnter your name: ");
+            String name = scanner.nextLine().trim();  // Trim to remove leading/trailing spaces
+
+            // Check if the input is not empty and contains only letters and spaces
+            if (!name.isEmpty() && name.matches("[a-zA-Z ]+")) {
+                visitor.setName(name);
+                break;  // Exit the loop if the name is valid
+            } else {
+                System.err.println("Invalid name. Please enter only letters.");
+            }
+        }
+    }
+
+    // Helper method to ask for numerical input (age, weight, height)
+    private int askForNumericInput(String prompt) {
+        while (true) {
+            try {
+                System.out.println("\n" + prompt);
+                int input = scanner.nextInt();  // Get numeric input
+                scanner.nextLine();  // Clear the newline character after nextInt()
+
+                if (input <= 0) {
+                    throw new IllegalArgumentException("Invalid input. Please try again.");
+                }
+                return input;  // Return valid input
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            } catch (InputMismatchException e) {
+                System.err.println("Invalid input. Please enter a valid number.");
+                scanner.next();  // Clear the invalid input
+            }
+        }
+    }
+
+    // Method to ask for visitor's age
+    public void askVisitorAge() {
+        visitor.setAge(askForNumericInput("Enter your age: "));
+    }
+
+    // Method to ask for visitor's weight
+    public void askVisitorWeight() {
+        visitor.setVisitorWeight(askForNumericInput("Enter your weight in kg: "));
+    }
+
+    // Method to ask for visitor's height
+    public void askVisitorHeight() {
+        visitor.setVisitorHeight(askForNumericInput("Enter your height in cm: "));
+    }
 }
 
 
