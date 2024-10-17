@@ -42,7 +42,7 @@ public class EmployeeUI {
     }
 
     private boolean handleMenuChoice(String choice){
-        switch (choice) {
+        switch (choice.trim()) {
             case "1":
                 employee.shiftIn();
                 break;
@@ -74,7 +74,7 @@ public class EmployeeUI {
             case "9":
                 return true; // Exit to main menu
             case "exit":
-                exitProgram(choice);
+                exitProgram(choice.trim());
             default:
                 System.out.println("Invalid option. Please try again.");
                 break;
@@ -100,7 +100,7 @@ public class EmployeeUI {
 
         while (true) {
             System.out.println("Enter the name of the ride you want to check (or type 'cancel' to go back):");
-            String rideName = scanner.nextLine();
+            String rideName = scanner.nextLine().trim();
 
             exitProgram(rideName);
 

@@ -70,6 +70,7 @@ public class Park {
         }
         // Add the person to the park
         p.addToPark(this);
+        visitors.add((Visitor) p);
     }
 
     // Method to remove a Person from the park
@@ -218,7 +219,7 @@ public boolean removeStore(ParkStore s) {
     }
 }
 
-    public void sellTicket(Visitor v) {
+    public boolean sellTicket(Visitor v) {
         // Define a base price for the ticket (for example $100.00)
         double basePrice = 100.00;
 
@@ -243,10 +244,14 @@ public boolean removeStore(ParkStore s) {
             processTicket(newTicket, v, true);
 
             newTicket.displayTicketReceipt(v);  // Display the ticket receipt to visitor
+
+            return true;
+
         } else {
             System.out.println("Purchase cancelled.");
         }
-}
+        return false;
+    }
 
 // Method to refund a ticket to a visitor
 public void refundTicket(Ticket t, Visitor v) {
@@ -307,7 +312,7 @@ public void refundTicket(Ticket t, Visitor v) {
 
     // Getter for visitors (returns an unmodifiable set to prevent outside modification)
     public Set<Visitor> getVisitors() {
-        return Collections.unmodifiableSet(visitors);
+        return visitors;
     }
 
     // Getter for employees (returns an unmodifiable set to prevent outside modification)

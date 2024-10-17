@@ -45,22 +45,13 @@ public class Ticket implements Discountable {
     @Override
     public double applyDiscount(Visitor visitor){
         String visitorCategory = visitor.getVisitorCategory();
-        double discount = 0.0;
+        double discount = switch (visitorCategory) {
+            case "Child" -> 0.5;  //Children usually get the largest discounts
+            case "Senior" -> 0.25;
+            default -> 0.0; //No discount for regular adults
+        };
 
-        switch (visitorCategory){
-            case "Child":
-                discount = 0.5;  //Children usually get the largest discounts
-                break;
-            case "Senior":
-                discount = 0.25;
-                break;
-            case "Adult":
-            default:
-                discount = 0.0; //No discount for regular adults
-                break;
-        }
-
-        return ticketPrice * (1 - discount);
+        return BASE_PRICE * (1 - discount);
     }
 
     public static Ticket generateTicket(double price) {
