@@ -132,10 +132,10 @@ public class AmusementParkTest {
     public void testRideStartStop() {
         // Test starting and stopping the ride
         ride.startUse();
-        assertTrue(ride.isOperational()); // Verify ride is operational
+        assertTrue(ride.hasStarted()); // Verify ride is operational
         
         ride.stopUse();
-        assertFalse(ride.isOperational()); // Verify ride is not operational after stop
+        assertFalse(ride.hasStarted()); // Verify ride is not operational after stop
     }
 
     @Test
