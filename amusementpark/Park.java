@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Scanner;
+import static amusementpark.Main.exitProgram;
 
 public class Park {
 
@@ -217,7 +218,6 @@ public boolean removeStore(ParkStore s) {
     }
 }
 
-
     public void sellTicket(Visitor v) {
         // Define a base price for the ticket (for example $100.00)
         double basePrice = 100.00;
@@ -225,17 +225,15 @@ public boolean removeStore(ParkStore s) {
         // Generate a new ticket with the base price by calling the static method in Ticket
         Ticket newTicket = Ticket.generateTicket(basePrice);
 
-        
         double finalPrice = newTicket.applyDiscount(v);
 
-        
-        System.out.printf("Base Ticket Price: $%.2f\n", basePrice);
-        System.out.printf("Final Ticket Price after discount: $%.2f\n", finalPrice);
-
+        System.out.printf("Your ticket price after discount: $%.2f\n", finalPrice);
         
         System.out.println("Would you like to proceed with the purchase? (yes/no)");
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine();
+
+        exitProgram(response);
 
         if (response.equalsIgnoreCase("yes")) {
             // Update the ticket price to the discounted price
@@ -243,6 +241,8 @@ public boolean removeStore(ParkStore s) {
 
             // Process the sale
             processTicket(newTicket, v, true);
+
+            newTicket.displayTicketReceipt(v);  // Display the ticket receipt to visitor
         } else {
             System.out.println("Purchase cancelled.");
         }

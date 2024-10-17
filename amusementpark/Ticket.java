@@ -72,9 +72,9 @@ public class Ticket implements Discountable {
     public static void displayTicketInfo() {
         System.out.println("Ticket Pricing Information:");
         System.out.println("---------------------------");
-        System.out.printf("Adult Ticket Price: $%.2f\n", BASE_PRICE);
-        System.out.printf("Child Ticket Price: $%.2f (50%% discount)\n", BASE_PRICE * 0.5);
-        System.out.printf("Senior Ticket Price: $%.2f (25%% discount)\n", BASE_PRICE * 0.75);
+        System.out.printf("Adult (Age 12-64) Ticket Price: $%.2f\n", BASE_PRICE);
+        System.out.printf("Child (Age 1-11) Ticket Price: $%.2f (50%% discount)\n", BASE_PRICE * 0.5);
+        System.out.printf("Senior (Age 65+) Ticket Price: $%.2f (25%% discount)\n", BASE_PRICE * 0.75);
         System.out.println("---------------------------");
     }
 
