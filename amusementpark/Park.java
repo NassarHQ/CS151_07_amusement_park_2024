@@ -317,7 +317,7 @@ public void refundTicket(Ticket t, Visitor v) {
 
     // Getter for employees (returns an unmodifiable set to prevent outside modification)
     public Set<Employee> getEmployees() {
-        return Collections.unmodifiableSet(employees);
+        return employees;
     }
 
     // Getter for total revenue
