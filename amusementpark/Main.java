@@ -19,8 +19,7 @@ public class Main {
        /*   Visitor visitor = new Visitor("Test", 32);
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
         park.addRide(incredi);  RYANS TESTING STUFF */
-        
-        
+         
         System.out.println("Welcome to the Amusement Park Management System!");
         
         while (true){
