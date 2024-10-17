@@ -23,13 +23,15 @@ public class EmployeeUI {
             System.out.println("============================");
             System.out.println("1. Clock in");
             System.out.println("2. Clock out");
-            System.out.println("3. Make a report");
-            System.out.println("4. Check Salary Info");
-            System.out.println("5. Check Schedule");
-            System.out.println("6. View Ride Eligibility");
-            System.out.println("7. Exit to Main Menu");
+            System.out.println("3. View Work Log");
+            System.out.println("4. Make a report");
+            System.out.println("5. Check Salary Info");
+            System.out.println("6. Check Schedule");
+            System.out.println("7. Request Day Off");
+            System.out.println("8. View Ride Eligibility");           
+            System.out.println("9. Exit to Main Menu");
             System.out.println("============================");
-            System.out.print("\nPlease select an option (1-7): ");
+            System.out.print("\nPlease select an option (1-9): ");
             
             String choice = scanner.nextLine();
             exitMenu = handleMenuChoice(choice);
@@ -45,22 +47,28 @@ public class EmployeeUI {
                 employee.shiftOut();
                 break;
             case "3":
-                employee.reportIssue(park);
+                employee.viewWorkLog();
                 break;
             case "4":
+                employee.reportIssue(park);
+                break;
+            case "5":
                 System.out.println("\nEmployee " + employee.getName() + " salary info ");
                 System.out.println("This is their monthly wage:");
                 employee.checkSalary();
                 break;
-            case "5":
+            case "6":
                 System.out.println("\nEmployee " + employee.getName());
                 System.out.println("You will be working on the following dates:");
                 employee.printWorkSchedule();
                 break;
-            case "6":
+            case "7":
+                employee.requestDayOff();
+                break;
+            case "8":
                 checkRideEligibility();
                 break;
-            case "7":
+            case "9":
                 return true; // Exit to main menu
             default:
                 System.out.println("Invalid option. Please try again.");

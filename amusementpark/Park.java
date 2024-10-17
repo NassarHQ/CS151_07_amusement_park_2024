@@ -26,7 +26,6 @@ public class Park {
     private ArrayList<Ride> rides;
     private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
-    private Set<Ticket> archivedTickets;
     private ArrayList<String> reportedIssues;
 
     // Constructor for the Park class
@@ -42,7 +41,6 @@ public class Park {
         this.rides = new ArrayList<>();
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
-        this.archivedTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
     }
 
@@ -58,7 +56,6 @@ public class Park {
         this.rides = new ArrayList<>();
         this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
-        this.archivedTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
 
     }

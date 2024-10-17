@@ -21,6 +21,8 @@ public class Employee extends Person{
     private LocalDateTime shiftTime;
     private boolean onShift;
     private double salary;
+    private double totalHoursWorked; 
+    private List<String> workLog; 
 
     // Class to represent each workday with a date and shift time
     private class WorkDay {
@@ -47,7 +49,8 @@ public class Employee extends Person{
         this.onShift = false;
         this.salary = 0.0;
         this.workSchedule = new ArrayList<>();
-        
+        this.totalHoursWorked = 0.0;
+        this.workLog = new ArrayList<>();
     }
 
     // Parametarized Constructor
@@ -58,18 +61,20 @@ public class Employee extends Person{
         this.onShift = false;
         this.salary = calculateSalary();  // Automatically calculate salary based on role
         this.workSchedule = generateWorkSchedule();  // Generate a 7-day work schedule
+        this.totalHoursWorked = 0.0;
+        this.workLog = new ArrayList<>();
     }
 
     public double calculateSalary() {
         switch (this.role.toLowerCase()) {
             case "manager":
-                return 5000.00;  // Example salary for a manager
+                return 5000.00;  
             case "shift lead":
-                return 3000.00;  // Example salary for a ride operator
+                return 3000.00;  
             case "general associate":
-                return 2500.00;  // Example salary for a ticket seller
+                return 2500.00;  
             case "custodian":
-                return 2000.00;  // Example salary for a cleaner
+                return 2000.00;  
             default:
                 return 1500.00;  // Default salary for unknown roles
         }
@@ -155,14 +160,34 @@ public class Employee extends Person{
         }
     }
 
-    public void shiftOut(){
-        if (!onShift){
+    public void shiftOut() {
+        if (!onShift) {
             System.out.println("Employee " + this.getName() + " is not currently on shift.");
-        }
-        else{
+        } else {
             LocalDateTime shiftEndTime = LocalDateTime.now();
             onShift = false;
+
+            // Calculate the duration of the shift
+            double hoursWorked = ChronoUnit.MINUTES.between(shiftTime, shiftEndTime) / 60.0;
+            totalHoursWorked += hoursWorked;
+
+            // Log the shift details
+            workLog.add(String.format("Shift: %s to %s (%.2f hours)", shiftTime, shiftEndTime, hoursWorked));
+
             System.out.println("Employee " + this.getName() + " has ended their shift at " + shiftEndTime);
+            System.out.printf("You worked for %.2f hours during this shift.%n", hoursWorked);
+        }
+    }
+    
+    public void viewWorkLog() {
+        System.out.printf("Total hours worked by %s: %.2f hours%n", getName(), totalHoursWorked);
+        if (workLog.isEmpty()) {
+            System.out.println("No shifts have been logged yet.");
+        } else {
+            System.out.println("Shift Log:");
+            for (String log : workLog) {
+                System.out.println(log);
+            }
         }
     }
 
@@ -183,7 +208,6 @@ public class Employee extends Person{
     //The employee will make sure every visitor on the ride is of appropriate height
     //and weight limit is not exceeded
     public boolean checkRideEligibility(Ride ride){
-
         List<Visitor> onRide = ride.getOnRide();
         for (int i = 0; i < onRide.size(); i++){
             Visitor visitor = onRide.get(i);
@@ -226,8 +250,6 @@ public class Employee extends Person{
         //System.out.println("Salary for " + this.getName() + " (" + this.role + "): $" + this.salary);
         System.out.printf("Salary for %s (%s): $%.2f%n", this.getName(), this.role, this.salary);
     }
-
-    
 
     @Override
     // Method to add Person to park
