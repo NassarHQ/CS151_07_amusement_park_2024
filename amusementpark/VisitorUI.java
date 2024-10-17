@@ -22,14 +22,8 @@ public class VisitorUI {
     public void displayMenu() {
 
         while (true) {   // Infinite loop to keep the menu running until EXIT
-            System.out.println("Visitor Menu:");
-            System.out.println("1. Buy Tickets");
-            System.out.println("2. View Rides");
-            System.out.println("3. Queue for a Ride");
-            System.out.println("4. Buy Products from Store");
-            System.out.println("5. Write a Feedback");
-            System.out.println("6. View Purchase History");
-            System.out.println("7. Exit");
+
+            PrintHelper.printVisitorMenu(); // Call printVisitorMenu from PrintHelper class to print out Visitor Menu
 
             int choice;
             try {
@@ -92,8 +86,9 @@ public class VisitorUI {
     public void checkoutRides() {
         while (true) {
             // Print out the park's rides
-            System.out.println("List of our Rides: " + "\n"
-                    + park.getRidesList());
+            System.out.println("List of our Rides:\n");
+            park.displayAllRides();
+            System.out.println("\n");   // Print new line for displaying purpose
 
             System.out.println("Enter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
             String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
@@ -169,7 +164,7 @@ public class VisitorUI {
             if (chosenItem.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to List of our Stores" + "\n"
                         + "-----");
-                return;  // Go back to visitor menu if user type 'cancel'
+                return;  // Go back to list of stores if user type 'cancel'
             }
 
             boolean itemFound = false;  // Initialize the flag to false
@@ -180,17 +175,16 @@ public class VisitorUI {
 
                     // Ask for quantity if item is valid
                     System.out.println("Enter the quantity you want to buy: ");
+
                     quantity = scanner.nextInt();
                     scanner.nextLine();  // Consume newline after the int input
 
-                    try {
-                        store.sellItems(visitor, chosenItem, quantity);   // Use sellItems from ParkStore to sell items
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid input. Please try again.");
-                    }
+                    store.sellItems(visitor, chosenItem, quantity);   // Use sellItems from ParkStore to sell items
+
+                    itemFound = true;
+                    break;
                 }
 
-                itemFound = true;
             }
 
             if (!itemFound) {
