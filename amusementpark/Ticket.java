@@ -5,6 +5,7 @@ public class Ticket implements Discountable {
     private String ticketID;
     private boolean isUsed; // Check if the ticket has been used
     private boolean isRefunded; // Check if the ticket has been refunded
+    private static int ticketCounter = 0;
 
     public Ticket(double ticketPrice, String ticketID){
         this.ticketPrice = ticketPrice;
@@ -50,6 +51,12 @@ public class Ticket implements Discountable {
         }
 
         return ticketPrice * (1 - discount);
+    }
+
+    public static Ticket generateTicket(double price) {
+        // Generate a unique ticket ID using the static counter
+        String ticketID = "TICKET" + (++ticketCounter);  // Increment the counter and create the ticket ID
+        return new Ticket(price, ticketID);  // Create and return a new Ticket object
     }
 
 

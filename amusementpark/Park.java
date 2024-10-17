@@ -186,12 +186,7 @@ public boolean removeStore(ParkStore s) {
         System.out.println("Tickets Sold Today: " + totalTicketsSold);
     }
 
-    // Generate a ticket for a visitor
-    private Ticket generateTicket(double price) {
-        String ticketID = "TICKET" + (soldTickets.size() + 1);  // Generate a unique ticket ID
-        return new Ticket(price, ticketID); // Create a new ticket with price and ID
-    }
-
+    
 // Modular method to handle ticket transactions (sell or refund)
     private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
     if (t == null || v == null) {
@@ -223,35 +218,34 @@ public boolean removeStore(ParkStore s) {
 }
 
 
-// Method to sell a ticket to a visitor
-public void sellTicket(Visitor v) {
-    // Define a base price for the ticket (for example $100.00)
-    double basePrice = 100.00;
+    public void sellTicket(Visitor v) {
+        // Define a base price for the ticket (for example $100.00)
+        double basePrice = 100.00;
 
-    // Generate a new ticket with the base price
-    Ticket newTicket = generateTicket(basePrice);
+        // Generate a new ticket with the base price by calling the static method in Ticket
+        Ticket newTicket = Ticket.generateTicket(basePrice);
 
-    // Apply discount based on the visitor's category
-    double finalPrice = newTicket.applyDiscount(v);
+        
+        double finalPrice = newTicket.applyDiscount(v);
 
-    // Display the price details to the visitor
-    System.out.printf("Base Ticket Price: $%.2f\n", basePrice);
-    System.out.printf("Final Ticket Price after discount: $%.2f\n", finalPrice);
+        
+        System.out.printf("Base Ticket Price: $%.2f\n", basePrice);
+        System.out.printf("Final Ticket Price after discount: $%.2f\n", finalPrice);
 
-    // Simulate confirmation (e.g., input from visitor)
-    System.out.println("Would you like to proceed with the purchase? (yes/no)");
-    Scanner scanner = new Scanner(System.in);
-    String response = scanner.nextLine();
+        
+        System.out.println("Would you like to proceed with the purchase? (yes/no)");
+        Scanner scanner = new Scanner(System.in);
+        String response = scanner.nextLine();
 
-    if (response.equalsIgnoreCase("yes")) {
-        // Update the ticket price to the discounted price
-        newTicket.setTicketPrice(finalPrice);
+        if (response.equalsIgnoreCase("yes")) {
+            // Update the ticket price to the discounted price
+            newTicket.setTicketPrice(finalPrice);
 
-        // Process the sale
-        processTicket(newTicket, v, true);
-    } else {
-        System.out.println("Purchase cancelled.");
-    }
+            // Process the sale
+            processTicket(newTicket, v, true);
+        } else {
+            System.out.println("Purchase cancelled.");
+        }
 }
 
 // Method to refund a ticket to a visitor
