@@ -74,14 +74,14 @@ public class AmusementParkTest {
     public void testVisitorAddTicketToPurchaseHistory() {
         // Test adding ticket to visitor's purchase history
         visitor.addTicketToPurchaseHistory(ticket);
-        assertTrue(visitor.getPurchaseHistory().contains(ticket)); // Verify ticket is in purchase history
+        assertTrue(visitor.getPurchaseTicketHistory().contains(ticket)); // Verify ticket is in purchase history
     }
 
     @Test
     public void testVisitorFeedback() {
         // Test adding feedback for the visitor
         visitor.provideFeedback("Great ride!");
-        assertEquals("Great ride!", visitor.viewFeedback().get(0)); // Verify feedback was added
+        assertEquals("Great ride!", visitor.viewFeedback().get(0)\); // Verify feedback was added
     }
 
     // --------- Ticket Tests ---------
@@ -151,9 +151,9 @@ public class AmusementParkTest {
     public void testDailyRevenueCalculation() {
         // Test daily revenue calculation
         visitor.addTicketToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
-        park.addVisitor(visitor);
-        park.calculateDailyRevenue(); // Calculate revenue based on visitors
-        assertEquals(50.0, park.getDailyRevenue(), 0.01); // Verify daily revenue
+        park.addPerson(visitor);
+        park.calculateParkMetric(); // Calculate revenue based on visitors
+        assertEquals(50.0, park.getTotalRevenue(), 0.01); // Verify daily revenue
     }
 
     @Test

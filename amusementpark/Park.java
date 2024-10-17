@@ -300,4 +300,9 @@ public void refundTicket(Ticket t, Visitor v) {
     public Set<Employee> getEmployees() {
         return Collections.unmodifiableSet(employees);
     }
+
+    // Getter for total revenue
+    public double getTotalRevenue() {
+        return totalRevenue;
+    }
 }
