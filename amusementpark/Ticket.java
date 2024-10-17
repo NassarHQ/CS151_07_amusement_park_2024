@@ -1,4 +1,6 @@
 package amusementpark;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Ticket implements Discountable {
     private double ticketPrice;
@@ -7,10 +9,17 @@ public class Ticket implements Discountable {
     private boolean isRefunded; // Check if the ticket has been refunded
     private static int ticketCounter = 0;
     private static final double BASE_PRICE = 100.00;
+    private LocalDateTime purchaseDateTime;
+
+    public Ticket(){
+        this.ticketPrice = -1;
+        this.ticketID = "Unknown";
+    }
 
     public Ticket(double ticketPrice, String ticketID){
         this.ticketPrice = ticketPrice;
         this.ticketID = ticketID;
+        this.purchaseDateTime = LocalDateTime.now();
     }
 
     public String getTicketID(){
@@ -67,6 +76,31 @@ public class Ticket implements Discountable {
         System.out.printf("Child Ticket Price: $%.2f (50%% discount)\n", BASE_PRICE * 0.5);
         System.out.printf("Senior Ticket Price: $%.2f (25%% discount)\n", BASE_PRICE * 0.75);
         System.out.println("---------------------------");
+    }
+
+    public void displayTicketReceipt(Visitor visitor) {
+        // Format the date and time nicely
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm:ss");
+        String formattedDateTime = purchaseDateTime.format(formatter);
+
+        System.out.println("\n------------------ TICKET RECEIPT ------------------");
+        System.out.printf("Visitor Category: %s\n", visitor.getVisitorCategory());
+        System.out.printf("Ticket ID       : %s\n", ticketID);
+        System.out.printf("Base Price      : $%.2f\n", BASE_PRICE);
+
+        // Apply discount and calculate final price
+        double discountedPrice = applyDiscount(visitor);
+        if (discountedPrice < BASE_PRICE) {
+            System.out.printf("Discounted Price: $%.2f\n", discountedPrice);
+        } else {
+            System.out.println("No discount applied.");
+        }
+
+        System.out.printf("Final Price     : $%.2f\n", discountedPrice);
+        System.out.printf("Purchase Date   : %s\n", formattedDateTime);
+        System.out.println("----------------------------------------------------");
+        System.out.println("Thank you for visiting our park!");
+        System.out.println("----------------------------------------------------\n");
     }
 
 
