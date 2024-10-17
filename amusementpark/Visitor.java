@@ -9,7 +9,7 @@ public class Visitor extends Person {
     private int height;
     private double weight;
     private List<String> purchaseTicketHistory;
-    private List<String> purchaseProductHistory;
+    private List<String> purchaseItemHistory;
     private String feedback;
     private boolean hasProvidedFeedback;
 
@@ -17,7 +17,7 @@ public class Visitor extends Person {
     public Visitor(){
         super();
         this.purchaseTicketHistory = new ArrayList<>(); // Initialize or create a new list;
-        this.purchaseProductHistory = new ArrayList<>();
+        this.purchaseItemHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
@@ -26,7 +26,7 @@ public class Visitor extends Person {
     public Visitor(String name, int age) {
         super (name, age);
         this.purchaseTicketHistory = new ArrayList<>();
-        this.purchaseProductHistory = new ArrayList<>();
+        this.purchaseItemHistory = new ArrayList<>();
         this.height = 0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
@@ -37,7 +37,7 @@ public class Visitor extends Person {
         this.height = height;
         this.weight = weight;
         this.purchaseTicketHistory = new ArrayList<>();
-        this.purchaseProductHistory = new ArrayList<>();
+        this.purchaseItemHistory = new ArrayList<>();
         this.hasProvidedFeedback = false; // Initialize the flag as false
     }    
 
@@ -151,11 +151,11 @@ public class Visitor extends Person {
     }
 
     // Method to view product purchase history
-    public void viewPurchaseProductHistory() {
-        if (purchaseProductHistory.isEmpty()) {
+    public void viewPurchaseItemHistory() {
+        if (purchaseItemHistory.isEmpty()) {
             System.out.println("You haven't purchased any products.");
         } else {
-            System.out.println("Your purchase products: " + purchaseProductHistory);
+            System.out.println("Your purchased items: " + purchaseItemHistory);
         }
     }
 
@@ -168,17 +168,9 @@ public class Visitor extends Person {
     }
 
     // Method to add purchased store products to purchase history
-    public List<String> addProductToPurchaseHistory(ParkStore store, String item, int quantity) {
-        try {
-            // Call the ParkStore's sellItems method
-            store.sellItems(this, item, quantity);
-
-            // If the sale is successful, add the item and quantity to the visitor's purchase history
-            purchaseProductHistory.add(quantity + "x " + item);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Purchase failed: " + e.getMessage());
-        }
-        return purchaseProductHistory;
+    public List<String> addItemToPurchaseHistory(ParkStore store, String item, int quantity) {
+        purchaseItemHistory.add(quantity + "x " + item);
+        return purchaseItemHistory;
     }
 
 

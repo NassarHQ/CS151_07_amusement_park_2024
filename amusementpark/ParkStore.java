@@ -135,7 +135,7 @@ public class ParkStore {
             visitors.add(v);
         }
 
-        System.out.println(v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
+        System.out.println("\n" + v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
                            "Total price is $" + price * quantity + ".\n");
 
         // Update the quantity of sold items
