@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        
+
         //Initialize some stuff for the sake of testing
         Scanner scanner = new Scanner(System.in);
         Park park = new Park();
