@@ -162,14 +162,19 @@ public class AmusementParkTest {
 
     @Test
     public void testDailyRevenueCalculation() {
-        // Test daily revenue calculation
-        visitor.addTicketToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
-        // Make sure ticket is also added to the park's soldTickets collection
-        park.processTicket(ticket, visitor, true);
+        Visitor visitor = new Visitor("John Doe", 30, 180, 85); // Example: A child visitor
+        double ticketPrice = 100.0;
+        ticket.setTicketPrice(ticketPrice); // Set initial price for the ticket
 
-        park.addPerson(visitor);
-        park.calculateParkMetric(); // Calculate revenue based on visitors
-        assertEquals(50.0, park.getTotalRevenue(), 0.01); // Verify daily revenue
+        visitor.addTicketToPurchaseHistory(ticket);     // Add the ticket to the visitor's purchase history
+
+        park.sellTicket(visitor);   //Process the ticket purchase
+
+        park.addPerson(visitor);    //Add the visitor to the park
+
+        park.calculateParkMetric(); // Calculate the park's metrics
+
+        assertEquals(ticketPrice, park.getTotalRevenue(), 0.01);
     }
 
     @Test
