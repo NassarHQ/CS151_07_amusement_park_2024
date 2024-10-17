@@ -2,9 +2,8 @@ package amusementpark;
 
 import java.util.Scanner;
 
-import static amusementpark.VisitorUI.exitProgram;
-
 public class Main {
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
 
         //Initialize some stuff for the sake of testing
@@ -45,11 +44,19 @@ public class Main {
                 System.out.println("Admin menu"); //Call admin UI stuff
                 break;
             case "exit":
-                VisitorUI.exitProgram(response);
+                exitProgram(response);
             default:
                 System.out.println("Invalid response");
                 break;
         }
     }
+    }
+
+    public static void exitProgram(String input) {
+        if (input.equalsIgnoreCase("exit")) {
+            scanner.close();
+            System.out.println("Exiting the program. Goodbye!");
+            System.exit(0);
+        }
     }
 }

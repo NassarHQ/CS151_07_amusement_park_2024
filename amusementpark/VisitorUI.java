@@ -2,6 +2,7 @@ package amusementpark;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import static amusementpark.Main.exitProgram;
 
 public class VisitorUI {
     private Scanner scanner;
@@ -269,12 +270,13 @@ public class VisitorUI {
     }
 
     // Helper method to exit the program whenever user types 'EXIT'
-    public static void exitProgram(String input) {
-        if (input.equalsIgnoreCase("exit")) {
-            System.out.println("Exiting the program. Goodbye!");
-            System.exit(0);
-        }
-    }
+//    public static void exitProgram(String input) {
+//        if (input.equalsIgnoreCase("exit")) {
+//            System.out.println("Exiting the program. Goodbye!");
+//            System.exit(0);
+//            scanner.close();
+//        }
+//    }
 }
 
 

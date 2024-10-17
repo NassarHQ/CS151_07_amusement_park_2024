@@ -2,6 +2,7 @@ package amusementpark;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
+import static amusementpark.Main.exitProgram;
 
 
 public class EmployeeUI {
@@ -29,11 +30,13 @@ public class EmployeeUI {
             System.out.println("6. Check Schedule");
             System.out.println("7. Request Day Off");
             System.out.println("8. View Ride Eligibility");           
-            System.out.println("9. Exit to Main Menu");
+            System.out.println("9. Return to Main Menu");
+            System.out.println("EXIT");
             System.out.println("============================");
             System.out.print("\nPlease select an option (1-9): ");
             
             String choice = scanner.nextLine();
+
             exitMenu = handleMenuChoice(choice);
         }
     }
@@ -70,6 +73,8 @@ public class EmployeeUI {
                 break;
             case "9":
                 return true; // Exit to main menu
+            case "exit":
+                exitProgram(choice);
             default:
                 System.out.println("Invalid option. Please try again.");
                 break;
@@ -96,6 +101,9 @@ public class EmployeeUI {
         while (true) {
             System.out.println("Enter the name of the ride you want to check (or type 'cancel' to go back):");
             String rideName = scanner.nextLine();
+
+            exitProgram(rideName);
+
 
             if (rideName.equalsIgnoreCase("cancel")) {
                 System.out.println("Cancelled checking ride eligibility.");
