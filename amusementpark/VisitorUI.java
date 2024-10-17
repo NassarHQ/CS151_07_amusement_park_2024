@@ -51,8 +51,8 @@ public class VisitorUI {
                 case "6":
                     viewPurchaseHistory();
                     break;
-                case "7":
-                    return; // Exit to main menu
+                case "exit":
+                    exitProgram(choice);
                 default:
                     System.err.println("Invalid option. Please try again.");
                     break;
@@ -65,6 +65,8 @@ public class VisitorUI {
             try {
                 System.out.println("\nEnter the number of tickets you want to buy: ");
                 int numberOfTickets = scanner.nextInt();    // Read the user's input
+
+                exitProgram(String.valueOf(numberOfTickets));
 
                 if (numberOfTickets < 0) {
                     // Throw exception if number of tickets is smaller than 0
@@ -90,6 +92,8 @@ public class VisitorUI {
 
             System.out.println("\nEnter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
             String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
+
+            exitProgram(chosenRide);
 
             if (chosenRide.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to Visitor Menu");
@@ -125,6 +129,8 @@ public class VisitorUI {
             System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
             String chosenStore = scanner.nextLine();     // Read user's input for chosen store
 
+            exitProgram(chosenStore);
+
             if (chosenStore.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to Visitor Menu");
                 return;  // Go back to visitor menu if user type 'cancel'
@@ -157,6 +163,8 @@ public class VisitorUI {
         while (true) {
             System.out.println("\nEnter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
             chosenItem = scanner.nextLine();
+
+            exitProgram(chosenItem);
 
             if (chosenItem.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to List of our Stores");
@@ -210,6 +218,8 @@ public class VisitorUI {
             System.out.println("\nEnter your name: ");
             String name = scanner.nextLine().trim();  // Trim to remove leading/trailing spaces
 
+            exitProgram(name);
+
             // Check if the input is not empty and contains only letters and spaces
             if (!name.isEmpty() && name.matches("[a-zA-Z ]+")) {
                 visitor.setName(name);
@@ -227,6 +237,8 @@ public class VisitorUI {
                 System.out.println("\n" + prompt);
                 int input = scanner.nextInt();  // Get numeric input
                 scanner.nextLine();  // Clear the newline character after nextInt()
+
+                exitProgram(String.valueOf(input));
 
                 if (input <= 0) {
                     throw new IllegalArgumentException("Invalid input. Please try again.");
@@ -260,7 +272,7 @@ public class VisitorUI {
     public static void exitProgram(String input) {
         if (input.equalsIgnoreCase("exit")) {
             System.out.println("Exiting the program. Goodbye!");
-            System.out.println(0);
+            System.exit(0);
         }
     }
 }

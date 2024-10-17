@@ -65,8 +65,9 @@ public class PrintHelper {
         System.out.println("4. Buy Items from Store");
         System.out.println("5. Write a Feedback");
         System.out.println("6. View Purchase History");
-        System.out.println("7. Exit");
+        System.out.println("EXIT");
         System.out.println("============================");
+        System.out.println("\nPlease select an option (1-6) or type 'EXIT' to exit the program: ");
     }
 
     public static void printMainMenu() {
@@ -76,8 +77,8 @@ public class PrintHelper {
         System.out.println("1. Visitor");
         System.out.println("2. Employee");
         System.out.println("3. Admin");
-        System.out.println("4. Exit");
+        System.out.println("EXIT");
         System.out.println("============================");
-        System.out.println("\nPlease select an option (1-4): ");
+        System.out.println("\nPlease select an option (1-3) or type 'EXIT' to exit the program: ");
     }
 }

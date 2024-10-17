@@ -2,6 +2,8 @@ package amusementpark;
 
 import java.util.Scanner;
 
+import static amusementpark.VisitorUI.exitProgram;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -38,20 +40,12 @@ public class Main {
               //  System.out.println("Employee Menu"); //Call employee UI STUFF
                 EmployeeUI employeeUI = new EmployeeUI(park, employee);
                 employeeUI.displayMenu();
-
                 break;
             case "3":
                 System.out.println("Admin menu"); //Call admin UI stuff
                 break;
-            case "4":
-                System.out.println("Do you want to exit? Type `EXIT` if you do");
-                response = scanner.nextLine();
-                if (response.equalsIgnoreCase("exit")){
-                    System.out.println("Goodbye!");
-                    scanner.close();
-                    return;
-                }
-                break;
+            case "exit":
+                VisitorUI.exitProgram(response);
             default:
                 System.out.println("Invalid response");
                 break;
