@@ -13,6 +13,13 @@ public abstract class Person {
         this.password = "";
     }
 
+    public Person(String name, int age){
+        this.name = name;
+        this.age = age;
+        this.username = "";
+        this.password = "";
+    }
+
     public Person(String name, int age, String username, String password) {
         this.name = name;
         this.age = age;

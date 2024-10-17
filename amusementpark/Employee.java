@@ -54,6 +54,17 @@ public class Employee extends Person{
         this.workLog = new ArrayList<>();
     }
 
+    public Employee(String name, int age, String employeeID, String role) {
+        super(name, age);
+        this.employeeID = employeeID;
+        this.role = role;
+        this.onShift = false;
+        this.salary = calculateSalary();  // Automatically calculate salary based on role
+        this.workSchedule = generateWorkSchedule();  // Generate a 7-day work schedule
+        this.totalHoursWorked = 0.0;
+        this.workLog = new ArrayList<>();
+    }
+
     // Parametarized Constructor
     public Employee(String name, int age, String username, String password, String employeeID, String role) {
         super(name, age, username, password);
