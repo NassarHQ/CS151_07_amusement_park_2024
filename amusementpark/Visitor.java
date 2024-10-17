@@ -78,6 +78,16 @@ public class Visitor extends Person {
         return purchaseTicketHistory;
     }    
 
+    //Getter for feedback
+    public String getFeedback() {
+        return feedback;
+    }
+
+    // Getter for hasProvidedFeedback
+    public boolean hasProvidedFeedback() {
+        return hasProvidedFeedback;     // Return the feedback flag status
+    }
+
     public String getVisitorCategory() {
         int age = getAge();
         if (age < 12) {

@@ -79,10 +79,13 @@ public class AmusementParkTest {
 
     @Test
     public void testVisitorFeedback() {
-        // Test adding feedback for the visitor
-        visitor.provideFeedback("Great ride!");
-        assertEquals("Great ride!", visitor.viewFeedback().get(0)\); // Verify feedback was added
+        visitor.provideFeedback(); // Simulate the user providing feedback interactively
+
+        // Verify feedback was added
+        assertTrue(visitor.hasProvidedFeedback()); // Ensure that the feedback flag is set
+        assertEquals("Great ride!", visitor.getFeedback()); // Check if feedback matches(assumes user input was "Great ride!")
     }
+
 
     // --------- Ticket Tests ---------
 
@@ -94,10 +97,17 @@ public class AmusementParkTest {
 
     @Test
     public void testTicketDiscount() {
-        // Test applying a discount to the ticket
-        ticket.applyDiscount(10.0); // Apply a 10% discount
-        assertEquals(45.0, ticket.getTicketPrice(), 0.01); // Verify new ticket price
+        // Create a visitor with a specific category for testing
+        Visitor visitor = new Visitor("John Doe", 10); // Example: A child visitor
+        ticket.setTicketPrice(90.0); // Set initial price for the ticket
+
+        // Apply discount based on the visitor's category
+        double discountedPrice = ticket.applyDiscount(visitor); // This should apply the discount based on the visitor category
+
+        // Verify new ticket price
+        assertEquals(45.0, discountedPrice, 0.01); // 50% discount for child
     }
+
 
     @Test
     public void testTicketRefundStatus() {
