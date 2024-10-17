@@ -99,13 +99,16 @@ public class AmusementParkTest {
     public void testTicketDiscount() {
         // Create a visitor with a specific category for testing
         Visitor visitor = new Visitor("John Doe", 10); // Example: A child visitor
-        ticket.setTicketPrice(90.0); // Set initial price for the ticket
+        ticket.setTicketPrice(100.0); // Set initial price for the ticket
 
+        // Debug: Check if the visitor category is correct
+        System.out.println("Visitor Category: " + visitor.getVisitorCategory()); // This should print "Child"
+    
         // Apply discount based on the visitor's category
         double discountedPrice = ticket.applyDiscount(visitor); // This should apply the discount based on the visitor category
 
         // Verify new ticket price
-        assertEquals(45.0, discountedPrice, 0.01); // 50% discount for child
+        assertEquals(50.0, discountedPrice, 0.01); // 50% discount for child
     }
 
 
@@ -161,6 +164,9 @@ public class AmusementParkTest {
     public void testDailyRevenueCalculation() {
         // Test daily revenue calculation
         visitor.addTicketToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
+        // Make sure ticket is also added to the park's soldTickets collection
+        park.processTicket(ticket, visitor, true);
+
         park.addPerson(visitor);
         park.calculateParkMetric(); // Calculate revenue based on visitors
         assertEquals(50.0, park.getTotalRevenue(), 0.01); // Verify daily revenue
