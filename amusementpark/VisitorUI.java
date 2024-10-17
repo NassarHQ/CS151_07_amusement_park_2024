@@ -25,15 +25,8 @@ public class VisitorUI {
 
             PrintHelper.printVisitorMenu(); // Call printVisitorMenu from PrintHelper class to print out Visitor Menu
 
-            int choice;
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline character
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // Clear invalid input
-                continue; // Go to the next iteration of the loop
-            }
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
 
             switch (choice) {
                 case 1:
@@ -57,7 +50,7 @@ public class VisitorUI {
                 case 7:
                     return; // Exit to main menu
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Invalid option. Please try again.\n");
                     break;
             }
         }
@@ -71,13 +64,13 @@ public class VisitorUI {
 
                 if (numberOfTickets < 0) {
                     // Throw exception if number of tickets is smaller than 0
-                    throw new IllegalArgumentException("Number of tickets has to be greater than 0.");
+                    throw new IllegalArgumentException("Number of tickets has to be greater than 0.\n");
                 }
                 break;  // Break if found a valid integer
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
             } catch (InputMismatchException e) {  // Catch the mismatch exception for input
-                System.err.println(" Invalid input. Please enter an integer.");
+                System.err.println(" Invalid number of tickets. Please try again.\n");
                 scanner.next(); // Clear the invalid input
             }
         }
@@ -112,7 +105,7 @@ public class VisitorUI {
 
             // If the ride was not found, inform the user
             if (!rideFound) {
-                System.out.println("Invalid Ride. Please try again.");
+                System.out.println("Invalid ride. Please try again.\n");
             }
         }
     }
@@ -122,9 +115,8 @@ public class VisitorUI {
             // Buy products from store
             System.out.println("List of our Stores: ");
             park.displayAllStores();    // Display all stores to visitors using method from Park class
-            System.out.println("\n");   // Print new line for displaying purpose
 
-            System.out.println("Choose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
+            System.out.println("Choose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)\n");
             String chosenStore = scanner.nextLine();     // Read user's input for chosen store
 
             if (chosenStore.equalsIgnoreCase("cancel")) {
@@ -151,7 +143,7 @@ public class VisitorUI {
 
             // If the store was not found, inform the user
             if (!storeFound) {
-                System.out.println("Invalid Store. Please try again.");
+                System.out.println("Invalid store. Please try again.\n");
             }
         }
     }
@@ -167,42 +159,46 @@ public class VisitorUI {
                 return;  // Go back to list of stores if user type 'cancel'
             }
 
-            boolean itemFound = false;  // Initialize the flag to false
 
             // Loop through inventories of the store to check for item
             for (String item : store.getInventories().keySet()) {
                 if (chosenItem.equalsIgnoreCase(item)) {
+                    boolean itemFound = false;  // Initialize the flag to false
 
-                    // Ask for quantity if item is valid
-                    System.out.println("Enter the quantity you want to buy: ");
+                    // Keep asking for the quantity until a valid integer is provided
+                    while (!itemFound) {
+                        System.out.println("Enter the quantity you want to buy: ");
+                        try {
+                            quantity = scanner.nextInt();  // Read the quantity
+                            scanner.nextLine();  // Consume the newline character
 
-                    quantity = scanner.nextInt();
-                    scanner.nextLine();  // Consume newline after the int input
+                            // Call sellItems to process the purchase
+                            store.sellItems(visitor, chosenItem, quantity);
 
-                    store.sellItems(visitor, chosenItem, quantity);   // Use sellItems from ParkStore to sell items
+                            itemFound = true;  // Exit the loop if valid input is given
 
-                    itemFound = true;
-                    break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid quantity. Please try again\n");
+                            scanner.nextLine();  // Clear the invalid input
+                        }
+                    }
+                } else {
+                    System.out.println("Invalid item. Please try again.\n");
                 }
 
-            }
-
-            if (!itemFound) {
-                System.out.println("Invalid Item. Please try again.");
             }
         }
     }
 
     public void writeFeedback() {
         visitor.provideFeedback();
-        System.out.println("Thank you for your feedback.\n");
+        System.out.println("Thank you for your feedback.");
     }
 
     public void viewPurchaseHistory() {
         System.out.println(visitor.getName() + "'s purchase history:\n");
         visitor.viewPurchaseTicketHistory();
         visitor.viewPurchaseProductHistory();
-        System.out.println("\n");
     }
 }
 
