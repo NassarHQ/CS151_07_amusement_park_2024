@@ -156,39 +156,53 @@ public class ParkStore {
         this.inventories = inventories;
     }
 
-    // Method to add items
-    public void addItems(String item, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero.");
-        }
-
-        switch (parkStoreType.toLowerCase()) {
-            case "food":
-                if (isValidFoodType(item.toLowerCase())) {
-                    // Use lambda function to update the quantity of added items
-                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
-                } else {
-                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
-                }
-                break;
-            case "drink":
-                if (isValidDrinkType(item.toLowerCase())) {
-                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
-                } else {
-                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
-                }
-                break;
-            case "souvenir":
-                if (isValidSouvenirType(item.toLowerCase())) {
-                    inventories.compute(item, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
-                } else {
-                    throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedSouvenirTypes));
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown store type: " + parkStoreType);
-        }
+// Method to add items
+public void addItems(String item, int quantity) {
+    if (quantity <= 0) {
+        throw new IllegalArgumentException("Quantity must be greater than zero.");
     }
+
+    // Convert the item name to lowercase for consistent checking
+    String lowerCaseItem = item.toLowerCase();
+
+    // Depending on the store type, check the validity of the item and update the inventory
+    switch (parkStoreType.toLowerCase()) {
+        case "food":
+            if (isValidFoodType(lowerCaseItem)) {
+                // Add or update the item quantity in the inventory using lambda function
+                inventories.compute(lowerCaseItem, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
+            } else {
+                // Throw an exception with allowed food types in the message
+                throw new IllegalArgumentException("Invalid food item: " + item + ". Allowed types are: " + String.join(", ", allowedFoodTypes));
+            }
+            break;
+
+        case "drink":
+            if (isValidDrinkType(lowerCaseItem)) {
+                // Add or update the drink item
+                inventories.compute(lowerCaseItem, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
+            } else {
+                // Throw an exception with allowed drink types
+                throw new IllegalArgumentException("Invalid drink item: " + item + ". Allowed types are: " + String.join(", ", allowedDrinkTypes));
+            }
+            break;
+
+        case "souvenir":
+            if (isValidSouvenirType(lowerCaseItem)) {
+                // Add or update the souvenir item
+                inventories.compute(lowerCaseItem, (k, currentQuantity) -> (currentQuantity == null) ? quantity : currentQuantity + quantity);
+            } else {
+                // Throw an exception with allowed souvenir types
+                throw new IllegalArgumentException("Invalid souvenir item: " + item + ". Allowed types are: " + String.join(", ", allowedSouvenirTypes));
+            }
+            break;
+
+        default:
+            // If the store type is unknown, throw an exception
+            throw new IllegalArgumentException("Unknown store type: " + parkStoreType);
+    }
+}
+
 
     // Helper method to check for food validation
     //Test comment making public
