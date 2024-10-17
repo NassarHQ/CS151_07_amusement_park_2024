@@ -193,4 +193,37 @@ public void displayRideDetails() {
         hasStarted = false;
     }
 
+    // Method to add a visitor that checks if the ride can admit more riders
+    public void addRider(Visitor visitor) {
+        if (!isOperational) {
+            System.out.println("The ride is not operational.");
+            return;
+        }
+        
+        if (hasStarted) {
+            System.out.println("The ride has already started. You cannot add more riders.");
+            return;
+        }
+    
+        if (onRide.size() >= rideCapacity) {
+            System.out.println("The ride is at full capacity.");
+            return;
+        }
+    
+        // Check if the visitor meets height and weight requirements
+        if (visitor.getVisitorHeight() < rideMinHeight) {
+            System.out.println(visitor.getName() + " does not meet the minimum height requirement.");
+            return;
+        }
+    
+        if (visitor.getVisitorWeight() > rideMaxWeight) {
+            System.out.println(visitor.getName() + " exceeds the maximum weight limit.");
+            return;
+        }
+    
+        // Admit the visitor to the ride
+        onRide.add(visitor);
+        System.out.println(visitor.getName() + " has been added to the ride.");
+    }    
+
 }
