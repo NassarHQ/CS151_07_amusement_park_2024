@@ -67,4 +67,20 @@ public class AmusementParkTest {
         ride.addRider(visitor);
         assertFalse(employee.checkRideEligibility(ride)); // Expect false due to height restriction
     }
+
+    // --------- Visitor Tests ---------
+
+    @Test
+    public void testVisitorAddTicketToPurchaseHistory() {
+        // Test adding ticket to visitor's purchase history
+        visitor.addTicketToPurchaseHistory(ticket);
+        assertTrue(visitor.getPurchaseHistory().contains(ticket)); // Verify ticket is in purchase history
+    }
+
+    @Test
+    public void testVisitorFeedback() {
+        // Test adding feedback for the visitor
+        visitor.provideFeedback("Great ride!");
+        assertEquals("Great ride!", visitor.viewFeedback().get(0)); // Verify feedback was added
+    }
 }
