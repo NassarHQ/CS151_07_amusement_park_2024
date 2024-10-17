@@ -255,6 +255,14 @@ public class VisitorUI {
     public void askVisitorHeight() {
         visitor.setVisitorHeight(askForNumericInput("Enter your height in cm: "));
     }
+
+    // Helper method to exit the program whenever user types 'EXIT'
+    public static void exitProgram(String input) {
+        if (input.equalsIgnoreCase("exit")) {
+            System.out.println("Exiting the program. Goodbye!");
+            System.out.println(0);
+        }
+    }
 }
 
 
