@@ -32,6 +32,15 @@ public class Visitor extends Person {
         this.hasProvidedFeedback = false;   // Initialize the flag as false
     }
 
+    public Visitor(String name, int age, int height, double weight) {
+        super(name, age); // Call the parent class constructor
+        this.height = height;
+        this.weight = weight;
+        this.purchaseTicketHistory = new ArrayList<>();
+        this.purchaseProductHistory = new ArrayList<>();
+        this.hasProvidedFeedback = false; // Initialize the flag as false
+    }    
+
     // Getter for visitor's height
     public int getVisitorHeight() {
         return height;
