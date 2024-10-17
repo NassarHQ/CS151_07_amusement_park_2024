@@ -16,13 +16,13 @@ public class Main {
         park.addStore(store1);
         store.addItems("burger", 30);
         store1.addItems("coke", 12);
-        park.sellTicket(visitor);
+        // park.sellTicket(visitor);
        /*   Visitor visitor = new Visitor("Test", 32);
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
         park.addRide(incredi);  RYANS TESTING STUFF */
-         /* 
+
         System.out.println("Welcome to the Amusement Park Management System!");
-        
+
         while (true){
 
         PrintHelper.printMainMenu();    // Call printMainMenu() to print out Main Menu
@@ -56,6 +56,6 @@ public class Main {
                 System.out.println("Invalid response");
                 break;
         }
-    }*/
+    }
     }
 }

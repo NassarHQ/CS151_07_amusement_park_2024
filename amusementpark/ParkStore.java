@@ -116,12 +116,12 @@ public class ParkStore {
         boolean itemFound = false;   // Initialize flag to false
 
         if (quantity <= 0) {
-            System.out.println("Quantity must be greater than zero. Please try again.\n");
+            System.out.println("Quantity must be greater than zero. Please try again.");
             return;  // Exit the method to allow the program to continue
         }
 
         if (quantity > inventories.get(item.toLowerCase())) {
-            System.out.println("Not enough quantity of " + item + " for sale.\n");
+            System.out.println("Not enough quantity of " + item + " for sale.");
             return;  // Exit the method to allow the program to continue
         }
 
@@ -136,7 +136,7 @@ public class ParkStore {
         }
 
         System.out.println("\n" + v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
-                           "Total price is $" + price * quantity + ".\n");
+                           "Total price is $" + price * quantity + ".");
 
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
@@ -214,7 +214,7 @@ public class ParkStore {
         }
 
         for (String item : inventories.keySet()) {
-            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each\n");
+            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each");
         }
     }
 
