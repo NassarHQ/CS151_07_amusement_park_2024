@@ -188,48 +188,17 @@ public boolean removeStore(ParkStore s) {
         System.out.println("Tickets Sold Today: " + totalTicketsSold);
     }
 
-    
-// Modular method to handle ticket transactions (sell or refund)
-    private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
-    if (t == null || v == null) {
-        System.out.println("Invalid ticket or visitor.");
-        return false;
-    }
 
-    String action = isSelling ? "sold" : "refunded";
-
-    if (isSelling) { // Process a sale
-        soldTickets.add(t);
-        v.addTicketToPurchaseHistory(t);
-        totalRevenue += t.getTicketPrice();
-        totalTicketsSold++;
-        printActionMessage("Ticket", t.getTicketID(), true, action);
-        return true;
-    } else {
-        if (soldTickets.contains(t) && v.hasPurchased(t.getTicketID())) {
-            soldTickets.remove(t);
-            totalRevenue -= t.getTicketPrice();
-            totalTicketsSold--;
-            printActionMessage("Ticket", t.getTicketID(), true, action);
-            return true;
-        } else {
-            printActionMessage("Ticket", t.getTicketID(), false, "not eligible for refund");
-            return false;
-        }
-    }
-}
-
+    // Simplified ticket selling method
     public boolean sellTicket(Visitor v) {
-        // Define a base price for the ticket (for example $100.00)
         double basePrice = 100.00;
 
-        // Generate a new ticket with the base price by calling the static method in Ticket
+        // Generate a new ticket
         Ticket newTicket = Ticket.generateTicket(basePrice);
-
         double finalPrice = newTicket.applyDiscount(v);
 
         System.out.printf("Your ticket price after discount: $%.2f\n", finalPrice);
-        
+
         System.out.println("Would you like to proceed with the purchase? (yes/no)");
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine();
@@ -237,28 +206,21 @@ public boolean removeStore(ParkStore s) {
         exitProgram(response);
 
         if (response.equalsIgnoreCase("yes")) {
-            // Update the ticket price to the discounted price
             newTicket.setTicketPrice(finalPrice);
-
-            // Process the sale
-            processTicket(newTicket, v, true);
-
-            newTicket.displayTicketReceipt(v);  // Display the ticket receipt to visitor
-
+            soldTickets.add(newTicket);
+            v.addTicketToPurchaseHistory(newTicket);
+            totalRevenue += finalPrice;
+            totalTicketsSold++;
+            newTicket.displayTicketReceipt(v);
             return true;
-
         } else {
             System.out.println("Purchase cancelled.");
         }
         return false;
     }
 
-// Method to refund a ticket to a visitor
-public void refundTicket(Ticket t, Visitor v) {
-    processTicket(t, v, false); // Use processTicket to handle refunding
-}
 
-  
+
   // Method to display all feedbacks from visitors
     public void displayAllFeedbacks() {
         System.out.println("Visitor Feedback:");
