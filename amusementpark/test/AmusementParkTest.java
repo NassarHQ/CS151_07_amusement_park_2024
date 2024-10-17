@@ -71,6 +71,13 @@ public class AmusementParkTest {
     // --------- Visitor Tests ---------
 
     @Test
+    public void testVisitorAddTicketToPurchaseHistory() {
+        // Test adding ticket to visitor's purchase history
+        visitor.addTicketToPurchaseHistory(ticket);
+        assertTrue(visitor.getPurchaseTicketHistory().contains(ticket)); // Verify ticket is in purchase history
+    }
+    
+    @Test
     public void testVisitorFeedback() {
         visitor.provideFeedback(); // Simulate the user providing feedback interactively
 
