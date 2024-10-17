@@ -136,7 +136,7 @@ public class ParkStore {
         }
 
         System.out.println("\n" + v.getName() + " bought " + quantity + " " + item + "(s) from " + this.parkStoreName + ".\n" +
-                           "Total price is $" + price * quantity + ".");
+                           "Total price is $" + String.format("%.2f", price * quantity) + ".");
 
         // Update the quantity of sold items
         inventories.put(item.toLowerCase(), inventories.get(item.toLowerCase()) - quantity);
@@ -214,7 +214,8 @@ public class ParkStore {
         }
 
         for (String item : inventories.keySet()) {
-            System.out.println("Item: " + item + " - Quantity: " + inventories.get(item) + " - Price: $" + itemPrices.get(item) +"/each");
+            System.out.printf("Item: %s - Quantity: %d - Price: $%.2f/each%n",
+                    item, inventories.get(item), itemPrices.get(item));
         }
     }
 

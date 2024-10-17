@@ -7,20 +7,21 @@ import static amusementpark.Main.exitProgram;
 public class VisitorUI {
     private Scanner scanner;
     private Visitor visitor;
-    private Ticket ticket;
     private Park park;
     private Ride ride;
     private ParkStore store;
     private String chosenItem;
     private int quantity;
 
-    public VisitorUI(Park park, Visitor visitor) {  //Only one constructor here. This makes the most sense.
+    public VisitorUI(Park park) {  //Only one constructor here. This makes the most sense.
         this.scanner = new Scanner(System.in);
-        this.visitor = visitor;
         this.park = park;
     }
 
     public void displayMenu() {
+
+        // Create a new Visitor instance for this session
+        visitor = new Visitor();
 
         askVisitorName();
         askVisitorAge();
@@ -33,7 +34,7 @@ public class VisitorUI {
 
             String choice = scanner.nextLine();
 
-            switch (choice) {
+            switch (choice.trim()) {
                 case "1":
                     buyTickets();
                     break;
@@ -52,8 +53,10 @@ public class VisitorUI {
                 case "6":
                     viewPurchaseHistory();
                     break;
+                case "7":
+                    return;
                 case "exit":
-                    exitProgram(choice);
+                    exitProgram(choice.trim());
                 default:
                     System.err.println("Invalid option. Please try again.");
                     break;
@@ -62,9 +65,15 @@ public class VisitorUI {
     }
 
     public void buyTickets() {
-       Ticket.displayTicketInfo();
-       park.sellTicket(visitor);
-
+       Ticket.displayTicketInfo();  // Display tickets info
+        if (park.getVisitors().contains(visitor)) {
+            System.out.println("You already purchased a ticket.");
+        } else {
+            if (park.sellTicket(visitor)) {
+                visitor.setTicketPurchased(true);
+                park.addPerson(visitor);
+            }
+        }
     }
 
     public void checkoutRides() {
@@ -76,7 +85,7 @@ public class VisitorUI {
             park.displayAllRides();
 
             System.out.println("\nEnter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
-            String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
+            String chosenRide = scanner.nextLine().trim();     // Read user's input for chosen ride
 
             exitProgram(chosenRide);
 
@@ -104,6 +113,10 @@ public class VisitorUI {
     }
 
     public void checkoutStores() {
+        if (!visitor.getTicketPurchased()) {
+            System.out.println("You haven't purchased any tickets to enter the park. Please purchase a ticket first.");
+            return;
+        }
         while (true) {
             // Buy products from store
             System.out.println("\n============================");
@@ -112,7 +125,7 @@ public class VisitorUI {
             park.displayAllStores();    // Display all stores to visitors using method from Park class
 
             System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
-            String chosenStore = scanner.nextLine();     // Read user's input for chosen store
+            String chosenStore = scanner.nextLine().trim();     // Read user's input for chosen store
 
             exitProgram(chosenStore);
 
@@ -149,7 +162,7 @@ public class VisitorUI {
             System.out.println("\nEnter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
             chosenItem = scanner.nextLine();
 
-            exitProgram(chosenItem);
+            exitProgram(chosenItem.trim());
 
             if (chosenItem.equalsIgnoreCase("cancel")) {
                 System.out.println("Return to List of our Stores");
@@ -165,16 +178,17 @@ public class VisitorUI {
                     // Keep asking for the quantity until a valid integer is provided
                     while (!itemFound) {
                         System.out.println("\nEnter the quantity you want to buy: ");
-                        try {
-                            quantity = scanner.nextInt();  // Read the quantity
-                            scanner.nextLine();  // Consume the newline character
+                        String quantityString = scanner.nextLine().trim();
 
+                        exitProgram(quantityString.trim());
+                        try {
+                            quantity = Integer.parseInt(quantityString);
                             // Call sellItems to process the purchase
                             store.sellItems(visitor, chosenItem, quantity);
 
                             itemFound = true;  // Exit the loop if valid input is given
 
-                        } catch (InputMismatchException e) {
+                        } catch (NumberFormatException e) {
                             System.err.println("Invalid quantity. Please try again");
                             scanner.nextLine();  // Clear the invalid input
                         }
@@ -182,14 +196,18 @@ public class VisitorUI {
                 } else {
                     System.err.println("Invalid item. Please try again.");
                 }
-
             }
         }
     }
 
     public void writeFeedback() {
+        if (!visitor.getTicketPurchased()) {
+            System.out.println("You haven't purchased any tickets to enter the park to write a feedback. Please purchase a ticket first.");
+            return;
+        }
         visitor.provideFeedback();
         System.out.println("Thank you for your feedback.");
+
     }
 
     public void viewPurchaseHistory() {
@@ -215,52 +233,66 @@ public class VisitorUI {
         }
     }
 
-    // Helper method to ask for numerical input (age, weight, height)
-    private int askForNumericInput(String prompt) {
+    // Helper method to ask double input (height, weight)
+    private int askForDoubleInput(String prompt) {
         while (true) {
+            System.out.println("\n" + prompt);
+            String input = scanner.nextLine().trim();  // Read input as string
+
+            exitProgram(input);  // Check for exit
+
             try {
-                System.out.println("\n" + prompt);
-                int input = scanner.nextInt();  // Get numeric input
-                scanner.nextLine();  // Clear the newline character after nextInt()
-
-                exitProgram(String.valueOf(input));
-
-                if (input <= 0) {
-                    throw new IllegalArgumentException("Invalid input. Please try again.");
+                int userInput = Integer.parseInt(input);  // Parse string to integer
+                if (userInput <= 0) {
+                    throw new IllegalArgumentException("Invalid input. Please enter a valid integer.");
                 }
-                return input;  // Return valid input
+                return userInput;  // Return valid input
+
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter a valid integer.");
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
-            } catch (InputMismatchException e) {
-                System.err.println("Invalid input. Please enter a valid number.");
-                scanner.next();  // Clear the invalid input
             }
         }
     }
 
-    // Method to ask for visitor's age
-    public void askVisitorAge() {
-        visitor.setAge(askForNumericInput("Enter your age: "));
+    // Method to ask for visitor's height
+    public void askVisitorHeight() {
+        visitor.setVisitorHeight(askForDoubleInput("Enter your height in cm: "));
     }
 
     // Method to ask for visitor's weight
     public void askVisitorWeight() {
-        visitor.setVisitorWeight(askForNumericInput("Enter your weight in kg: "));
+        visitor.setVisitorWeight(askForDoubleInput("Enter your weight in kg: "));
     }
 
-    // Method to ask for visitor's height
-    public void askVisitorHeight() {
-        visitor.setVisitorHeight(askForNumericInput("Enter your height in cm: "));
-    }
+    // Method to ask for visitor's age
+    public void askVisitorAge() {
+        while (true) {
+            System.out.println("\nEnter your age: ");
+            String ageInput = scanner.nextLine().trim();  // Read input as a string
 
-    // Helper method to exit the program whenever user types 'EXIT'
-//    public static void exitProgram(String input) {
-//        if (input.equalsIgnoreCase("exit")) {
-//            System.out.println("Exiting the program. Goodbye!");
-//            System.exit(0);
-//            scanner.close();
-//        }
-//    }
+            // Check for the exit condition
+            exitProgram(ageInput);
+
+            try {
+                // Parse the string input to an integer
+                int age = Integer.parseInt(ageInput);
+
+                if (age <= 0) {
+                    throw new IllegalArgumentException("Invalid input. Age has to be greater than 0.");
+                }
+
+                visitor.setAge(age);  // Set the age in the visitor object
+                break;  // Exit the loop if age is valid
+
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter a valid integer.");
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
 }
 
 

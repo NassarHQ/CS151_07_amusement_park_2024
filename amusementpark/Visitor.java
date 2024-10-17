@@ -11,6 +11,7 @@ public class Visitor extends Person {
     private List<String> purchaseItemHistory;
     private String feedback;
     private boolean hasProvidedFeedback;
+    private boolean ticketPurchased;
 
 
     public Visitor(){
@@ -20,6 +21,7 @@ public class Visitor extends Person {
         this.height = 0.0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
+        this.ticketPurchased = false; // Initialize the flag as false
     }
 
     public Visitor(String name, int age) {
@@ -29,15 +31,17 @@ public class Visitor extends Person {
         this.height = 0.0;
         this.weight = 0.0;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
+        this.ticketPurchased = false; // Initialize the flag as false
     }
 
-    public Visitor(String name, int age, int height, double weight) {
+    public Visitor(String name, int age, double height, double weight) {
         super(name, age); // Call the parent class constructor
         this.height = height;
         this.weight = weight;
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
         this.hasProvidedFeedback = false; // Initialize the flag as false
+        this.ticketPurchased = false; // Initialize the flag as false
     }
 
     // Getter for visitor's height
@@ -46,7 +50,7 @@ public class Visitor extends Person {
     }
 
     // Setter for visitor's height
-    public void setVisitorHeight(int height) {
+    public void setVisitorHeight(double height) {
         validatePositiveNumber(height, "Height");
         this.height = height;
     }
@@ -58,7 +62,7 @@ public class Visitor extends Person {
 
     // Setter for visitor's weight
     public void setVisitorWeight(double weight) {
-        validatePositiveNumber(height, "Weight");
+        validatePositiveNumber(weight, "Weight");
         this.weight = weight;
     }
 
@@ -75,6 +79,16 @@ public class Visitor extends Person {
     // Getter for hasProvidedFeedback
     public boolean hasProvidedFeedback() {
         return hasProvidedFeedback;     // Return the feedback flag status
+    }
+
+    // Setter for ticketPurchased flag
+    public void setTicketPurchased(boolean purchased) {
+        this.ticketPurchased = purchased; // Set ticket purchase status
+    }
+
+    // Getter for ticketPurchased flag
+    public boolean getTicketPurchased() {
+        return ticketPurchased; // Set ticket purchase status
     }
 
     public String getVisitorCategory() {
@@ -142,14 +156,14 @@ public class Visitor extends Person {
         if (purchaseTicketHistory.isEmpty()) {
             System.out.println("You haven't purchased any tickets.");
         } else {
-            System.out.println("Your purchase ticket ID(s): " + purchaseTicketHistory);
+            System.out.println("Your purchased ticket ID: " + purchaseTicketHistory);
         }
     }
 
     // Method to view product purchase history
     public void viewPurchaseItemHistory() {
         if (purchaseItemHistory.isEmpty()) {
-            System.out.println("You haven't purchased any products.");
+            System.out.println("You haven't purchased any items.");
         } else {
             System.out.println("Your purchased items: " + purchaseItemHistory);
         }

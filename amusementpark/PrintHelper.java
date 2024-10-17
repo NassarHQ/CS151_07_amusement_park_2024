@@ -59,15 +59,16 @@ public class PrintHelper {
         System.out.println("\n============================");
         System.out.println("\tVisitor Menu");
         System.out.println("============================");
-        System.out.println("1. Buy a Ticket");
+        System.out.println("1. Purchase a Ticket");
         System.out.println("2. View Rides");
         System.out.println("3. Queue for a Ride");
         System.out.println("4. Buy Items from Store");
         System.out.println("5. Write a Feedback");
         System.out.println("6. View Purchase History");
+        System.out.println("7. Return to Main Menu");
         System.out.println("EXIT");
         System.out.println("============================");
-        System.out.println("\nPlease select an option (1-6) or type 'EXIT' to exit the program: ");
+        System.out.println("\nPlease select an option (1-7) or type 'EXIT' to exit the program: ");
     }
 
     public static void printMainMenu() {
