@@ -62,9 +62,9 @@ public class PrintHelper {
         System.out.println("1. Buy Tickets");
         System.out.println("2. View Rides");
         System.out.println("3. Queue for a Ride");
-        System.out.println("4. Buy Products from Store");
+        System.out.println("4. Buy Items from Store");
         System.out.println("5. Write a Feedback");
-        System.out.println("6.View Purchase History");
+        System.out.println("6. View Purchase History");
         System.out.println("7. Exit");
         System.out.println("============================");
     }
@@ -77,7 +77,7 @@ public class PrintHelper {
         System.out.println("2. Employee");
         System.out.println("3. Admin");
         System.out.println("4. Exit");
-        System.out.println("\nPlease select an option (1-4): ");
         System.out.println("============================");
+        System.out.println("\nPlease select an option (1-4): ");
     }
 }

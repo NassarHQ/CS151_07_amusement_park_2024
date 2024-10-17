@@ -25,32 +25,31 @@ public class VisitorUI {
 
             PrintHelper.printVisitorMenu(); // Call printVisitorMenu from PrintHelper class to print out Visitor Menu
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            String choice = scanner.nextLine();
 
             switch (choice) {
-                case 1:
+                case "1":
                     buyTickets();
                     break;
-                case 2:
+                case "2":
                     checkoutRides();
                     break;
-                case 3:   // IMPLEMENT LATER
+                case "3":   // IMPLEMENT LATER
                     // VISITOR GET ON QUEUE
                     break;
-                case 4:
+                case "4":
                     checkoutStores();
                     break;
-                case 5:
+                case "5":
                     writeFeedback();
                     break;
-                case 6:
+                case "6":
                     viewPurchaseHistory();
                     break;
-                case 7:
+                case "7":
                     return; // Exit to main menu
                 default:
-                    System.out.println("Invalid option. Please try again.\n");
+                    System.out.println("Invalid option. Please try again.");
                     break;
             }
         }
@@ -175,6 +174,9 @@ public class VisitorUI {
                             // Call sellItems to process the purchase
                             store.sellItems(visitor, chosenItem, quantity);
 
+                            // Add the purchase to history
+                            visitor.addItemToPurchaseHistory(store, chosenItem, quantity);
+
                             itemFound = true;  // Exit the loop if valid input is given
 
                         } catch (InputMismatchException e) {
@@ -198,7 +200,7 @@ public class VisitorUI {
     public void viewPurchaseHistory() {
         System.out.println(visitor.getName() + "'s purchase history:\n");
         visitor.viewPurchaseTicketHistory();
-        visitor.viewPurchaseProductHistory();
+        visitor.viewPurchaseItemHistory();
     }
 }
 
