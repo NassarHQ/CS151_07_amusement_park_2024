@@ -4,7 +4,7 @@ public class Ticket implements Discountable {
     private double ticketPrice;
     private String ticketID;
     private boolean isUsed; // Check if the ticket has been used
-    boolean isRefunded; // Check if the ticket has been refunded
+    private boolean isRefunded; // Check if the ticket has been refunded
 
     public Ticket(double ticketPrice, String ticketID){
         this.ticketPrice = ticketPrice;
@@ -26,6 +26,10 @@ public class Ticket implements Discountable {
         this.ticketPrice = ticketPrice;
     }
 
+    // Getter for refund status
+    public boolean isRefunded() {
+        return isRefunded;
+    }
 
     @Override
     public double applyDiscount(Visitor visitor){
@@ -53,5 +57,14 @@ public class Ticket implements Discountable {
     public String toString() {
         return "Ticket Number: " + ticketID + ", Price: $" + ticketPrice;
     }
+
+    public void setRefundStatus(boolean isRefunded) {
+        this.isRefunded = isRefunded; // Update the refund status
+        if (isRefunded) {
+            System.out.println("Ticket " + ticketID + " has been refunded.");
+        } else {
+            System.out.println("Refund status for ticket " + ticketID + " has been revoked.");
+        }
+    }    
 
 }

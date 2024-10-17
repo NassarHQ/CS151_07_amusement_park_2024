@@ -73,6 +73,11 @@ public class Visitor extends Person {
         System.out.println("Weight of " + toString() + " is: " + weight +" kg.");
     }
 
+    // Getter to retrieve purchase ticket history
+    public List<String> getPurchaseTicketHistory() {
+        return purchaseTicketHistory;
+    }    
+
     public String getVisitorCategory() {
         int age = getAge();
         if (age < 12) {

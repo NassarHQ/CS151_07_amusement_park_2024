@@ -22,7 +22,7 @@ public class AmusementParkTest {
         employee = new Employee("John Doe", 30, "E123", "Manager");
         visitor = new Visitor("Jane Doe", 25, 170, 70);
         ticket = new Ticket(50.0, "T123");
-        ride = new Ride("Roller Coaster", 1, 20, 60, 150, 200);
+        ride = new Ride("Roller Coaster", "0001", 20, 60, 150, 200);
         park = new Park();
     }
 
@@ -118,20 +118,20 @@ public class AmusementParkTest {
     @Test
     public void testRideStartStop() {
         // Test starting and stopping the ride
-        ride.start();
-        assertTrue(ride.isRideOperational()); // Verify ride is operational
+        ride.startUse();
+        assertTrue(ride.isOperational()); // Verify ride is operational
         
-        ride.stop();
-        assertFalse(ride.isRideOperational()); // Verify ride is not operational after stop
+        ride.stopUse();
+        assertFalse(ride.isOperational()); // Verify ride is not operational after stop
     }
 
     @Test
     public void testRideCapacity() {
         // Test that the ride can't exceed its capacity
-        for (int i = 0; i < ride.getCapacity(); i++) {
+        for (int i = 0; i < ride.getRideCapacity(); i++) {
             ride.addRider(new Visitor("Visitor" + i, 20, 160, 70)); // Add visitors
         }
-        assertEquals(ride.getCapacity(), ride.getOnRide().size()); // Verify capacity is met
+        assertEquals(ride.getRideCapacity(), ride.getOnRide().size()); // Verify capacity is met
 
         Visitor extraVisitor = new Visitor("Extra Visitor", 25, 170, 75);
         ride.addRider(extraVisitor);  // Try to add another visitor
@@ -144,13 +144,13 @@ public class AmusementParkTest {
     public void testAddRideToPark() {
         // Test adding a ride to the park
         park.addRide(ride);
-        assertTrue(park.getRides().contains(ride)); // Verify ride is in the park's ride list
+        assertTrue(park.getRidesList().contains(ride)); // Verify ride is in the park's ride list
     }
 
     @Test
     public void testDailyRevenueCalculation() {
         // Test daily revenue calculation
-        visitor.addToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
+        visitor.addTicketToPurchaseHistory(ticket);  // Add ticket to visitor's purchase history
         park.addVisitor(visitor);
         park.calculateDailyRevenue(); // Calculate revenue based on visitors
         assertEquals(50.0, park.getDailyRevenue(), 0.01); // Verify daily revenue
@@ -161,6 +161,6 @@ public class AmusementParkTest {
         // Test removing a ride from the park
         park.addRide(ride);
         park.removeRide(ride);
-        assertFalse(park.getRides().contains(ride)); // Verify ride is not in the park's ride list
+        assertFalse(park.getRidesList().contains(ride)); // Verify ride is not in the park's ride list
     }
 }
