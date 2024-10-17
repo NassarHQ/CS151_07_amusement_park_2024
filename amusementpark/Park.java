@@ -24,7 +24,6 @@ public class Park {
     private Set<Employee> employees;
     private ArrayList<ParkStore> stores;
     private ArrayList<Ride> rides;
-    private Set<Ticket> availableTickets;
     private Set<Ticket> soldTickets;
     private ArrayList<String> reportedIssues;
 
@@ -39,7 +38,6 @@ public class Park {
         this.employees = new HashSet<>();
         this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
-        this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
     }
@@ -54,7 +52,6 @@ public class Park {
         this.employees = new HashSet<>();
         this.stores = new ArrayList<>();
         this.rides = new ArrayList<>();
-        this.availableTickets = new HashSet<>();
         this.soldTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
 
@@ -188,8 +185,14 @@ public boolean removeStore(ParkStore s) {
         System.out.println("Tickets Sold Today: " + totalTicketsSold);
     }
 
+    // Generate a ticket for a visitor
+    private Ticket generateTicket(double price) {
+        String ticketID = "TICKET" + (soldTickets.size() + 1);  // Generate a unique ticket ID
+        return new Ticket(price, ticketID); // Create a new ticket with price and ID
+    }
+
 // Modular method to handle ticket transactions (sell or refund)
-private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
+    private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
     if (t == null || v == null) {
         System.out.println("Invalid ticket or visitor.");
         return false;
@@ -198,22 +201,15 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
     String action = isSelling ? "sold" : "refunded";
 
     if (isSelling) { // Process a sale
-        if (availableTickets.contains(t)) {
-            availableTickets.remove(t);
-            soldTickets.add(t);
-            v.addTicketToPurchaseHistory(t);
-            totalRevenue += t.getTicketPrice();
-            totalTicketsSold++;
-            printActionMessage("Ticket", t.getTicketID(), true, action);
-            return true;
-        } else {
-            printActionMessage("Ticket", t.getTicketID(), false, "not available for purchase");
-            return false;
-        }
+        soldTickets.add(t);
+        v.addTicketToPurchaseHistory(t);
+        totalRevenue += t.getTicketPrice();
+        totalTicketsSold++;
+        printActionMessage("Ticket", t.getTicketID(), true, action);
+        return true;
     } else {
         if (soldTickets.contains(t) && v.hasPurchased(t.getTicketID())) {
             soldTickets.remove(t);
-            availableTickets.add(t);
             totalRevenue -= t.getTicketPrice();
             totalTicketsSold--;
             printActionMessage("Ticket", t.getTicketID(), true, action);
@@ -227,8 +223,9 @@ private boolean processTicket(Ticket t, Visitor v, boolean isSelling) {
 
 
 // Method to sell a ticket to a visitor
-public void sellTicket(Ticket t, Visitor v) {
-    processTicket(t, v, true); // Use processTicket to handle selling
+public void sellTicket(Visitor v, double price) {
+    Ticket newTicket = generateTicket(price);  // Generate a new ticket when selling
+    processTicket(newTicket, v, true);  // Process the sale
 }
 
 // Method to refund a ticket to a visitor
