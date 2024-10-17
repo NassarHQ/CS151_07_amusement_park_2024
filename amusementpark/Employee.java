@@ -177,6 +177,15 @@ public class Employee extends Person{
         this.salary = calculateSalary();
     }
 
+    //Getter and setter for onShift
+    public boolean getOnShift() {
+        return onShift;
+    }
+
+    public void setOnShift(boolean onShift) {
+        this.onShift = onShift;
+    }
+
     public void checkSalary() {
         //System.out.println("Salary for " + this.getName() + " (" + this.role + "): $" + this.salary);
         System.out.printf("Salary for %s (%s): $%.2f%n", this.getName(), this.role, this.salary);
