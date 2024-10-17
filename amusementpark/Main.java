@@ -10,7 +10,7 @@ public class Main {
         //Initialize some stuff for the sake of testing
         Scanner scanner = new Scanner(System.in);
         Park park = new Park();
-        Employee employee = new Employee("John Doe", 25, "1304", "manager");
+        Employee employee = new Employee("John Doe", 25, "1304", "manager", "john1", "haha");
         ParkStore store = new ParkStore("foody", "food");
         ParkStore store1 = new ParkStore("drunk", "drink");
         park.addStore(store);
