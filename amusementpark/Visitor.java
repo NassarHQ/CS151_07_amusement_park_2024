@@ -113,32 +113,6 @@ public class Visitor extends Person {
     }
 
     @Override
-    public void addedToPark(Park park) {
-        // Add visitor to the park's visitor set
-        // this refers to the current instance of visitor
-        if (park.getVisitors().add(this)) {
-            // Print a confirmation that the visitor is added
-            System.out.println(toString() + " is added to the park");
-        } else {
-            // Print a message that the visitor already exists
-            System.out.println(toString() + " is already in the park");
-        }
-    }
-
-    @Override
-    public void removedFromPark(Park park) {
-        // Remove the visitor from the park's visitor set
-        // This refers to the current instance of Visitor
-        if (park.getVisitors().remove(this)) {
-            // Print a message that the visitor has been removed
-            System.out.println(toString() + " has been removed from the park.");
-        } else {
-            // Print a message that the visitor is not in the park
-            System.out.println(toString() + " is not found in the park.");
-        }
-    }
-
-    @Override
     public void personType(){
         System.out.println("Visitor");
     }

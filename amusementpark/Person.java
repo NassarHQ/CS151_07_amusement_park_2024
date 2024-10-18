@@ -68,10 +68,6 @@ public abstract class Person implements Loginable {
         this.password = password;
     }
 
-    // Abstract methods that subclasses (Visitor, Employee) must implement
-    public abstract void addedToPark(Park park); // Adds the person to the park
-    public abstract void removedFromPark(Park park); // Removes the person from the park
-
     // This should print out whether you are Visitor OR Employee
     public abstract void personType();
 
