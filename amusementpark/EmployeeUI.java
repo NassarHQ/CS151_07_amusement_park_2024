@@ -82,6 +82,7 @@ public class EmployeeUI {
             case "11":
                 return true; // Exit to main menu
             case "exit":
+            case "EXIT":
                 exitProgram(choice.trim());
             default:
                 System.out.println("Invalid option. Please try again.");
