@@ -1,5 +1,6 @@
 package amusementpark;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -53,6 +54,25 @@ public class Main {
         }
     }
 
+    public static class InputMismatchExample {
+        public static void main(String[] args) {
+            int number = 0;
+
+            while (true) {
+                try {
+                    System.out.print("Please enter an integer: ");
+                    number = scanner.nextInt(); // This line may throw InputMismatchException
+                    break; // Exit the loop if input is valid
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a valid integer.");
+                    scanner.nextLine(); // Clear the invalid input from the scanner
+                }
+            }
+
+            System.out.println("You entered: " + number);
+        }
+    }
+
     public static void exitProgram(String input) {
         System.out.println("Input received: '" + input + "'"); // Debug line
         if (input.trim().equalsIgnoreCase("exit")) {
@@ -61,4 +81,5 @@ public class Main {
             System.exit(0); // Exit the program
         }
     }
+
 }

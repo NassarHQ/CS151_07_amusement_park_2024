@@ -1,7 +1,6 @@
 package amusementpark;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
 
 public class VisitorUI extends PersonUI{

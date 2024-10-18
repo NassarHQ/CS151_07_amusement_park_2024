@@ -15,7 +15,6 @@ public abstract class PersonUI implements Loginable {
     // Constructor taking only Park as a parameter
     public PersonUI(Park park) {
         this.accounts = new HashMap<>();
-        this.scanner = new Scanner(System.in);
         this.park = park;
         this.person = createPerson(); // Call the method to create the person object
     }
