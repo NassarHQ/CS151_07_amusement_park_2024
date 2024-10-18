@@ -90,7 +90,7 @@ public class EmployeeUI {
         return false;
     }
 
-    public Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
+    public static Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
         for (Ride ride : rideList) {
             if (ride.getRideName().equalsIgnoreCase(rideName)) {
                 return ride;
