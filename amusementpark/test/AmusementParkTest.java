@@ -6,6 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class AmusementParkTest {
 
@@ -53,12 +55,12 @@ public class AmusementParkTest {
         assertFalse(employee.getOnShift()); // Verify employee is off shift
     }
 
-//    @Test
-//    public void testEmployeeAddToPark() {
-//        // Test adding employee to park
-//        employee.addToPar(park);
-//        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
-//    }
+    @Test
+    public void testEmployeeAddToPark() {
+        // Test adding employee to park
+        employee.addedToPark(park);
+        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
+    }
 
     @Test
     public void testEmployeeCheckRideEligibility() {
@@ -84,13 +86,18 @@ public class AmusementParkTest {
     
     @Test
     public void testVisitorFeedback() {
-        visitor.provideFeedback(); // Simulate the user providing feedback interactively
+        // Simulate user input by providing feedback through System.setIn
+        String simulatedInput = "Great ride!";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(inputStream);
+
+        Visitor visitor = new Visitor("John Doe", 30);
+        visitor.provideFeedback();  // This should use the simulated input
 
         // Verify feedback was added
-        assertTrue(visitor.hasProvidedFeedback()); // Ensure that the feedback flag is set
-        assertEquals("Great ride!", visitor.getFeedback()); // Check if feedback matches(assumes user input was "Great ride!")
+        assertTrue(visitor.hasProvidedFeedback()); // Ensure the feedback flag is set
+        assertEquals("Great ride!", visitor.getFeedback()); // Verify feedback
     }
-
 
     // --------- Ticket Tests ---------
 
@@ -172,6 +179,11 @@ public class AmusementParkTest {
         ticket.setTicketPrice(ticketPrice); // Set initial price for the ticket
 
         visitor.addTicketToPurchaseHistory(ticket);     // Add the ticket to the visitor's purchase history
+
+        // Mock user input for ticket purchase 
+        String simulatedInput = "yes\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(inputStream);
 
         park.sellTicket(visitor);   //Process the ticket purchase
 
