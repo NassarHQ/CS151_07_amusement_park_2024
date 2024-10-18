@@ -24,7 +24,7 @@ public abstract class PersonUI implements Loginable {
     protected abstract Person createPerson();
 
     // Method to ask if the user has an account or not
-    public void askForAccount() {
+    protected void askForAccount() {
         while (true) {
             System.out.println("Do you already have an existing account? (yes/no or 'cancel' to return to Main Menu or 'EXIT' to exit the program)");
             String answer = scanner.nextLine().trim().toLowerCase();
@@ -54,10 +54,10 @@ public abstract class PersonUI implements Loginable {
     }
 
     // Abstract method to be implemented in subclasses for user info
-    public abstract void askForUserInfo();
+    protected abstract void askForUserInfo();
 
     // Method to ask for username and password to log in
-    public boolean askForLogin() {  // Return type is now boolean
+    protected boolean askForLogin() {  // Return type is now boolean
         System.out.println("Enter your username: ");
         person.setUsername(scanner.nextLine().trim());  // Trim the input
         exitProgram(person.getUsername());
@@ -77,7 +77,7 @@ public abstract class PersonUI implements Loginable {
     }
 
     // Method to create a new account
-    public void createNewAccount() {
+    protected void createNewAccount() {
         System.out.println("Creating a new account...");
 
         // Ask for username
