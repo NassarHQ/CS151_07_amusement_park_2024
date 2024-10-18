@@ -35,13 +35,12 @@ public class EmployeeUI {
             System.out.println("11. Return to Main Menu");
             System.out.println("EXIT");
             System.out.println("============================");
-            System.out.print("\nPlease select an option (1-9): ");
+            System.out.print("\nPlease select an option (1-11): ");
             
             String choice = scanner.nextLine();
 
             exitMenu = handleMenuChoice(choice);
         }
-            scanner.close();
     }
 
     private boolean handleMenuChoice(String choice){
