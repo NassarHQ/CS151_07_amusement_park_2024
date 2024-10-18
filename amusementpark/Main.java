@@ -2,12 +2,15 @@ package amusementpark;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+import java.util.Map;
+import java.util.HashMap;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
+    private static Map<String, Employee> employeeAccounts = new HashMap<>();
 
     public static void main(String[] args) {
 
+        
         //Initialize some stuff for the sake of testing
         Scanner scanner = new Scanner(System.in);
         Park park = new Park();
@@ -39,8 +42,8 @@ public class Main {
                     break;
                 case "2":
                     //  System.out.println("Employee Menu"); //Call employee UI STUFF
-                    EmployeeUI employeeUI = new EmployeeUI(park, employee);
-                    employeeUI.displayMenu();
+                    EmployeeUI employeeUI = new EmployeeUI(park,employeeAccounts);
+                    employeeUI.showLoginMenu();
                     break;
                 case "3":
                     System.out.println("Admin menu"); //Call admin UI stuff
