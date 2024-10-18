@@ -58,7 +58,7 @@ public class AmusementParkTest {
     @Test
     public void testEmployeeAddToPark() {
         // Test adding employee to park
-        employee.addedToPark(park);
+        park.addEmployee(employee);
         assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
     }
 
