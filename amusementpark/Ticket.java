@@ -1,6 +1,8 @@
 package amusementpark;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ticket implements Discountable {
     private double ticketPrice;
@@ -10,6 +12,9 @@ public class Ticket implements Discountable {
     private static int ticketCounter = 0;
     private static final double BASE_PRICE = 100.00;
     private LocalDateTime purchaseDateTime;
+
+    // List to keep track of all generated tickets
+    private static List<Ticket> generatedTickets = new ArrayList<>();
 
     public Ticket(){
         this.ticketPrice = -1;
@@ -59,10 +64,30 @@ public class Ticket implements Discountable {
         return BASE_PRICE * (1 - discount);
     }
 
+    // Generate a new ticket and ensure it's not used
     public static Ticket generateTicket(double price) {
-        // Generate a unique ticket ID using the static counter
-        String ticketID = "TICKET" + (++ticketCounter);  // Increment the counter and create the ticket ID
-        return new Ticket(price, ticketID);  // Create and return a new Ticket object
+        Ticket newTicket;
+
+        do {
+            // Generate a unique ticket ID using the static counter
+            String ticketID = "TICKET" + (++ticketCounter);  // Increment the counter and create the ticket ID
+            newTicket = new Ticket(price, ticketID);  // Create a new Ticket object
+        } while (checkIfTicketUsed(newTicket));  // Repeat if the ticket has been used
+
+        // Add the new ticket to the list of generated tickets
+        generatedTickets.add(newTicket);
+        return newTicket;
+    }
+
+    // Check if the generated ticket has been used
+    private static boolean checkIfTicketUsed(Ticket ticket) {
+        for (Ticket existingTicket : generatedTickets) {
+            if (existingTicket.getTicketID().equals(ticket.getTicketID()) && existingTicket.isUsed()) {
+                System.out.println("Ticket " + ticket.getTicketID() + " is already used. Generating a new ticket...");
+                return true;  // Ticket is used, rerandomize
+            }
+        }
+        return false;  // Ticket is not used
     }
 
     public static void displayTicketInfo() {
