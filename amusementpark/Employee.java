@@ -233,6 +233,32 @@ public class Employee extends Person{
         return true;
     }
 
+    public void operateRide(Ride ride) {
+        if (ride == null) {
+            System.out.println("No ride assigned.");
+            return;
+        }
+        if (this != ride.getOperator()) {
+            System.out.println("You are not assigned to operate this ride.");
+            return;
+        }
+
+        ride.startUse(); // Call the method to start the ride
+    }
+
+    public void stopRide(Ride ride) {
+        if (ride == null) {
+            System.out.println("No ride assigned.");
+            return;
+        }
+        if (this != ride.getOperator()) {
+            System.out.println("You are not assigned to stop this ride.");
+            return;
+        }
+
+        ride.stopUse(); // Call the method to stop the ride
+    }
+
     // Getter and Setter for EmployeeID and role
     public String getEmployeeID() {
         return employeeID;
