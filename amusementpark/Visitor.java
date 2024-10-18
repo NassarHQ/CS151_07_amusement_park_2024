@@ -18,8 +18,8 @@ public class Visitor extends Person {
         super();
         this.purchaseTicketHistory = new ArrayList<>(); // Initialize or create a new list;
         this.purchaseItemHistory = new ArrayList<>();
-        this.height = 0.0;
-        this.weight = 0.0;
+        this.height = 0.00;
+        this.weight = 0.00;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
         this.ticketPurchased = false; // Initialize the flag as false
     }
@@ -28,8 +28,8 @@ public class Visitor extends Person {
         super (name, age);
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
-        this.height = 0.0;
-        this.weight = 0.0;
+        this.height = 0.00;
+        this.weight = 0.00;
         this.hasProvidedFeedback = false;   // Initialize the flag as false
         this.ticketPurchased = false; // Initialize the flag as false
     }
@@ -38,8 +38,8 @@ public class Visitor extends Person {
         super(name, age, username, password);  // Call the parameterized constructor of Person
         this.purchaseTicketHistory = new ArrayList<>();
         this.purchaseItemHistory = new ArrayList<>();
-        this.height = 0.0;
-        this.weight = 0.0;
+        this.height = 0.00;
+        this.weight = 0.00;
         this.hasProvidedFeedback = false;
         this.ticketPurchased = false;
     }
@@ -180,11 +180,12 @@ public class Visitor extends Person {
 
     @Override
     public void viewProfile() {
+        System.out.println("Visitor " + toString() + "'s information: ");
         System.out.println("Name: " + getName());
         System.out.println("Age: " + getAge());
         System.out.println("Username: " + getUsername());
-        System.out.println("Height: " + height);
-        System.out.println("Weight: " + weight);
+        System.out.println("Height: " + height +" cm");
+        System.out.println("Weight: " + weight + " kg");
     }
 
 }
