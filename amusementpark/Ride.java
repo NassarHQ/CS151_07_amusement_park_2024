@@ -18,6 +18,7 @@ public class Ride implements ParkInteractables {
     private boolean hasStarted; // Track if the ride has started/already running
     private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
     private List<Visitor> onRide; // To keep track of visitors currently on the ride
+    private Employee operator; // Employee assigned to operate the ride
     
     // Default constructor for Ride class
     public Ride() {
@@ -37,16 +38,16 @@ public class Ride implements ParkInteractables {
     public Ride(String rideName, String rideID, int rideCapacity,
         int rideDuration, int rideMinHeight, int rideMaxWeight) {
 
-            this.rideName = rideName;
-            this.rideID = rideID;
-            this.rideCapacity = rideCapacity;
-            this.rideDuration = rideDuration;
-            this.rideMinHeight = rideMinHeight;
-            this.rideMaxWeight = rideMaxWeight;
-            this.isOperational = true;
-            this.hasStarted = false;
-            this.rideVisitorQueue = new LinkedList<>();
-            this.onRide = new LinkedList<>();
+        this.rideName = rideName;
+        this.rideID = rideID;
+        this.rideCapacity = rideCapacity;
+        this.rideDuration = rideDuration;
+        this.rideMinHeight = rideMinHeight;
+        this.rideMaxWeight = rideMaxWeight;
+        this.isOperational = true;
+        this.hasStarted = false;
+        this.rideVisitorQueue = new LinkedList<>();
+        this.onRide = new LinkedList<>();
     }
 
     // Getters and Setters for rideName
@@ -132,14 +133,24 @@ public class Ride implements ParkInteractables {
         // Custom logic to manage riders
     }
 
-    // Method to admit a set of visitors
-    public void admitRiders(Set<Visitor> visitors){
-        rideVisitorQueue.addAll(visitors);
+    // Method to admit an individual visitor to the queue
+    public void admitRider(Visitor visitor) {
+        if (visitor == null) {
+            System.out.println("Invalid visitor. Cannot add to queue.");
+            return;
+        }
+        rideVisitorQueue.add(visitor);
+        System.out.println(visitor.getName() + " has been added to the ride queue.");
     }
 
-    // Method to remove a set of visitors
-    public void removeRiders(Set<Visitor> visitors){
-        rideVisitorQueue.removeAll(visitors);
+    // Method to remove an individual visitor from the queue
+    public void removeRider(Visitor visitor) {
+        if (visitor == null || !rideVisitorQueue.contains(visitor)) {
+            System.out.println("Visitor is not in the queue.");
+            return;
+        }
+        rideVisitorQueue.remove(visitor);
+        System.out.println(visitor.getName() + " has been removed from the ride queue.");
     }
 
     // Modify the isOperational method to just return the status
@@ -153,37 +164,63 @@ public class Ride implements ParkInteractables {
     }
 
     // Method to display ride metrics
-public void displayRideMetrics() {
-    System.out.println("\n============================");
-    System.out.println("   Ride Metrics for " + rideName);
-    System.out.println("============================");
-    System.out.printf("Capacity:                %d%n", rideCapacity);
-    System.out.printf("Duration:                %d minutes%n", rideDuration);
-    System.out.printf("Minimum Height:          %d cm%n", rideMinHeight);
-    System.out.printf("Maximum Weight:          %d kg%n", rideMaxWeight);
-    System.out.println("============================\n");
-}
+    public void displayRideMetrics() {
+        System.out.println("\n============================");
+        System.out.println("   Ride Metrics for " + rideName);
+        System.out.println("============================");
+        System.out.printf("Capacity:                %d%n", rideCapacity);
+        System.out.printf("Duration:                %d minutes%n", rideDuration);
+        System.out.printf("Minimum Height:          %d cm%n", rideMinHeight);
+        System.out.printf("Maximum Weight:          %d kg%n", rideMaxWeight);
+        System.out.println("============================\n");
+    }
 
 // Method to display ride details
-public void displayRideDetails() {
-    System.out.println("\n============================");
-    System.out.println("       Ride Details");
-    System.out.println("============================");
-    System.out.printf("Ride Name:               %s%n", rideName);
-    System.out.printf("Ride ID:                 %s%n", rideID);
-    System.out.printf("Operational Status:      %s%n", (isOperational ? "Operational" : "Not operational"));
-    System.out.printf("Ride Started:            %s%n", (hasStarted ? "Yes" : "No"));
-    System.out.println("============================\n");
-}
+    public void displayRideDetails() {
+        System.out.println("\n============================");
+        System.out.println("       Ride Details");
+        System.out.println("============================");
+        System.out.printf("Ride Name:               %s%n", rideName);
+        System.out.printf("Ride ID:                 %s%n", rideID);
+        System.out.printf("Operational Status:      %s%n", (isOperational ? "Operational" : "Not operational"));
+        System.out.printf("Ride Started:            %s%n", (hasStarted ? "Yes" : "No"));
+        System.out.println("============================\n");
+    }
+
+    // Method to assign an employee to the ride
+    public void assignOperator(Employee employee) {
+        this.operator = employee;
+        System.out.println("Operator " + employee.getName() + " has been assigned to the ride " + rideName);
+    }
+
+    public Employee getOperator() {
+        return this.operator;
+    }
 
     // Interface to start ride
     @Override
     public void startUse() {
-        if (hasStarted) {
-            System.out.println("Ride is already running.");
+        if (!isOperational) {
+            System.out.println("The ride is not operational.");
             return;
         }
-        System.out.println("Ride is starting.");
+        if (hasStarted) {
+            System.out.println("The ride has already started.");
+            return;
+        }
+        System.out.println("Starting the ride: " + rideName);
+
+        // Clear the current list of visitors on the ride
+        onRide.clear();
+
+        // Dequeue up to the ride's capacity from the visitor queue
+        int ridersToAdmit = Math.min(rideCapacity, rideVisitorQueue.size());
+        for (int i = 0; i < ridersToAdmit; i++) {
+            Visitor visitor = rideVisitorQueue.poll();
+            onRide.add(visitor);
+            System.out.println(visitor.getName() + " has boarded the ride.");
+        }
+
         hasStarted = true;
     }
 
@@ -191,10 +228,13 @@ public void displayRideDetails() {
     @Override
     public void stopUse() {
         if (!hasStarted) {
-            System.out.println("Ride is already stopped.");
+            System.out.println("The ride is already stopped.");
             return;
         }
-        System.out.println("Ride is stopping.");
+        System.out.println("Stopping the ride: " + rideName);
+
+        // Clear all riders after the ride stops
+        onRide.clear();
         hasStarted = false;
     }
 
