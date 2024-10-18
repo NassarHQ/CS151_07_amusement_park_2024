@@ -90,7 +90,7 @@ public class EmployeeUI {
         return false;
     }
 
-    private Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
+    public Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
         for (Ride ride : rideList) {
             if (ride.getRideName().equalsIgnoreCase(rideName)) {
                 return ride;
@@ -158,7 +158,6 @@ public class EmployeeUI {
                 } else {
                     selectedRide.assignOperator(employee);
                     assignedRide = selectedRide;  // Store the assigned ride
-                    System.out.println(employee.getName() + " has been successfully assigned to operate the ride: " + selectedRide.getRideName());
                 }
                 break;
             } else {
