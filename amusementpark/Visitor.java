@@ -117,12 +117,6 @@ public class Visitor extends Person {
         System.out.println("Visitor");
     }
 
-    @Override
-    // Override toString method to provide a string representation of the Visitor object
-    public String toString() {
-        return "Visitor " + getName();
-    }
-
     // Method to provide feedback
     public String provideFeedback() {
         System.out.println("Enter your feedback: ");
@@ -180,12 +174,10 @@ public class Visitor extends Person {
 
     @Override
     public void viewProfile() {
-        System.out.println("Visitor " + toString() + "'s information: ");
+        System.out.println("Visitor information: ");
         System.out.println("Name: " + getName());
         System.out.println("Age: " + getAge());
-        System.out.println("Username: " + getUsername());
         System.out.println("Height: " + height +" cm");
         System.out.println("Weight: " + weight + " kg");
     }
-
 }
