@@ -100,9 +100,7 @@ public class Ticket implements Discountable {
     }
 
     public void useTicket() {
-        if (isRefunded) {
-            System.out.println("Ticket " + ticketID + " has been refunded and cannot be used.");
-        } else if (isUsed) {
+        if (isUsed) {
             System.out.println("Ticket " + ticketID + " has already been used. Sorry!");
         } else {
             isUsed = true;
