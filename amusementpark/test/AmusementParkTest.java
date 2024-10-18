@@ -55,12 +55,12 @@ public class AmusementParkTest {
         assertFalse(employee.getOnShift()); // Verify employee is off shift
     }
 
-//    @Test
-//    public void testEmployeeAddToPark() {
-//        // Test adding employee to park
-//        employee.addToPar(park);
-//        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
-//    }
+    @Test
+    public void testEmployeeAddToPark() {
+        // Test adding employee to park
+        employee.addedToPark(park);
+        assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
+    }
 
     @Test
     public void testEmployeeCheckRideEligibility() {
@@ -184,7 +184,7 @@ public class AmusementParkTest {
         String simulatedInput = "yes\n";
         InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
         System.setIn(inputStream);
-        
+
         park.sellTicket(visitor);   //Process the ticket purchase
 
         park.addVisitor(visitor);    //Add the visitor to the park
