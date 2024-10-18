@@ -1,7 +1,5 @@
 package amusementpark;
 
-import java.util.Scanner;
-import static amusementpark.Main.exitProgram;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +9,6 @@ public abstract class Person {
     protected String username;
     protected String password;
     protected Map<String, String> accounts; // Static map for accounts
-    protected Scanner scanner = new Scanner(System.in);  // Scanner for user input
 
     public Person() {
         this.name = "Unknown";
