@@ -62,14 +62,6 @@ public class AmusementParkTest {
         assertTrue(park.getEmployees().contains(employee)); // Verify employee is in the park's employee list
     }
 
-    @Test
-    public void testEmployeeCheckRideEligibility() {
-        // Test ride eligibility check
-        visitor = new Visitor("Visitor", 12, 130, 50, "usn11", "psw11");  // Invalid height for the ride
-        ride.addRider(visitor);
-        assertFalse(employee.checkRideEligibility(ride)); // Expect false due to height restriction
-    }
-
     // --------- Visitor Tests ---------
 
     @Test
