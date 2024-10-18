@@ -1,6 +1,6 @@
 package amusementpark;
 
-import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
 
@@ -20,6 +20,9 @@ public class VisitorUI {
 
         // Create a new Visitor instance for this session
         visitor = new Visitor();
+
+        visitor.askForAccount();
+
 
         askVisitorName();
         askVisitorAge();
@@ -82,31 +85,16 @@ public class VisitorUI {
             System.out.println("============================");
             park.displayAllRides();
 
-            System.out.println("\nEnter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)");
-            String chosenRide = scanner.nextLine();     // Read user's input for chosen ride
+            // Use the helper method to select a ride
+            Ride chosenRide = chooseFromList(park.getRidesList(),
+                    "Enter the Ride you want to get information about (or type 'cancel' to go back to Visitor Menu)",
+                    "Return to Visitor Menu");
 
-            exitProgram(chosenRide.trim());
-
-            if (chosenRide.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to Visitor Menu");
-                return;  // Go back to visitor menu if user type 'cancel'
+            if (chosenRide == null) {
+                return; // User chose to cancel
             }
 
-            boolean rideFound = false;  // Initialize the flag to false
-
-            // Loop through the list of rides to check if any ride matches the user's input
-            for (Ride ride : park.getRidesList()) {
-                if (chosenRide.equalsIgnoreCase(ride.getRideName())) {
-                    ride.displayRideMetrics(); // Display metrics if a match is found
-                    rideFound = true; // Set flag to true as the ride is found
-                    break; // Exit the loop once a match is found
-                }
-            }
-
-            // If the ride was not found, inform the user
-            if (!rideFound) {
-                System.out.println("Invalid ride. Please try again.");
-            }
+            chosenRide.displayRideMetrics(); // Display metrics for the chosen ride
         }
     }
 
@@ -123,37 +111,24 @@ public class VisitorUI {
             System.out.println("============================");
             park.displayAllStores();    // Display all stores to visitors using method from Park class
 
-            System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
-            String chosenStore = scanner.nextLine().trim();  // Trim the input for better accuracy
+            // Use the new helper method to select a store
+            ParkStore chosenStore = chooseFromList(park.getStoresList(),
+                    "Choose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)",
+                    "Return to Visitor Menu");
 
-            exitProgram(chosenStore);  // Exit if user inputs the exit command
-
-            if (chosenStore.equalsIgnoreCase("cancel")) {
-                System.out.println("Return to Visitor Menu");
-                return;  // Go back to visitor menu if user types 'cancel'
+            if (chosenStore == null) {
+                return; // User chose to cancel
             }
 
-            boolean storeFound = false;  // Initialize the flag to false
+            System.out.println("Available items from " + chosenStore.getParkStoreName() + ":");
+            chosenStore.displayAvailableItems();
 
-            // Loop through the list of stores to check if any store matches the user's input
-            for (ParkStore s : park.getStoresList()) {
-                if (chosenStore.equalsIgnoreCase(s.getParkStoreName())) {
-                    store = s;  // Set the object store to the chosen store from the list
-                    System.out.println("Available items from " + store.getParkStoreName() + ":");
-                    store.displayAvailableItems();
-                    storeFound = true;  // Set flag to true as the store is found
-
-                    buyProductsFromStore();  // Move to the product buying process
-                    return;  // Exit the store selection after successful purchase
-                }
-            }
-
-            // If the store was not found, inform the user
-            if (!storeFound) {
-                System.out.println("Invalid store. Please try again.");
-            }
+            store = chosenStore; // Set the store to the chosen store
+            buyProductsFromStore(); // Move to the product buying process
+            return; // Exit the store selection after successful purchase
         }
     }
+
 
     public void buyProductsFromStore() {
         while (true) {
@@ -292,6 +267,27 @@ public class VisitorUI {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    // Helper method to choose an item from a list
+    public <T> T chooseFromList(List<T> list, String prompt, String cancelMessage) {
+        while (true) {
+            System.out.println(prompt);
+            String choice = scanner.nextLine();
+            exitProgram(choice.trim());
+
+            if (choice.equalsIgnoreCase("cancel")) {
+                System.out.println(cancelMessage);
+                return null; // Return null to indicate cancellation
+            }
+
+            for (T item : list) {
+                if (choice.equalsIgnoreCase(item.toString())) {
+                    return item; // Found the item
+                }
+            }
+            System.out.println("Invalid choice. Please try again.");
         }
     }
 }
