@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class AmusementParkTest {
 
@@ -179,6 +180,11 @@ public class AmusementParkTest {
 
         visitor.addTicketToPurchaseHistory(ticket);     // Add the ticket to the visitor's purchase history
 
+        // Mock user input for ticket purchase 
+        String simulatedInput = "yes\n";
+        InputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(inputStream);
+        
         park.sellTicket(visitor);   //Process the ticket purchase
 
         park.addVisitor(visitor);    //Add the visitor to the park
