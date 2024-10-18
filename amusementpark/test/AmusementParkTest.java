@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.io.ByteArrayInputStream;
 
 public class AmusementParkTest {
 
@@ -84,13 +85,18 @@ public class AmusementParkTest {
     
     @Test
     public void testVisitorFeedback() {
-        visitor.provideFeedback(); // Simulate the user providing feedback interactively
+        // Simulate user input by providing feedback through System.setIn
+        String simulatedInput = "Great ride!";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(inputStream);
+
+        Visitor visitor = new Visitor("John Doe", 30);
+        visitor.provideFeedback();  // This should use the simulated input
 
         // Verify feedback was added
-        assertTrue(visitor.hasProvidedFeedback()); // Ensure that the feedback flag is set
-        assertEquals("Great ride!", visitor.getFeedback()); // Check if feedback matches(assumes user input was "Great ride!")
+        assertTrue(visitor.hasProvidedFeedback()); // Ensure the feedback flag is set
+        assertEquals("Great ride!", visitor.getFeedback()); // Verify feedback
     }
-
 
     // --------- Ticket Tests ---------
 
