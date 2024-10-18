@@ -134,6 +134,33 @@ public class AmusementParkTest {
         assertTrue(ticket.isUsed());
     }
 
+    @Test
+    public void testPreventDuplicateTickets() {
+        // Generate a ticket and mark it as used
+        Ticket ticket = Ticket.generateTicket(100.0);
+        ticket.useTicket();
+        
+        // Try to generate the same ticket again (check for duplicates)
+        Ticket anotherTicket = Ticket.generateTicket(100.0);
+        
+        // Ensure that the new ticket is not marked as used
+        assertFalse(anotherTicket.isUsed());
+    }
+
+    @Test
+    public void testGenerateTicket() {
+        Ticket generatedTicket = Ticket.generateTicket(120.0);
+        
+        // Ensure ticket is generated with a valid ID and price
+        assertNotNull(generatedTicket.getTicketID());
+        assertEquals(120.0, generatedTicket.getTicketPrice(), 0.01);
+        assertFalse(generatedTicket.isUsed()); // New tickets should not be used
+        
+        // Test that the generated ticket ID is unique
+        Ticket anotherTicket = Ticket.generateTicket(100.0);
+        assertNotEquals(generatedTicket.getTicketID(), anotherTicket.getTicketID());
+    }
+
     // --------- Ride Tests ---------
 
     @Test
