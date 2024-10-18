@@ -190,7 +190,7 @@ public class Ride implements ParkInteractables {
     // Method to assign an employee to the ride
     public void assignOperator(Employee employee) {
         this.operator = employee;
-        System.out.println("Operator " + employee.getName() + " has been assigned to the ride " + rideName);
+        System.out.println("Employee " + employee.getName() + " has been assigned to the ride " + rideName);
     }
 
     public Employee getOperator() {
