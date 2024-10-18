@@ -7,14 +7,15 @@ import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
 
 public abstract class PersonUI implements Loginable {
-    protected Map<String, String> accounts; // Shared accounts map
+    protected static Map<String, String> accounts = new HashMap<>(); // Shared accounts map
+    protected static Map<String, Visitor> visitorAccounts = new HashMap<>();
+    protected static Map<String, Employee> employeeAccounts = new HashMap<>();
     protected Scanner scanner;
     protected Park park;
     protected Person person; // Person object
 
     // Constructor taking only Park as a parameter
     public PersonUI(Park park) {
-        this.accounts = new HashMap<>();
         this.park = park;
         this.person = createPerson(); // Call the method to create the person object
         this.scanner = new Scanner(System.in);
@@ -66,10 +67,27 @@ public abstract class PersonUI implements Loginable {
         person.setPassword(scanner.nextLine().trim());  // Trim the input
         exitProgram(person.getPassword());
 
+        // Debugging prints to check input values
+        System.out.println("Trying to log in with username: " + person.getUsername());
+        System.out.println("Trying to log in with password: " + person.getPassword());
+
+        // Debugging print to check map contents
+        System.out.println("Accounts Map: " + accounts);
+
         // Attempt to log in using the provided credentials
         if (login(person.getUsername(), person.getPassword())) {  // Use the login method here
             System.out.println("Login successful!");
-            return true;
+
+            // Retrieve and set the correct Visitor object
+            if (visitorAccounts.containsKey(person.getUsername())) {
+                this.person = visitorAccounts.get(person.getUsername());  // Update 'person' to correct Visitor
+            }
+
+            // Retrieve and set the correct Employee object
+            if (employeeAccounts.containsKey(person.getUsername())) {
+                this.person = employeeAccounts.get(person.getUsername());  // Update 'person' to correct Employee
+            }
+                return true;
         } else {
             System.out.println("Login failed. Please try again.");
             return false;
@@ -99,13 +117,32 @@ public abstract class PersonUI implements Loginable {
 
         // Save the new account
         accounts.put(person.getUsername(), person.getPassword());
+
+        if (person instanceof Visitor) {
+            // Save Visitor object
+            visitorAccounts.put(person.getUsername(), (Visitor) person);
+        }
+
+        if (person instanceof Employee) {
+            employeeAccounts.put(person.getUsername(), (Employee) person);
+        }
+
         System.out.println("Account created successfully!");
         // Call the relevant method based on the type of person
         askForUserInfo(); // Prompt for user info
     }
 
     public boolean login(String username, String password) {
-        return accounts.containsKey(username) && accounts.get(username).equals(password); // Check shared accounts map
+        if (accounts.containsKey(username)) {
+            if (accounts.get(username).equals(password)) {
+                return true; // Successful login
+            } else {
+                System.out.println("Incorrect password.");
+            }
+        } else {
+            System.out.println("Username does not exist.");
+        }
+        return false; // Failed login
     }
 }
 
