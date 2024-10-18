@@ -41,6 +41,7 @@ public class EmployeeUI {
 
             exitMenu = handleMenuChoice(choice);
         }
+            scanner.close();
     }
 
     private boolean handleMenuChoice(String choice){
