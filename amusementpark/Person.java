@@ -88,8 +88,14 @@ public abstract class Person implements Loginable {
                 exitProgram(answer);  // Exit the program
                 break;
             } else if (answer.equals("yes")) {
-                askForLogin();  // If the user has an account, prompt them to log in
-                break;
+                // If the user has an account, prompt them to log in
+                boolean loginSuccessful = askForLogin();  // Get the login result
+                if (loginSuccessful) {
+                    break;  // Exit the loop if login was successful
+                } else {
+                    // If login fails, it will return to the top of the loop, asking if they have an account
+                    System.out.println("\nReturn to account options\n");
+                }
             } else if (answer.equals("no")) {
                 System.out.println("You need to create an account first.");
                 createNewAccount();
@@ -101,23 +107,23 @@ public abstract class Person implements Loginable {
     }
 
     // Method to ask for username and password to log in
-    public void askForLogin() {
-        while (true) {
-            System.out.println("Enter your username: ");
-            String usernameInput = scanner.nextLine().trim();
-            exitProgram(usernameInput);  // Exit if needed
+    public boolean askForLogin() {  // Return type is now boolean
+        System.out.println("Enter your username: ");
+        this.setUsername(scanner.nextLine().trim()); // Trim the input
+        exitProgram(this.getUsername());
 
-            System.out.println("Enter your password: ");
-            String passwordInput = scanner.nextLine().trim();
-            exitProgram(passwordInput);  // Exit if needed
+        System.out.println("Enter your password: ");
+        this.setPassword(scanner.nextLine().trim()); // Trim the input
+        exitProgram(this.getPassword());
 
-            // Attempt to log in using the provided credentials
-            if (login(usernameInput, passwordInput)) {  // Use the login method here
-                System.out.println("Login successful!");
-                break;  // Exit the loop once login is successful
-            } else {
-                System.out.println("Login failed. Please try again.");
-            }
+        // Attempt to log in using the provided credentials
+        if (login(this.getUsername(), this.getPassword())) {  // Use the login method here
+            System.out.println("Login successful!");
+            return true;  // Return true if login is successful
+        } else {
+            System.out.println("Login failed. Please try again.");
+            return false;
+
         }
     }
 
@@ -126,24 +132,24 @@ public abstract class Person implements Loginable {
         System.out.println("Creating a new account...");
 
         // Ask for username
-        System.out.println("Enter a new username: ");
-        String newUsername = scanner.nextLine().trim();
-        exitProgram(newUsername);  // Exit if needed
+        System.out.println("Enter an username: ");
+        this.setUsername(scanner.nextLine());
+        exitProgram(this.getUsername().trim());
 
         // Check if username already exists
-        if (accounts.containsKey(newUsername)) {
+        if (accounts.containsKey(this.getUsername())) {
             System.out.println("Username already exists. Please choose a different username.");
             createNewAccount(); // Recurse to ask for a new username
             return;
         }
 
         // Ask for password
-        System.out.println("Enter a new password: ");
-        String newPassword = scanner.nextLine().trim();
-        exitProgram(newPassword);  // Exit if needed
+        System.out.println("Enter a password: ");
+        this.setPassword(scanner.nextLine());
+        exitProgram(this.getPassword().trim());
 
         // Save the new account
-        accounts.put(newUsername, newPassword);
+        accounts.put(this.getUsername(), this.getPassword());
         System.out.println("Account created successfully!");
     }
 }
