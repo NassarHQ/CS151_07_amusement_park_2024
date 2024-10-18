@@ -123,6 +123,17 @@ public class AmusementParkTest {
         assertTrue(ticket.isRefunded()); // Verify ticket is marked as refunded
     }
 
+    @Test
+    public void testUseTicket() {
+        Ticket ticket = new Ticket(100.00, "Ticket001");
+        assertFalse(ticket.isUsed()); 
+
+        ticket.useTicket();
+        assertTrue(ticket.isUsed());
+        ticket.useTicket();
+        assertTrue(ticket.isUsed());
+    }
+
     // --------- Ride Tests ---------
 
     @Test
