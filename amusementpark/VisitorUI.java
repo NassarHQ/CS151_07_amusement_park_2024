@@ -1,11 +1,11 @@
 package amusementpark;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
 
 public class VisitorUI extends PersonUI{
     private Visitor visitor;
-    private Ride ride;
     private ParkStore store;
 
     public VisitorUI(Park park) {
@@ -36,8 +36,8 @@ public class VisitorUI extends PersonUI{
                 case "2":
                     checkoutRides();
                     break;
-                case "3":   // IMPLEMENT LATER
-                    // VISITOR GET ON QUEUE
+                case "3":
+                    queueForRide();
                     break;
                 case "4":
                     checkoutStores();
@@ -59,7 +59,7 @@ public class VisitorUI extends PersonUI{
         }
     }
 
-    public void buyTickets() {
+    private void buyTickets() {
        Ticket.displayTicketInfo();  // Display tickets info
         if (park.getVisitors().contains(visitor)) {
             System.out.println("You already purchased a ticket.");
@@ -71,7 +71,7 @@ public class VisitorUI extends PersonUI{
         }
     }
 
-    public void checkoutRides() {
+    private void checkoutRides() {
         while (true) {
             // Print out the park's rides
             System.out.println("\n============================");
@@ -105,7 +105,7 @@ public class VisitorUI extends PersonUI{
         }
     }
 
-    public void checkoutStores() {
+    private void checkoutStores() {
         if (!visitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park. Please purchase a ticket first.");
             return;
@@ -148,7 +148,7 @@ public class VisitorUI extends PersonUI{
             }
         }
     }
-    public void buyProductsFromStore() {
+    private void buyProductsFromStore() {
         while (true) {
             // Ask the user for the item to buy
             System.out.println("\nEnter the item you want to buy (or type 'cancel' to go back to List of our Stores)");
@@ -193,7 +193,7 @@ public class VisitorUI extends PersonUI{
         }
     }
 
-    public void writeFeedback() {
+    private void writeFeedback() {
         if (!visitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park to write a feedback. Please purchase a ticket first.");
             return;
@@ -203,13 +203,13 @@ public class VisitorUI extends PersonUI{
 
     }
 
-    public void viewPurchaseHistory() {
+    private void viewPurchaseHistory() {
         visitor.viewPurchaseTicketHistory();
         visitor.viewPurchaseItemHistory();
     }
 
     // Method to ask for visitor's name
-    public void askVisitorName() {
+    private void askVisitorName() {
         while (true) {
             System.out.println("\nEnter your name: ");
             String name = scanner.nextLine().trim();  // Trim to remove leading/trailing spaces
@@ -250,17 +250,17 @@ public class VisitorUI extends PersonUI{
     }
 
     // Method to ask for visitor's height
-    public void askVisitorHeight() {
+    private void askVisitorHeight() {
         visitor.setVisitorHeight(askForDoubleInput("Enter your height in cm: "));
     }
 
     // Method to ask for visitor's weight
-    public void askVisitorWeight() {
+    private void askVisitorWeight() {
         visitor.setVisitorWeight(askForDoubleInput("Enter your weight in kg: "));
     }
 
     // Method to ask for visitor's age
-    public void askVisitorAge() {
+    private void askVisitorAge() {
         while (true) {
             System.out.println("\nEnter your age: ");
             String ageInput = scanner.nextLine().trim();  // Read input as a string
@@ -288,11 +288,45 @@ public class VisitorUI extends PersonUI{
     }
 
     @Override
-    public void askForUserInfo() {
+    protected void askForUserInfo() {
         askVisitorName();   // Prompt for name
         askVisitorAge();    // Prompt for age
         askVisitorHeight(); // Optionally ask for height
         askVisitorWeight(); // Optionally ask for weight
+    }
+
+    // Method to queue for a ride
+    private void queueForRide() {
+        if (!visitor.getTicketPurchased()) {
+            System.out.println("You haven't purchased any tickets to enter the park to queue for a ride. Please purchase a ticket first.");
+            return;
+        }
+
+        ArrayList<Ride> rideList = park.getRidesList();
+        if (rideList.isEmpty()) {
+            System.out.println("There are no rides at the park.");
+            return;
+        }
+
+        while (true) {
+            System.out.println("Enter the name of the ride you want to queue for (or type 'cancel' to go back):");
+            String rideName = scanner.nextLine();
+            exitProgram(rideName.trim());
+
+            if (rideName.equalsIgnoreCase("cancel")) {
+                System.out.println("Return to Visitor Menu");
+                return;
+            }
+
+            Ride selectedRide = EmployeeUI.findRideByName(rideName, rideList);
+
+            if (selectedRide != null) {
+                selectedRide.admitRider(visitor);
+                break;
+            } else {
+                System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
+            }
+        }
     }
 }
 

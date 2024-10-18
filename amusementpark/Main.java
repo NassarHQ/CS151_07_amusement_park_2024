@@ -19,9 +19,9 @@ public class Main {
         store1.addItems("coke", 12);
         //park.sellTicket(visitor);
         Visitor visitor = new Visitor("Test", 32);
-       /*  Visitor j = new Visitor("Joe", 21, 170, 90, "asd", "asd");
+        Visitor j = new Visitor("Joe", 21, 170, 90, "asd", "asd");
         Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
-        park.addRide(incredi);*/  
+        park.addRide(incredi);
 
         System.out.println("Welcome to the Amusement Park Management System!");
 
