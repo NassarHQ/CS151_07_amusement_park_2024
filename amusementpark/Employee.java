@@ -266,34 +266,6 @@ public class Employee extends Person{
     }
 
     @Override
-    // Method to add Person to park
-    public void addedToPark(Park park) {
-
-        // add the employee from the park employee set
-        // this refers to the current instance of employee
-        if (park.getEmployees().add(this)) {
-            // Print a message that the employee is removed
-            System.out.println(toString() + " added to park");
-        } else {
-            // Else,rint a message that the employee already is not found in the park
-            System.out.println(toString() + " already in park");
-        }
-    }
-
-    @Override
-    // Method to remove person from Park
-    public void removedFromPark(Park park) {
-        // remove the employee from the park employee set
-        // this refers to the current  instance of employee
-        if (park.getEmployees().remove(this)) {
-            System.out.println(toString()+ " removed from park");
-        } else {
-            // Else, print a message that the employee already is not found in the park
-            System.out.println(toString() + " not found in the park");
-        }
-    }
-
-    @Override
     public void personType(){
         System.out.println("Employee");
     }
