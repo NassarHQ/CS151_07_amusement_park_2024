@@ -1,7 +1,6 @@
 package amusementpark;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
 import static amusementpark.Main.exitProgram;
 
 
@@ -9,6 +8,7 @@ public class EmployeeUI {
     private Scanner scanner;
     private Employee employee;
     private Park park;
+    private Ride assignedRide;
 
     public EmployeeUI(Park park, Employee employee){  //Only one constructor here. This makes the most sense.
         scanner = new Scanner(System.in);
@@ -29,8 +29,10 @@ public class EmployeeUI {
             System.out.println("5. Check Salary Info");
             System.out.println("6. Check Schedule");
             System.out.println("7. Request Day Off");
-            System.out.println("8. View Ride Eligibility");           
-            System.out.println("9. Return to Main Menu");
+            System.out.println("8. Assign to a Ride");
+            System.out.println("9. Start Assigned Ride");
+            System.out.println("10. Stop Assigned Ride");           
+            System.out.println("11. Return to Main Menu");
             System.out.println("EXIT");
             System.out.println("============================");
             System.out.print("\nPlease select an option (1-9): ");
@@ -69,9 +71,15 @@ public class EmployeeUI {
                 employee.requestDayOff();
                 break;
             case "8":
-                checkRideEligibility();
+                assignToRide();
                 break;
             case "9":
+                operateAssignedRide();
+                break;
+            case "10":
+                stopAssignedRide();
+                break;
+            case "11":
                 return true; // Exit to main menu
             case "exit":
                 exitProgram(choice.trim());
@@ -90,7 +98,7 @@ public class EmployeeUI {
         }
         return null;
     }
-    private void checkRideEligibility() {
+    /*private void checkRideEligibility() {
         ArrayList<Ride> rideList = park.getRidesList();
         
         if (rideList.isEmpty()) {
@@ -124,6 +132,56 @@ public class EmployeeUI {
                 System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
             }
         }
+    }*/
+    private void assignToRide() {
+        ArrayList<Ride> rideList = park.getRidesList();
+        if (rideList.isEmpty()) {
+            System.out.println("There are no rides to assign to at the moment.");
+            return;
+        }
+
+        while (true) {
+            System.out.println("Enter the name of the ride you want to be assigned to (or type 'cancel' to go back):");
+            String rideName = scanner.nextLine().trim();
+            exitProgram(rideName);
+
+            if (rideName.equalsIgnoreCase("cancel")) {
+                System.out.println("Cancelled ride assignment.");
+                return;
+            }
+
+            Ride selectedRide = findRideByName(rideName, rideList);
+
+            if (selectedRide != null) {
+                if (selectedRide.getOperator() != null) {
+                    System.out.println("This ride is already assigned to another operator: " + selectedRide.getOperator().getName());
+                } else {
+                    selectedRide.assignOperator(employee);
+                    assignedRide = selectedRide;  // Store the assigned ride
+                    System.out.println(employee.getName() + " has been successfully assigned to operate the ride: " + selectedRide.getRideName());
+                }
+                break;
+            } else {
+                System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
+            }
+        }
     }
 
+    private void operateAssignedRide() {
+        if (assignedRide == null) {
+            System.out.println("You have not been assigned to any ride yet.");
+            return;
+        }
+
+        employee.operateRide(assignedRide);  // Operate the stored ride directly
+    }
+
+    private void stopAssignedRide() {
+        if (assignedRide == null) {
+            System.out.println("You have not been assigned to any ride yet.");
+            return;
+        }
+
+        employee.stopRide(assignedRide);  // Stop the stored ride directly
+    }
 }
