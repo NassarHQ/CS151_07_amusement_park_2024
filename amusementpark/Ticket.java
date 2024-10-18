@@ -42,6 +42,11 @@ public class Ticket implements Discountable {
         return isRefunded;
     }
 
+    // Getter for isUsed
+    public boolean isUsed() {
+        return isUsed;
+    }
+
     @Override
     public double applyDiscount(Visitor visitor){
         String visitorCategory = visitor.getVisitorCategory();
@@ -94,6 +99,16 @@ public class Ticket implements Discountable {
         System.out.println("----------------------------------------------------\n");
     }
 
+    public void useTicket() {
+        if (isRefunded) {
+            System.out.println("Ticket " + ticketID + " has been refunded and cannot be used.");
+        } else if (isUsed) {
+            System.out.println("Ticket " + ticketID + " has already been used. Sorry!");
+        } else {
+            isUsed = true;
+            System.out.println("Ticket " + ticketID + " succesfully validated. Enjoy your ride!");
+        }
+    }
 
     @Override
     public String toString() {
