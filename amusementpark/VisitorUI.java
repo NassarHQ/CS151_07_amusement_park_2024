@@ -302,6 +302,16 @@ public class VisitorUI extends PersonUI{
             return;
         }
 
+        // Use the ticket and validate
+        Ticket purchasedTicket = visitor.getTicketPurchased();
+        purchasedTicket.useTicket(); // Call the method to validate and use the ticket
+
+        // If the ticket was used, check the ticket status
+        if (purchasedTicket.isUsed()) {
+            System.out.println("Your ticket has already been used. You cannot queue for another ride.");
+            return;
+        }
+
         ArrayList<Ride> rideList = park.getRidesList();
         if (rideList.isEmpty()) {
             System.out.println("There are no rides at the park.");
