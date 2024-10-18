@@ -3,31 +3,24 @@ package amusementpark;
 import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
 
-public class VisitorUI {
-    private Scanner scanner;
+public class VisitorUI extends PersonUI{
     private Visitor visitor;
-    private Park park;
     private Ride ride;
     private ParkStore store;
 
-    public VisitorUI(Park park) {  //Only one constructor here. This makes the most sense.
-        this.scanner = new Scanner(System.in);
-        this.park = park;
+    public VisitorUI(Park park) {
+        super(park);
+        this.visitor = (Visitor) createPerson();
+    }
+
+    @Override
+    protected Person createPerson() {
+        return new Visitor();
     }
 
     public void displayMenu() {
-
-        // Create a new Visitor instance for this session
-        visitor = new Visitor();
-
-        visitor.askForAccount();
-
-
-        askVisitorName();
-        askVisitorAge();
-        askVisitorHeight();
-        askVisitorWeight();
-
+        // Ask for account information
+        askForAccount();
         visitor.viewProfile();
 
         while (true) {   // Infinite loop to keep the menu running until EXIT
@@ -127,6 +120,7 @@ public class VisitorUI {
 
             System.out.println("\nChoose a Store you want to buy from (or type 'cancel' to go back to Visitor Menu)");
             String chosenStore = scanner.nextLine().trim();  // Trim the input for better accuracy
+
             exitProgram(chosenStore);  // Exit if user inputs the exit command
 
             if (chosenStore.equalsIgnoreCase("cancel")) {
@@ -198,7 +192,6 @@ public class VisitorUI {
             }
         }
     }
-
 
     public void writeFeedback() {
         if (!visitor.getTicketPurchased()) {
@@ -292,6 +285,14 @@ public class VisitorUI {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    @Override
+    public void askForUserInfo() {
+        askVisitorName();   // Prompt for name
+        askVisitorAge();    // Prompt for age
+        askVisitorHeight(); // Optionally ask for height
+        askVisitorWeight(); // Optionally ask for weight
     }
 }
 

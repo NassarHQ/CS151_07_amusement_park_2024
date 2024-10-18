@@ -10,7 +10,7 @@ public class Main {
         //Initialize some stuff for the sake of testing
         Scanner scanner = new Scanner(System.in);
         Park park = new Park();
-        Employee employee = new Employee("John Doe", 25, "1304", "manager", "john1", "haha1");
+        Employee employee = new Employee("John Doe", 25, "1304", "manager");
         ParkStore store = new ParkStore("foody", "food");
         ParkStore store1 = new ParkStore("drunk", "drink");
         park.addStore(store);
@@ -18,9 +18,9 @@ public class Main {
         store.addItems("burger", 30);
         store1.addItems("coke", 12);
         //park.sellTicket(visitor);
-       /*   Visitor visitor = new Visitor("Test", 32);
-        Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
-        park.addRide(incredi);  RYANS TESTING STUFF */
+        Visitor visitor = new Visitor("Test", 32);
+//        Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
+//        park.addRide(incredi);  RYANS TESTING STUFF */
 
         System.out.println("Welcome to the Amusement Park Management System!");
 
