@@ -86,7 +86,7 @@ Once the system is running, you will be presented with a main menu offering diff
 - Clock in and out of shifts.
 - View work schedules and logs.
 - Report issues within the park.
-- Operate rides and manage visitor eligibility.
+- Operate rides
 
 ### Admin Features:
 
