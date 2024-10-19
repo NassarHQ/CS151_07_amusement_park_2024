@@ -45,13 +45,10 @@ public class PrintHelper {
         System.out.println("2. Remove existing store");
         System.out.println("3. Get Store Type");
         System.out.println("4. Add Items to Store");
-        System.out.println("5. Check Food Validation");
-        System.out.println("6. Check Drink Validation");
-        System.out.println("7. Check Souvenir Validation");
-        System.out.println("8. Display Available Items");
-        System.out.println("9. View Store Purchase History");
-        System.out.println("10.Get Visitors in Store");
-        System.out.println("11. Display All Stores");
+        System.out.println("6. Display Available Items");
+        System.out.println("7. View Store Purchase History");
+        System.out.println("8. Get Visitors in Store");
+        System.out.println("9. Display All Stores");
         System.out.println("Type \"CANCEL\" for previous menu");
         System.out.println("Type \"EXIT\" to quit the program");
         System.out.println("============================");
@@ -129,7 +126,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
     // Method to print login menu
     public static void printLoginMenu(String prompt) {
         System.out.println("\n============================");
-        System.out.println("   Welcome to " + prompt + " Management:");
+        System.out.println("Welcome to " + prompt + " Management:");
         System.out.println("============================");
         System.out.println("1. Login");
         System.out.println("2. Create New Account");
