@@ -131,11 +131,7 @@ public class Ride implements ParkInteractables {
         return "Number of visitors in line: " + rideVisitorQueue.size();
     }
 
-    // Method to manage riders
-    public void manageRiders(){
-        // Custom logic to manage riders
-    }
-
+    //Method to admit riders to the queue
     public void admitRider(Visitor visitor) {
         if (visitor == null) {
             System.out.println("Invalid visitor. Cannot add to queue.");
