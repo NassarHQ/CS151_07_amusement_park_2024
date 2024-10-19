@@ -203,27 +203,22 @@ public class AmusementParkTest {
         Visitor validVisitor2 = new Visitor("Bob", 30, 155, 80, "usn6", "psw6");
         Visitor overweightVisitor = new Visitor("Charlie", 35, 160, 110, "usn7", "psw7");
         Visitor shortVisitor = new Visitor("Dave", 20, 140, 70, "usn8", "psw8");
-        Visitor extraVisitor = new Visitor("Eve", 28, 170, 65, "usn9", "psw9");
 
         // Admit the first valid visitor
         ride.admitRider(validVisitor1);
-        assertTrue(ride.getOnRide().contains(validVisitor1));  // Check if the visitor is on the ride
+        assertTrue(ride.getRideVisitorQueue().contains(validVisitor1));  // Check if the visitor is in the queue
 
         // Admit the second valid visitor
         ride.admitRider(validVisitor2);
-        assertTrue(ride.getOnRide().contains(validVisitor2));  // Check if the visitor is on the ride
-
-        // Try to admit a third visitor (exceeds capacity)
-        ride.admitRider(extraVisitor);
-        assertFalse(ride.getOnRide().contains(extraVisitor));  // Check if the visitor is not on the ride
+        assertTrue(ride.getRideVisitorQueue().contains(validVisitor2));  // Check if the visitor is in the queue
 
         // Try to admit an overweight visitor
         ride.admitRider(overweightVisitor);
-        assertFalse(ride.getOnRide().contains(overweightVisitor));  // Check if the visitor is not on the ride
+        assertFalse(ride.getRideVisitorQueue().contains(overweightVisitor));  // Check if the visitor is not in the queue
 
         // Try to admit a short visitor
         ride.admitRider(shortVisitor);
-        assertFalse(ride.getOnRide().contains(shortVisitor));  // Check if the visitor is not on the ride
+        assertFalse(ride.getRideVisitorQueue().contains(shortVisitor));  // Check if the visitor is not in the queue
     }
 
     // --------- Park Tests ---------
