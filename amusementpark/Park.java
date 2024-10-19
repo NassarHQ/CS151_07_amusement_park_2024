@@ -222,11 +222,7 @@ public void calculateParkMetric() {
             System.out.println("No visitors have provided feedback.");
         } else {
             for (Visitor visitor : visitors) {
-<<<<<<< Updated upstream
                 visitor.viewFeedback(); // Display visitor feedback
-=======
-                visitor.getFeedback(); // Display visitor feedback
->>>>>>> Stashed changes
             }
         }
     }
