@@ -58,17 +58,6 @@ public class Park {
 
     }
 
-    // Utility method to print generic action-related messages for rides or tickets
-    public void printActionMessage(String entityType, String entityNameOrID, boolean success, String additionalMessage) {
-        String status = success ? "successfully" : "unsuccessfully";
-        System.out.println("\n================================");
-        System.out.printf(" %s %s: %s\n", entityType, additionalMessage, entityNameOrID);
-        System.out.println("--------------------------------");
-        System.out.printf(" Status: %s %s\n", status, additionalMessage);
-        System.out.println("================================\n");
-    }
-
-
     private <T> boolean manageEntity(T entity, ArrayList<T> list, String entityName, boolean add) {
         if (entity == null) {
             System.out.println("Invalid " + entityName + ". Cannot perform operations.");

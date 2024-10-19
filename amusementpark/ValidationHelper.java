@@ -149,6 +149,7 @@ public static String getValidString(Scanner scanner, String prompt) {
                 return "cancel";  // Return "cancel" to signify cancellation of the process
             }
 
+            // d+ -> one or more numeric digit
             if (input.matches("\\d+")) {
                 return input;  // Return valid numeric input
             } else {

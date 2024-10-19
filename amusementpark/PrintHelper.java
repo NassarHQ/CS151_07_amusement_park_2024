@@ -78,7 +78,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("Ride Capacity:           " + ride.getRideCapacity());
         System.out.println("Ride Duration:           " + ride.getRideDuration());
         System.out.println("Ride Max Weight:         " + ride.getRideMaxWeight());
-        System.out.println("Ride Minimum Weight:     " + ride.getRideMinHeight());
+        System.out.println("Ride Minimum Height:     " + ride.getRideMinHeight());
         System.out.println("Operational Status:      " + (ride.isOperational() ? "Operational" : "Not operational"));
         System.out.println("============================");
     }

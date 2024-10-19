@@ -11,27 +11,31 @@ public class AdminUI {
     private Scanner scanner = new Scanner(System.in);
     private ParkStore store = new ParkStore();
 
+    // Constructor to initialize the park and print helper instances
     public AdminUI(Park park, PrintHelper printHelper) {
         this.park = park;
         this.printHelper = printHelper;
     }
 
-    // Display Admin Menu with Universal Exit and Back Handling
+    // Main admin menu, handles navigation for ride, store management, etc.
     public void displayAdminMenu() {
         while (true) {
-            printHelper.printAdminMenu();
-            String input = scanner.nextLine().trim();
-            if (handleExitOrBack(input)) return;
+            printHelper.printAdminMenu(); // Show menu options
+            String input = scanner.nextLine().trim(); // Get user input
+            if (handleExitOrBack(input)) return; // Check for "exit" or "cancel"
 
             try {
                 int choice = Integer.parseInt(input);
                 switch (choice) {
-                    case 1 -> manageRides(); // Manage rides menu
-                    case 2 -> manageStores(); // Manage stores menu
-                    case 3 -> showFeedback(); // Show visitor feedback
-                    case 4 -> showReports(); // Show employee reports
+                    case 1 -> manageRides(); // Navigate to ride management
+                    case 2 -> manageStores(); // Navigate to store management
+                    case 3 -> showFeedback(); // Display visitor feedback
+                    case 4 -> showReports(); // Display employee reports
                     case 5 -> checkMetrics(); // Check park metrics
-                    case 6 -> System.out.println("Exiting Admin Menu... Goodbye!");
+                    case 6 -> {
+                        System.out.println("Exiting Admin Menu... Goodbye!");
+                        return; // Exit admin menu
+                    }
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -40,81 +44,102 @@ public class AdminUI {
         }
     }
 
-    // Helper method to handle "exit" or "cancel" commands
+    // Method to handle "exit" or "cancel" commands universally
     private boolean handleExitOrBack(String input) {
         if (input.equalsIgnoreCase("exit")) {
             System.out.println("Exiting the program... Goodbye!");
-            System.exit(0); // Totally exit the program
+            System.exit(0); // Exit the entire program
         } else if (input.equalsIgnoreCase("cancel")) {
             System.out.println("Returning to the previous menu...");
-            return true; // Indicate cancel and return to the previous menu
+            return true; // Return to previous menu
         }
-        return false; // Continue operation
+        return false; // Continue in the current menu
     }
 
-    // Helper to get validated input with exit/cancel handling for repetitive input requests
-    private String getValidatedInput(String prompt, boolean isAlphabetic) {
+    // Helper to validate and retrieve user input (alphabetic or numeric)
+    private String getValidatedInput(String prompt, boolean isAlphabetic, boolean isNumeric) {
         String input;
         while (true) {
             if (isAlphabetic) {
-                input = ValidationHelper.getValidAlphabeticString(scanner, prompt);
+                input = ValidationHelper.getValidAlphabeticString(scanner, prompt); // Get valid alphabetic string
+            } else if (isNumeric) {
+                input = ValidationHelper.getValidNumericString(scanner, prompt); // Get valid numeric string
+                try {
+                    int value = Integer.parseInt(input); // Parse to check if it's numeric
+                    if (value >= 0) {
+                        return input; // Return if non-negative
+                    } else {
+                        System.out.println("Error: ID cannot be negative. Please enter a valid non-negative number.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Please enter a valid numeric ID.");
+                }
             } else {
-                input = ValidationHelper.getValidString(scanner, prompt);
+                input = ValidationHelper.getValidString(scanner, prompt); // Handle general string input
             }
+
+            // Check for exit or cancel commands
             if (handleExitOrBack(input)) {
-                ValidationHelper.setCanceled(true);  // Set cancel flag
-                return null;  // Handle "cancel" or "exit"
+                ValidationHelper.setCanceled(true); // Set the cancel flag
+                return null; // Return null to signify cancel or exit
             }
-            return input;
+
+            // Return valid input if it's not empty
+            if (!input.isEmpty()) {
+                return input;
+            }
         }
     }
 
-// Perform action with only one askToContinue call
-private void performActionWithLoop(String action, Runnable task) {
-  boolean continueOperation = true;
-  while (continueOperation) {
-      task.run(); // Run the task only once
+    // Repeated action handler (e.g., remove, display), NOT for adding items
+    private void performActionWithLoop(String actionDescription, Runnable task) {
+      boolean continueOperation = true;
+      while (continueOperation) {
+          task.run(); // Run the task (e.g., remove, display)
 
-      if (ValidationHelper.wasCanceled()) {
-          ValidationHelper.setCanceled(false);
-          return; // Exit if canceled
+          if (ValidationHelper.wasCanceled()) {
+              ValidationHelper.setCanceled(false); // Reset cancel flag
+              return;
+          }
+
+          // Only ask to continue for specific actions (NOT for adding)
+          continueOperation = askToContinue(actionDescription); 
       }
+    }
 
-      // Only ask once after task completion
-      continueOperation = askToContinue(action);
-  }
-}
 
-// Ask if the user wants to continue with an action
+// Ask to continue method (used only in appropriate contexts, e.g., looping operations)
 private boolean askToContinue(String action) {
   while (true) {
-      String continueInput = ValidationHelper.getValidString(scanner, "Do you want to " + action + "? (yes/no) (or type 'exit' to quit, 'cancel' to go back): ", false);
+      String continueInput = ValidationHelper.getValidString(scanner, "Do you want to continue to " + action + "? (yes/no): ", false);
       if (continueInput.equalsIgnoreCase("yes")) return true;
       if (continueInput.equalsIgnoreCase("no") || continueInput.equalsIgnoreCase("cancel")) return false;
       if (continueInput.equalsIgnoreCase("exit")) {
           System.out.println("Exiting the program... Goodbye!");
           System.exit(0);
       }
-      System.out.println("Invalid input. Please enter 'yes', 'no', 'cancel', or 'exit'.");
+      System.out.println("Invalid input. Please enter 'yes', 'no', 'exit', or 'cancel'.");
   }
 }
 
-
-    // Manage Rides Menu
+    // Manage rides in the amusement park
     public void manageRides() {
         while (true) {
-            printHelper.printRideManagerMenu();
-            String input = scanner.nextLine().trim();
-            if (handleExitOrBack(input)) return;
+            printHelper.printRideManagerMenu(); // Display ride manager options
+            String input = scanner.nextLine().trim(); // Get user input
+            if (handleExitOrBack(input)) return; // Handle "exit" or "cancel"
 
             try {
                 int choice = Integer.parseInt(input);
                 switch (choice) {
-                    case 1 -> performActionWithLoop("add", this::addRide);
-                    case 2 -> performActionWithLoop("remove", this::removeRide);
-                    case 3 -> performActionWithLoop("display", this::displayRideDetails);
-                    case 4 -> performActionWithLoop("open/close for maintenance", this::openCloseForMaintenance);
-                    case 5 -> System.out.println("Returning to Admin Menu...");
+                    case 1 -> performActionWithLoop("add", this::addRide); // Add a ride
+                    case 2 -> performActionWithLoop("remove", this::removeRide); // Remove a ride
+                    case 3 -> performActionWithLoop("display", this::displayRideDetails); // Display ride details
+                    case 4 -> performActionWithLoop("open/close for maintenance", this::openCloseForMaintenance); // Open/close for maintenance
+                    case 5 -> {
+                        System.out.println("Returning to Admin Menu...");
+                        return;
+                    }
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -124,36 +149,58 @@ private boolean askToContinue(String action) {
     }
 
     public void addRide() {
-        System.out.println("\n--- Add a Ride ---");
-        String name = getValidatedInput("Enter ride name", true);
-        if (name == null) return;
-
-        String rideID = getValidatedInput("Enter ride ID", false);
-        if (rideID == null) return;
-
-        int capacity = ValidationHelper.getValidPositiveInt(scanner, "ride capacity");
-        if (capacity == -1) return;
-
-        int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration");
-        if (duration == -1) return;
-
-        int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "height (150 cm - 195 cm)", 150, 195);
-        if (minHeight == -1) return;
-
-        int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "weight (50 kg - 100 kg)", 50, 100);
-        if (maxWeight == -1) return;
-
-        Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
-        if (park.addRide(newRide)) {
-            printHelper.printSuccessMessage("Ride", name, rideID, "added");
-        } else {
-            printHelper.printErrorMessage("Ride", name, rideID, "could not be added");
-        }
-    }
-
+      System.out.println("\n--- Add a Ride ---");
+  
+      // Get ride name with alphabetic validation
+      String name = getValidatedInput("Enter the ride name: ", true, false); 
+      if (name == null) return; // Return if canceled
+  
+      // Check if a ride with the same name already exists
+      if (park.getRidesList().stream().anyMatch(ride -> ride.getRideName().equalsIgnoreCase(name))) {
+          System.out.println("Error: A ride with the name '" + name + "' already exists.");
+          return;  // Prevent adding a duplicate ride
+      }
+  
+      // Get ride ID with numeric validation
+      String rideID = getValidatedInput("Enter the ride ID (must be a non-negative number):", false, true); 
+      if (rideID == null) return; // Return if canceled
+  
+      // Check if a ride with the same ID already exists
+      if (park.getRidesList().stream().anyMatch(ride -> ride.getRideID().equals(rideID))) {
+          System.out.println("Error: A ride with the ID '" + rideID + "' already exists.");
+          return;  // Prevent adding a duplicate ride
+      }
+  
+      // Get other ride details with validation
+      int capacity = ValidationHelper.getValidPositiveInt(scanner, "ride capacity");
+      if (capacity == -1) return;
+  
+      int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration (in minutes)");
+      if (duration == -1) return;
+  
+      int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 150 and 195)", 150, 195);
+      if (minHeight == -1) return;
+  
+      int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "maximum weight (in kg, between 50 and 100)", 50, 100);
+      if (maxWeight == -1) return;
+  
+      // Create a new ride instance and add it to the park
+      Ride newRide = new Ride(name, rideID, capacity, duration, minHeight, maxWeight);
+      if (park.addRide(newRide)) {
+          System.out.println("Success: Ride '" + name + "' (ID: " + rideID + ") has been added to the park.");
+      } else {
+          System.out.println("Error: Ride '" + name + "' could not be added.");
+      }
+  
+      // There should be no `askToContinue` here after adding a ride
+      // The operation ends here and returns to the menu without extra prompts
+  }
+  
+  
+  // Remove an existing ride from the park
     public void removeRide() {
         System.out.println("\n--- Remove a Ride ---");
-        String rideID = getValidatedInput("Enter the Ride ID to be removed:", false);
+        String rideID = getValidatedInput("Enter the Ride ID to be removed:", false, true); // Get ride ID
         if (rideID == null) return;
 
         Ride rideToRemove = park.getRidesList().stream()
@@ -167,9 +214,10 @@ private boolean askToContinue(String action) {
         }
     }
 
+    // Display details of a ride
     public void displayRideDetails() {
         System.out.println("\n--- Display Ride Details ---");
-        String rideID = getValidatedInput("Enter the ride ID:", false);
+        String rideID = getValidatedInput("Enter the ride ID:", false, true); // Get ride ID
         if (rideID == null) return;
 
         Ride rideToDisplay = park.getRidesList().stream()
@@ -183,105 +231,102 @@ private boolean askToContinue(String action) {
         }
     }
 
+    // Open or close a ride for maintenance
     public void openCloseForMaintenance() {
         System.out.println("\n--- Open/Close Ride for Maintenance ---");
-        String rideID = getValidatedInput("Enter the Ride ID of the ride to open/close for maintenance: ", false);
+        String rideID = getValidatedInput("Enter the Ride ID of the ride to open/close for maintenance: ", false, true); // Get ride ID
         if (rideID == null) return;
 
         Ride ride = findRideByID(rideID);
         if (ride != null) {
-            ride.toggleOperational();
+            ride.toggleOperational(); // Toggle operational status
             printHelper.printMaintenanceStatus(ride);
         } else {
             System.out.println("Ride not found. Please check the Ride ID.");
         }
     }
 
-// Manage Stores Menu
-public void manageStores() {
-  while (true) {
-      printHelper.printStoreManagerMenu();
-      String input = scanner.nextLine().trim();
-      if (handleExitOrBack(input)) return;
+    // Manage stores (similar logic to ride management)
+    public void manageStores() {
+        while (true) {
+            printHelper.printStoreManagerMenu();
+            String input = scanner.nextLine().trim();
+            if (handleExitOrBack(input)) return;
 
-      try {
-          int choice = Integer.parseInt(input);
-          switch (choice) {
-              case 1 -> performActionWithLoop("add", this::addStore);
-              case 2 -> performActionWithLoop("remove", this::removeStore);
-              case 3 -> performActionWithLoop("get", this::getStoreType);
-              case 4 -> performActionWithLoop("add items to", this::addItemsToStore);
-              case 5 -> performActionWithLoop("validate food", () -> validateItemInStore("food"));  // Updated
-              case 6 -> performActionWithLoop("validate drink", () -> validateItemInStore("drink"));  // Updated
-              case 7 -> performActionWithLoop("validate souvenir", () -> validateItemInStore("souvenir"));  // Updated
-              case 8 -> performActionWithLoop("display items", this::displayStoreItems);
-              case 9 -> performActionWithLoop("view purchase history", this::viewStorePurchaseHistory);
-              case 10 -> performActionWithLoop("get visitors in", this::getVisitorsInStore);
-              case 11 -> System.out.println("Returning to Admin Menu...");
-              default -> System.out.println("Invalid choice. Try again.");
-          }
-      } catch (NumberFormatException e) {
-          System.out.println("Invalid input. Please enter a number.");
-      }
-  }
-}
-
-public void addStore() {
-  System.out.println("\n--- Add a New Store ---");
-  
-  // Get store name
-  String newStoreName = getValidatedInput("Enter store name", true);
-  if (newStoreName == null) return;
-
-  if (findStoreByName(newStoreName) != null) {
-      System.out.println("Error: A store with the name \"" + newStoreName + "\" already exists.");
-      return;
-  }
-
-  // Get store type with validation
-  String storeType = null;
-  while (true) {
-      storeType = getValidatedInput("Enter store type (food, drink, or souvenir)", true);
-      if (storeType == null) return;
-
-      // Validate store type
-      storeType = storeType.toLowerCase();
-      if (storeType.equals("food") || storeType.equals("drink") || storeType.equals("souvenir")) {
-          break; // Valid type, exit loop
-      } else {
-          System.out.println("Invalid store type! Please enter 'food', 'drink', or 'souvenir'.");
-      }
-  }
-
-  // Create a new store instance
-  ParkStore newStore = new ParkStore(newStoreName, storeType);
-
-  // Add store to park
-  if (park.addStore(newStore)) {
-      printHelper.printSuccessMessage("Store", newStoreName, "", "added");
-  } else {
-      printHelper.printErrorMessage("Store", newStoreName, "", "could not be added");
-  }
-}
-
-
-    public void removeStore() {
-        System.out.println("\n--- Remove a Store ---");
-        String storeNameToRemove = getValidatedInput("Enter the store name:", false);
-        if (storeNameToRemove == null) return;
-
-        ParkStore storeToRemove = findStoreByName(storeNameToRemove);
-
-        if (storeToRemove != null && park.removeStore(storeToRemove)) {
-            printHelper.printSuccessMessage("Store", storeNameToRemove, "", "removed");
-        } else {
-            System.out.println("Store not found or could not be removed.");
+            try {
+                int choice = Integer.parseInt(input);
+                switch (choice) {
+                    case 1 -> performActionWithLoop("add", this::addStore); // Add a store
+                    case 2 -> performActionWithLoop("remove", this::removeStore); // Remove a store
+                    case 3 -> performActionWithLoop("get", this::getStoreType); // Get store type
+                    case 4 -> performActionWithLoop("add items", this::addItemsToStore); // Add items to a store
+                    case 5 -> performActionWithLoop("validate food", () -> validateItemInStore("food")); // Validate food in store
+                    case 6 -> performActionWithLoop("validate drink", () -> validateItemInStore("drink")); // Validate drink in store
+                    case 7 -> performActionWithLoop("validate souvenir", () -> validateItemInStore("souvenir")); // Validate souvenir in store
+                    case 8 -> performActionWithLoop("display items", this::displayStoreItems); // Display store items
+                    case 9 -> performActionWithLoop("view purchase history", this::viewStorePurchaseHistory); // View purchase history
+                    case 10 -> performActionWithLoop("get visitors in", this::getVisitorsInStore); // Get visitors in store
+                    default -> System.out.println("Invalid choice. Try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
         }
     }
 
+    // Add a new store to the park
+    public void addStore() {
+        System.out.println("\n--- Add a New Store ---");
+        String newStoreName = getValidatedInput("Enter store name", true, false); // Get store name
+        if (newStoreName == null) return;
+
+        if (findStoreByName(newStoreName) != null) {
+            System.out.println("Error: A store with the name \"" + newStoreName + "\" already exists.");
+            return;
+        }
+
+        String storeType = null;
+        while (true) {
+            storeType = getValidatedInput("Enter store type (food, drink, or souvenir)", true, false); // Get store type
+            if (storeType == null) return;
+
+            storeType = storeType.toLowerCase();
+            if (storeType.equals("food") || storeType.equals("drink") || storeType.equals("souvenir")) {
+                break; // Valid type
+            } else {
+                System.out.println("Invalid store type! Please enter 'food', 'drink', or 'souvenir'.");
+            }
+        }
+
+        // Create new store and add to park
+        ParkStore newStore = new ParkStore(newStoreName, storeType);
+        if (park.addStore(newStore)) {
+            printHelper.printSuccessMessage("Store", newStoreName, "", "added");
+        } else {
+            printHelper.printErrorMessage("Store", newStoreName, "", "could not be added");
+        }
+    }
+
+    // Remove a store
+    public void removeStore() {
+          System.out.println("\n--- Remove a Store ---");
+          
+          String storeNameToRemove = getValidatedInput("Enter the name of the store to remove: ", false, false); // Get store name
+          if (storeNameToRemove == null) return;
+      
+          ParkStore storeToRemove = findStoreByName(storeNameToRemove);
+      
+          if (storeToRemove != null && park.removeStore(storeToRemove)) {
+              System.out.println("Success: Store '" + storeNameToRemove + "' has been removed from the park.");
+          } else {
+              System.out.println("Error: Store '" + storeNameToRemove + "' not found or could not be removed.");
+          }
+      }
+
+    // Get store type by store name
     public void getStoreType() {
         System.out.println("\n--- Get Store Type ---");
-        String storeName = getValidatedInput("Enter the store name:", false);
+        String storeName = getValidatedInput("Enter the store name:", true, false);
         if (storeName == null) return;
 
         ParkStore store = findStoreByName(storeName);
@@ -292,96 +337,97 @@ public void addStore() {
         }
     }
 
-// Modify the addItemsToStore to remove the extra askToContinue
-public void addItemsToStore() {
-  System.out.println("\n--- Add Items to Store ---");
-  String storeName = getValidatedInput("Enter the store name: ", false);
-  if (storeName == null) return; // Handle cancel or exit
-
-  ParkStore store = findStoreByName(storeName);
-  if (store != null) {
-      // Simply handle items, no additional askToContinue
-      handleStoreItems(store);
-  } else {
-      printHelper.printErrorMessage("Store", storeName, "", "not found");
-  }
-}
-
-
-// Manage items without asking to continue within the method
-private void handleStoreItems(ParkStore store) {
-  String storeType = store.getParkStoreType().toLowerCase();
-  List<String> allowedItems = switch (storeType) {
-      case "food" -> Arrays.asList(store.allowedFoodTypes);
-      case "drink" -> Arrays.asList(store.allowedDrinkTypes);
-      case "souvenir" -> Arrays.asList(store.allowedSouvenirTypes);
-      default -> throw new IllegalArgumentException("Unknown store type");
-  };
-  System.out.println("Allowed " + storeType + " items: " + String.join(", ", allowedItems));
-
-  String itemName = getValidatedInput("Enter item name (or type 'cancel' to stop): ", false);
-  if (itemName == null) return; // Exit if user cancels
-
-  if (allowedItems.contains(itemName.toLowerCase())) {
-      int itemQuantity = ValidationHelper.getValidPositiveInt(scanner, "item quantity");
-      store.addItems(itemName, itemQuantity);
-      printHelper.printSuccessMessage("Item", itemName, "", "added to store");
-  } else {
-      System.out.println("Invalid item: " + itemName + ". Allowed items are: " + String.join(", ", allowedItems));
-  }
-}
-
-
-
-public void validateItemInStore(String itemType) {
-  System.out.println("\n--- Validate " + itemType + " in Store ---");
-  String storeName = getValidatedInput("Enter the store name: ", false);
-  if (storeName == null) return;
-
-  ParkStore store = findStoreByName(storeName);
-  if (store != null) {
-      validateItem(itemType, store);
-  } else {
-      printHelper.printErrorMessage("Store", storeName, "", "not found");
-  }
-}
-
-
-    private void validateItem(String itemType, ParkStore store) {
-      // Check if the item type matches the store type
-      if (!ValidationHelper.validateItemForStoreType(store.getParkStoreType(), itemType)) {
-          printHelper.printErrorMessage(itemType, "", "", "cannot be validated in this store type");
-          return;
-      }
+    // Add items to a store
+    public void addItemsToStore() {
+      System.out.println("\n--- Add Items to Store ---");
   
-      // Get allowed items based on store type
-      List<String> allowedItems;
-      switch (store.getParkStoreType().toLowerCase()) {
-          case "food" -> allowedItems = Arrays.asList(store.allowedFoodTypes);
-          case "drink" -> allowedItems = Arrays.asList(store.allowedDrinkTypes);
-          case "souvenir" -> allowedItems = Arrays.asList(store.allowedSouvenirTypes);
-          default -> {
-              System.out.println("Unknown store type.");
-              return;
-          }
-      }
+    // Get store name and validate
+    String storeName = getValidatedInput("Enter the store name: ", false, false); 
+    if (storeName == null) return;  // Handle cancel or exit
+
+    ParkStore store = findStoreByName(storeName);
+    if (store != null) {
+        handleStoreItems(store); // Directly handle items without asking to continue
+    } else {
+        System.out.println("Error: Store '" + storeName + "' not found.");
+    }
+  }
+    
+    // Handle adding items to a store
+    private void handleStoreItems(ParkStore store) {
+      String storeType = store.getParkStoreType().toLowerCase();
+      List<String> allowedItems = switch (storeType) {
+          case "food" -> Arrays.asList(store.allowedFoodTypes);
+          case "drink" -> Arrays.asList(store.allowedDrinkTypes);
+          case "souvenir" -> Arrays.asList(store.allowedSouvenirTypes);
+          default -> throw new IllegalArgumentException("Unknown store type");
+      };
   
-      // Ask for the item to validate
-      String itemName = getValidatedInput("Enter " + itemType + " item to check: ", false);
-      if (itemName == null) return;
+      System.out.println("You can add the following " + storeType + " items: " + String.join(", ", allowedItems));
   
-      // Validate if the item is part of the allowed items
+      // Get item name and validate
+      String itemName = getValidatedInput("Enter the name of the item to add (or type 'cancel' to stop): ", false, false);
+      if (itemName == null) return;  // Exit if user cancels
+  
       if (allowedItems.contains(itemName.toLowerCase())) {
-          printHelper.printSuccessMessage(itemType, itemName, "", "validated");
+          int itemQuantity = ValidationHelper.getValidPositiveInt(scanner, "quantity of the item");
+          store.addItems(itemName, itemQuantity);
+          System.out.println("Success: " + itemQuantity + " units of '" + itemName + "' have been added to the store.");
       } else {
-          printHelper.printErrorMessage(itemType, itemName, "", "invalid");
+          System.out.println("Error: '" + itemName + "' is not a valid item for this store. Allowed items are: " + String.join(", ", allowedItems));
       }
   }
-  
 
+    // Validate item in the store (food, drink, or souvenir)
+    public void validateItemInStore(String itemType) {
+        System.out.println("\n--- Validate " + itemType + " in Store ---");
+        String storeName = getValidatedInput("Enter the store name: ", true, false);
+        if (storeName == null) return;
+
+        ParkStore store = findStoreByName(storeName);
+        if (store != null) {
+            validateItem(itemType, store);
+        } else {
+            printHelper.printErrorMessage("Store", storeName, "", "not found");
+        }
+    }
+
+    // Helper method to validate item
+    private void validateItem(String itemType, ParkStore store) {
+        // Check if the item type matches the store type
+        if (!ValidationHelper.validateItemForStoreType(store.getParkStoreType(), itemType)) {
+            printHelper.printErrorMessage(itemType, "", "", "cannot be validated in this store type");
+            return;
+        }
+
+        // Get allowed items based on store type
+        List<String> allowedItems;
+        switch (store.getParkStoreType().toLowerCase()) {
+            case "food" -> allowedItems = Arrays.asList(store.allowedFoodTypes);
+            case "drink" -> allowedItems = Arrays.asList(store.allowedDrinkTypes);
+            case "souvenir" -> allowedItems = Arrays.asList(store.allowedSouvenirTypes);
+            default -> {
+                System.out.println("Unknown store type.");
+                return;
+            }
+        }
+
+        // Ask for the item to validate
+        String itemName = getValidatedInput("Enter " + itemType + " item to check: ", true, false);
+        if (itemName == null) return;
+
+        // Validate if the item is part of the allowed items
+        if (allowedItems.contains(itemName.toLowerCase())) {
+            printHelper.printSuccessMessage(itemType, itemName, "", "validated");
+        } else {
+            printHelper.printErrorMessage(itemType, itemName, "", "invalid");
+        }
+    }
+
+    // Display items in a store
     public void displayStoreItems() {
         System.out.println("\n--- Display Store Items ---");
-        String storeName = getValidatedInput("Enter the store name:", false);
+        String storeName = getValidatedInput("Enter the store name:", true, false);
         if (storeName == null) return;
 
         ParkStore store = findStoreByName(storeName);
@@ -392,9 +438,10 @@ public void validateItemInStore(String itemType) {
         }
     }
 
+    // View purchase history of a store
     public void viewStorePurchaseHistory() {
         System.out.println("\n--- View Store Purchase History ---");
-        String storeName = getValidatedInput("Enter the store name: ", false);
+        String storeName = getValidatedInput("Enter the store name: ", true, false);
         if (storeName == null) return;
 
         ParkStore store = findStoreByName(storeName);
@@ -405,9 +452,10 @@ public void validateItemInStore(String itemType) {
         }
     }
 
+    // Get the number of visitors in a store
     public void getVisitorsInStore() {
         System.out.println("\n--- Get Visitors in Store ---");
-        String storeName = getValidatedInput("Enter the store name: ", false);
+        String storeName = getValidatedInput("Enter the store name: ", true, false);
         if (storeName == null) return;
 
         ParkStore store = findStoreByName(storeName);
@@ -418,6 +466,7 @@ public void validateItemInStore(String itemType) {
         }
     }
 
+    // Additional methods for showing feedback, reports, metrics, etc.
     public void showFeedback() {
         System.out.println("Displaying all visitor feedback:");
         park.displayAllFeedbacks();
@@ -430,7 +479,7 @@ public void validateItemInStore(String itemType) {
 
     public void checkMetrics() {
         System.out.println("\n--- Check Metrics ---");
-        String rideName = getValidatedInput("Enter the name of the ride you want to check: ", false);
+        String rideName = getValidatedInput("Enter the name of the ride you want to check: ", false, true);
         if (rideName == null) return;
 
         Ride ride = findRideByID(rideName);
@@ -441,6 +490,7 @@ public void validateItemInStore(String itemType) {
         }
     }
 
+    // Helper methods to find rides and stores by ID or name
     private Ride findRideByID(String rideID) {
         return park.getRidesList().stream()
             .filter(ride -> ride.getRideID().equals(rideID))
