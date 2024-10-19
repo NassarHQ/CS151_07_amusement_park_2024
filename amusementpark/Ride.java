@@ -136,34 +136,41 @@ public class Ride implements ParkInteractables {
         // Custom logic to manage riders
     }
 
-    // Method to admit an individual visitor to the queue
     public void admitRider(Visitor visitor) {
         if (visitor == null) {
             System.out.println("Invalid visitor. Cannot add to queue.");
             return;
         }
-
+    
+        // Check if the visitor is already queued for another ride
+        if (visitor.isQueuedForARide()) {
+            System.out.println(visitor.getName() + " is already queued for another ride: " + visitor.getCurrentQueuedRide().getRideName());
+            return;
+        }
+    
         if (!isOperational) {
             System.out.println("The ride is not operational for queuing.");
             return;
         }
-
+    
         // Check if the visitor meets height and weight requirements
         if (visitor.getVisitorHeight() < rideMinHeight) {
             System.out.println(visitor.getName() + " does not meet the minimum height requirement.");
             return;
         }
-
+    
         if (visitor.getVisitorWeight() > rideMaxWeight) {
             System.out.println(visitor.getName() + " exceeds the maximum weight limit.");
             return;
         }
-
+    
+        // Add the visitor to the ride queue
         rideVisitorQueue.add(visitor);
-
+        visitor.setQueuedRide(this); // Set the ride as the visitor's queued ride
+    
         System.out.println(visitor.getName() + " has been added to the ride queue.");
     }
-
+    
     // Method to remove an individual visitor from the queue
     public void removeRider(Visitor visitor) {
         if (visitor == null || !rideVisitorQueue.contains(visitor)) {
@@ -254,17 +261,16 @@ public class Ride implements ParkInteractables {
             return;
         }
         System.out.println("Stopping the ride: " + rideName);
-
-        // Increment the roundsCompleted when the ride stops
-        roundsCompleted++;
-
+    
         // Clear all riders after the ride stops
+        for (Visitor visitor : onRide) {
+            visitor.clearQueuedRide(); // Clear the queued ride for each visitor
+        }
+    
         onRide.clear();
         hasStarted = false;
     }
-
-
-
+    
     // Method to add a visitor that checks if the ride can admit more riders
     public void addRider(Visitor visitor) {
         if (hasStarted) {

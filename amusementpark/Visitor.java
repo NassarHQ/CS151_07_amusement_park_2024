@@ -12,6 +12,8 @@ public class Visitor extends Person {
     private String feedback;
     private boolean hasProvidedFeedback;
     private boolean ticketPurchased;
+    private Ride currentQueuedRide; // The ride the visitor is currently queued for
+
 
     public Visitor(){
         super();
@@ -179,4 +181,25 @@ public class Visitor extends Person {
         System.out.println("Height: " + height +" cm");
         System.out.println("Weight: " + weight + " kg");
     }
+
+    // Method to check if visitor is already queued for a ride
+    public boolean isQueuedForARide() {
+        return currentQueuedRide != null;
+    }
+
+    // Method to set the current queued ride
+    public void setQueuedRide(Ride ride) {
+        this.currentQueuedRide = ride;
+    }
+
+    // Method to clear the queued ride
+    public void clearQueuedRide() {
+        this.currentQueuedRide = null;
+    }
+
+    // Method to get the current queued ride
+    public Ride getCurrentQueuedRide() {
+        return currentQueuedRide;
+    }
+
 }

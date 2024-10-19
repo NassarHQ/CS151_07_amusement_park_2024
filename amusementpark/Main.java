@@ -19,7 +19,7 @@ public class Main {
 
         ParkStore store1 = new ParkStore("Food Land", "Food");
         ParkStore store2 = new ParkStore("Drink Land", "Drink");
-        ParkStore store3 = new ParkStore("Souvenir Town", "Souvenir", 500.00);
+        ParkStore store3 = new ParkStore("Souvenir Town", "Souvenir", 0.0);
 
         park.addStore(store1);
         park.addStore(store2);

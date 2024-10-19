@@ -359,7 +359,7 @@ public class VisitorUI {
 
             if (selectedRide != null) {
                 selectedRide.admitRider(loggedInVisitor);
-                break;
+                return;
             } else {
                 System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
             }
