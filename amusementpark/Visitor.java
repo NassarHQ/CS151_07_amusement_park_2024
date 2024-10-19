@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static amusementpark.Main.exitProgram;
-
 public class Visitor extends Person {
     private double height;
     private double weight;
@@ -14,8 +12,6 @@ public class Visitor extends Person {
     private String feedback;
     private boolean hasProvidedFeedback;
     private boolean ticketPurchased;
-    private Park park;
-
 
     public Visitor(){
         super();
