@@ -39,8 +39,6 @@ The project follows object-oriented design principles, with a focus on abstracti
 
 - **Discountable.java**: An interface implemented by the `Ticket` class, which applies discounts based on the visitor's category (e.g., child, senior, adult).
     
-- **Loginable.java**: An interface that standardizes the login behavior for users (employees and visitors). This interface is designed to ensure that login systems are consistent across the system.
-    
 - **PrintHelper.java**: A utility class that provides various static methods to print formatted text to the console, making it easier to maintain a consistent user interface throughout the application.
     
 - **ValidationHelper.java**: A helper class used to validate input across the system, ensuring correct and secure input handling.
