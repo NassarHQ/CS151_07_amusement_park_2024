@@ -120,7 +120,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
 
     public static void printLoginMenu(String prompt) {
         System.out.println("\n============================");
-        System.out.println("Welcome to " + prompt + " Management");
+        System.out.println("Welcome to " + prompt + " Management:");
         System.out.println("============================");
         System.out.println("1. Login");
         System.out.println("2. Create New Account");
