@@ -8,7 +8,6 @@ public class Ticket implements Discountable {
     private double ticketPrice;
     private String ticketID;
     private boolean isUsed; // Check if the ticket has been used
-    private boolean isRefunded; // Check if the ticket has been refunded
     private static int ticketCounter = 0;
     private static final double BASE_PRICE = 100.00;
     private LocalDateTime purchaseDateTime;
@@ -40,11 +39,6 @@ public class Ticket implements Discountable {
 
     public void setTicketPrice(double ticketPrice){
         this.ticketPrice = ticketPrice;
-    }
-
-    // Getter for refund status
-    public boolean isRefunded() {
-        return isRefunded;
     }
 
     // Getter for isUsed
@@ -84,7 +78,7 @@ public class Ticket implements Discountable {
         for (Ticket existingTicket : generatedTickets) {
             if (existingTicket.getTicketID().equals(ticket.getTicketID()) && existingTicket.isUsed()) {
                 System.out.println("Ticket " + ticket.getTicketID() + " is already used. Generating a new ticket...");
-                return true;  // Ticket is used, rerandomize
+                return true;  // Ticket is used, re-generate
             }
         }
         return false;  // Ticket is not used
@@ -129,7 +123,7 @@ public class Ticket implements Discountable {
             System.out.println("Ticket " + ticketID + " has already been used. Sorry!");
         } else {
             isUsed = true;
-            System.out.println("Ticket " + ticketID + " succesfully validated. Enjoy your ride!");
+            System.out.println("Ticket " + ticketID + " successfully validated. Enjoy your ride!");
         }
     }
 
@@ -137,14 +131,5 @@ public class Ticket implements Discountable {
     public String toString() {
         return "Ticket Number: " + ticketID + ", Price: $" + ticketPrice;
     }
-
-    public void setRefundStatus(boolean isRefunded) {
-        this.isRefunded = isRefunded; // Update the refund status
-        if (isRefunded) {
-            System.out.println("Ticket " + ticketID + " has been refunded.");
-        } else {
-            System.out.println("Refund status for ticket " + ticketID + " has been revoked.");
-        }
-    }    
 
 }
