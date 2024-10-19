@@ -331,6 +331,9 @@ public class VisitorUI {
 
     // Method to queue for a ride
     private void queueForRide() {
+
+        park.displayAllRides();
+
         if (!loggedInVisitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park to queue for a ride. Please purchase a ticket first.");
             return;
