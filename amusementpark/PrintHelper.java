@@ -117,4 +117,34 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("============================");
         System.out.println("\nPlease select an option (1-3) or type 'EXIT' to exit the program: ");
     }
+
+    public static void printLoginMenu(String prompt) {
+        System.out.println("\n============================");
+        System.out.println("   Welcome to " + prompt + " Management:");
+        System.out.println("============================");
+        System.out.println("1. Login");
+        System.out.println("2. Create New Account");
+        System.out.println("3. Return to main menu");
+        System.out.println("============================");
+        System.out.print("Please select an option (1-3) or type 'EXIT' to exit the program: ");
+    }
+
+    public static void printEmployeeMenu() {
+        System.out.println("\n============================");
+        System.out.println("   Employee Menu:");
+        System.out.println("============================");
+        System.out.println("1. Clock in");
+        System.out.println("2. Clock out");
+        System.out.println("3. View Work Log");
+        System.out.println("4. Make a report");
+        System.out.println("5. Check Salary Info");
+        System.out.println("6. Check Schedule");
+        System.out.println("7. Request Day Off");
+        System.out.println("8. Assign to a Ride");
+        System.out.println("9. Start Assigned Ride");
+        System.out.println("10. Stop Assigned Ride");
+        System.out.println("11. Log Out");
+        System.out.println("============================");
+        System.out.print("Please select an option (1-11): ");
+    }
 }

@@ -11,24 +11,39 @@ public class Main {
 
     public static void main(String[] args) {
 
-        
-        //Initialize some stuff for the sake of testing
-        Scanner scanner = new Scanner(System.in);
+        // Initialize the park
         Park park = new Park();
-        Employee employee = new Employee("John Doe", 25, "1304", "manager");
-        ParkStore store = new ParkStore("foody", "food");
-        ParkStore store1 = new ParkStore("drunk", "drink");
-        park.addStore(store);
-        park.addStore(store1);
-        store.addItems("burger", 30);
-        store1.addItems("coke", 12);
-        //park.sellTicket(visitor);
-        Visitor visitor = new Visitor("Test", 32);
-        Visitor j = new Visitor("Joe", 21, 170, 90, "asd", "asd");
-        Ride incredi = new Ride("Incredible", "010", 45, 45, 120, 170);
-        park.addRide(incredi);
 
-        System.out.println("Welcome to the Amusement Park Management System!");
+        ParkStore store1 = new ParkStore("Food Land", "Food");
+        ParkStore store2 = new ParkStore("Drink Land", "Drink");
+        ParkStore store3 = new ParkStore("Souvenir Town", "Souvenir", 500.00);
+
+        park.addStore(store1);
+        park.addStore(store2);
+        park.addStore(store3);
+
+        store1.addItems("burger", 30);
+        store1.addItems("cotton candy", 12);
+        store1.addItems("fries", 25);
+
+        store2.addItems("coke", 30);
+        store2.addItems("water", 58);
+        store2.addItems("soda", 89);
+
+        store3.addItems("keychain", 102);
+        store3.addItems("hat", 36);
+        store3.addItems("magnet", 55);
+
+
+        Ride ride1 = new Ride("Bumper Cars", "010", 45, 45, 120, 170);
+        Ride ride2 = new Ride("Drop Tower", "011", 50, 90, 125, 160);
+        Ride ride3 = new Ride("Water Ride", "012", 35, 65, 120, 165);
+
+        park.addRide(ride1);
+        park.addRide(ride2);
+        park.addRide(ride3);
+
+        System.out.println("Welcome to the Amusement Park " + park.getParkName() + " at " + park.getParkLocation() + " Management System!");
 
         while (true) {
 
@@ -52,33 +67,13 @@ public class Main {
                 case "exit":
                     exitProgram(response.trim());
                 default:
-                    System.out.println("Invalid response");
+                    System.out.println("Invalid option. Please try again");
                     break;
             }
         }
     }
 
-    public static class InputMismatchExample {
-        public static void main(String[] args) {
-            int number = 0;
-
-            while (true) {
-                try {
-                    System.out.print("Please enter an integer: ");
-                    number = scanner.nextInt(); // This line may throw InputMismatchException
-                    break; // Exit the loop if input is valid
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter a valid integer.");
-                    scanner.nextLine(); // Clear the invalid input from the scanner
-                }
-            }
-
-            System.out.println("You entered: " + number);
-        }
-    }
-
     public static void exitProgram(String input) {
-        System.out.println("Input received: '" + input + "'"); // Debug line
         if (input.trim().equalsIgnoreCase("exit")) {
             scanner.close(); // Close the scanner
             System.out.println("Exiting the program. Goodbye!");
