@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static amusementpark.Main.exitProgram;
+
 public class Visitor extends Person {
     private double height;
     private double weight;
@@ -13,6 +15,7 @@ public class Visitor extends Person {
     private boolean hasProvidedFeedback;
     private boolean ticketPurchased;
     private Ride currentQueuedRide; // The ride the visitor is currently queued for
+    private List<String> allFeedbacks;
 
 
     public Visitor(){
@@ -124,6 +127,7 @@ public class Visitor extends Person {
         Scanner sc = new Scanner(System.in); // Create sc to read user's feedback
 
         feedback = sc.nextLine();
+        exitProgram(feedback.trim());
         this.hasProvidedFeedback = true;    // Set flag to true if visitor has provided feedback
 
         return feedback;
@@ -200,6 +204,15 @@ public class Visitor extends Person {
     // Method to get the current queued ride
     public Ride getCurrentQueuedRide() {
         return currentQueuedRide;
+    }
+
+    // Method to view feedback
+    public void viewFeedback() {
+        if (hasProvidedFeedback) {
+            System.out.println(this.getName() + " has provided a feedback: " + feedback);
+        } else {
+            System.out.println(this.getName() + " hasn't provided any feedbacks.");
+        }
     }
 
 }

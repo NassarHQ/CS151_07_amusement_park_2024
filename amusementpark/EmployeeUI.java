@@ -204,7 +204,6 @@ public class EmployeeUI {
                 } else {
                     selectedRide.assignOperator(loggedInEmployee);
                     assignedRide = selectedRide;
-                    System.out.println("Ride " + selectedRide.getRideName() + " assigned to you.");
                 }
                 break;
             } else {

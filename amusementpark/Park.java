@@ -208,7 +208,7 @@ public class Park {
             System.out.println("No visitors have provided feedback.");
         } else {
             for (Visitor visitor : visitors) {
-                visitor.provideFeedback(); // Display visitor feedback
+                visitor.viewFeedback(); // Display visitor feedback
             }
         }
     }

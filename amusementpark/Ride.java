@@ -28,7 +28,7 @@ public class Ride implements ParkInteractables {
         this.rideName = "Default Ride";
         this.rideID = "0000";
         this.rideCapacity = 10; // default capacity
-        this.rideDuration = 5; // default duration in minutes
+        this.rideDuration = 50; // default duration in seconds
         this.rideMinHeight = 120; // default height in cm
         this.rideMaxWeight = 170; // default max weight in kg
         this.isOperational = true;
