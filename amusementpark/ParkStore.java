@@ -243,9 +243,13 @@ public void addItems(String item, int quantity) {
 
     // Method to get list of visitors that visited the store
     public void getVisitorsInStore() {
-        System.out.println("List of visitors that visited the store: ");
-        for (Visitor v : visitors) {
-             System.out.println(v.getName());
+        if (visitors.isEmpty()) {
+            System.out.println("No visitors visited store " + this.getParkStoreName() +".");
+        } else {
+            System.out.println("List of visitors that visited the store: ");
+            for (Visitor v : visitors) {
+                System.out.println(v.getName());
+            }
         }
     }
 
