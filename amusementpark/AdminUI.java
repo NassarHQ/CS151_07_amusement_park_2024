@@ -32,10 +32,6 @@ public class AdminUI {
                     case 3 -> showFeedback(); // Display visitor feedback
                     case 4 -> showReports(); // Display employee reports
                     case 5 -> checkMetrics(); // Check park metrics
-                    case 6 -> {
-                        System.out.println("Exiting Admin Menu... Goodbye!");
-                        return; // Exit admin menu
-                    }
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -136,10 +132,6 @@ private boolean askToContinue(String action) {
                     case 2 -> performActionWithLoop("remove", this::removeRide); // Remove a ride
                     case 3 -> performActionWithLoop("display", this::displayRideDetails); // Display ride details
                     case 4 -> performActionWithLoop("open/close for maintenance", this::openCloseForMaintenance); // Open/close for maintenance
-                    case 5 -> {
-                        System.out.println("Returning to Admin Menu...");
-                        return;
-                    }
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -479,7 +471,7 @@ private boolean askToContinue(String action) {
 
     public void checkMetrics() {
         System.out.println("\n--- Check Metrics ---");
-        String rideName = getValidatedInput("Enter the name of the ride you want to check: ", false, true);
+        String rideName = getValidatedInput("Enter the name of the ride you want to check: ", true, false);
         if (rideName == null) return;
 
         Ride ride = findRideByID(rideName);

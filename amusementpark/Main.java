@@ -11,6 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Make an instance of PrintHelper
+        PrintHelper printHelper = new PrintHelper();
+
         // Initialize the park
         Park park = new Park();
 
@@ -62,7 +65,9 @@ public class Main {
                     employeeUI.showLoginMenu();
                     break;
                 case "3":
-                    System.out.println("Admin menu"); //Call admin UI stuff
+                    // Make an Instance of  AdminUI
+                    AdminUI adminUI = new AdminUI(park, printHelper);
+                    adminUI.displayAdminMenu(); // Display Admin Menu
                     break;
                 case "exit":
                     exitProgram(response.trim());
