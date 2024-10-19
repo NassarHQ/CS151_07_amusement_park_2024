@@ -76,7 +76,7 @@ public class VisitorUI {
         String name = scanner.nextLine().trim();
 
         int age = -1;
-        while (age < 0) {
+        while (age <= 0) {
             try {
                 System.out.print("Enter your age: ");
                 age = Integer.parseInt(scanner.nextLine().trim());
@@ -165,6 +165,8 @@ public class VisitorUI {
                     viewPurchaseHistory();
                     break;
                 case "7":
+                    System.out.println("Logging out...");
+                    loggedInVisitor = null; // Clear the logged-in employee
                     return;
                 case "exit":
                     exitProgram(choice.trim());
