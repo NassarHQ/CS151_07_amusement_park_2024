@@ -173,7 +173,7 @@ private boolean askToContinue(String action) {
       int capacity = ValidationHelper.getValidPositiveInt(scanner, "ride capacity");
       if (capacity == -1) return;
   
-      int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration (in minutes)");
+      int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration (in seconds)");
       if (duration == -1) return;
   
       int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 120 and 220)", ride.getRideMinHeight(), 220);
@@ -267,13 +267,10 @@ private boolean askToContinue(String action) {
                     case 2 -> performActionWithLoop("remove", this::removeStore); // Remove a store
                     case 3 -> performActionWithLoop("get", this::getStoreType); // Get store type
                     case 4 -> performActionWithLoop("add items", this::addItemsToStore); // Add items to a store
-                    case 5 -> performActionWithLoop("validate food", () -> validateItemInStore("food")); // Validate food in store
-                    case 6 -> performActionWithLoop("validate drink", () -> validateItemInStore("drink")); // Validate drink in store
-                    case 7 -> performActionWithLoop("validate souvenir", () -> validateItemInStore("souvenir")); // Validate souvenir in store
-                    case 8 -> performActionWithLoop("display items", this::displayStoreItems); // Display store items
-                    case 9 -> performActionWithLoop("view purchase history", this::viewStorePurchaseHistory); // View purchase history
-                    case 10 -> performActionWithLoop("get visitors in", this::getVisitorsInStore); // Get visitors in store
-                    case 11 -> performActionWithLoop("display Stores", this::displayAllStores); // Display all stores
+                    case 5 -> performActionWithLoop("display items", this::displayStoreItems); // Display store items
+                    case 6 -> performActionWithLoop("view purchase history", this::viewStorePurchaseHistory); // View purchase history
+                    case 7 -> performActionWithLoop("get visitors in", this::getVisitorsInStore); // Get visitors in store
+                    case 8 -> performActionWithLoop("display Stores", this::displayAllStores); // Display all stores
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
