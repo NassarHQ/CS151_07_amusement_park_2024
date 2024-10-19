@@ -11,6 +11,9 @@ public class AdminUI {
     private PrintHelper printHelper = new PrintHelper();
     private Scanner scanner = new Scanner(System.in);
     private ParkStore store = new ParkStore();
+    
+    // Instance of ride
+    Ride ride = new Ride();
 
     // Constructor to initialize the park and print helper instances
     public AdminUI(Park park, PrintHelper printHelper) {
@@ -173,10 +176,10 @@ private boolean askToContinue(String action) {
       int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration (in minutes)");
       if (duration == -1) return;
   
-      int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 150 and 195)", 150, 195);
+      int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 150 and 195)", ride.getRideMinHeight(), 220);
       if (minHeight == -1) return;
   
-      int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "maximum weight (in kg, between 50 and 100)", 50, 100);
+      int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "maximum weight (in kg, between 50 and 100)", 25, ride.getRideMaxWeight());
       if (maxWeight == -1) return;
   
       // Create a new ride instance and add it to the park
