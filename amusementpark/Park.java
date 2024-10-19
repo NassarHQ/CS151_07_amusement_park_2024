@@ -12,41 +12,40 @@ public class Park {
     // Instance variables holding park's name and location
     private String parkName; // Name of the Park
     private String parkLocation; // Location of the Park
-    private double dailyRevenueGoal;
-    private int dailyVisitorGoal;
+    private double dailyRevenueGoal; // Revenue goal for the day
+    private int dailyVisitorGoal; // Visitor goal for the day
 
     // Variables to store daily metrics
-    private double totalRevenue;   // Stores total revenue
-    private double totalTicketRevenue;  // Revenue from tickets
-    private double totalStoreRevenue;   // Revenue from stores
-    private int totalVisitors;     // Stores total number of visitors
-    private int totalTicketsSold;  // Stores total number of tickets sold
+    private double totalRevenue;   // Stores total revenue generated from tickets and stores
+    private double totalTicketRevenue;  // Revenue generated only from tickets
+    private double totalStoreRevenue;   // Revenue generated only from stores
+    private int totalVisitors;     // Tracks total number of visitors in the park
+    private int totalTicketsSold;  // Tracks total number of tickets sold
 
-    // HashSets to store visitors and employees.
-    // ArrayLists to store sections, rides, and tickets
-    private ArrayList<Visitor> visitors;
-    private ArrayList<Employee> employees;
-    private ArrayList<ParkStore> stores;
-    private ArrayList<Ride> rides;
-    private Set<Ticket> soldTickets;
-    private ArrayList<String> reportedIssues;
+    // Collections for visitors, employees, stores, rides, tickets sold, and reported issues
+    private ArrayList<Visitor> visitors; // List of visitors in the park
+    private ArrayList<Employee> employees; // List of employees working in the park
+    private ArrayList<ParkStore> stores; // List of stores in the park
+    private ArrayList<Ride> rides; // List of rides available in the park
+    private Set<Ticket> soldTickets; // Set of tickets that have been sold to visitors
+    private ArrayList<String> reportedIssues; // List of reported issues in the park
 
-    // Constructor for the Park class
+    // Default constructor for the Park class, initializes with default name, location, and goals
     public Park() {
         // Initialize the collections
-        this.parkName = "Ride & Seek";
-        this.parkLocation = "666 Roller Coaster Avenue";
-        this.dailyRevenueGoal = 5000.00;
-        this.dailyVisitorGoal = 100;
-        this.visitors = new ArrayList<>();
-        this.employees = new ArrayList<>();
-        this.stores = new ArrayList<>();
-        this.rides = new ArrayList<>();
-        this.soldTickets = new HashSet<>();
-        this.reportedIssues = new ArrayList<>();
+        this.parkName = "Ride & Seek"; // Default park name
+        this.parkLocation = "666 Roller Coaster Avenue"; // Default park location
+        this.dailyRevenueGoal = 5000.00; // Default daily revenue goal
+        this.dailyVisitorGoal = 100; // Default daily visitor goal
+        this.visitors = new ArrayList<>(); // Initialize visitors list
+        this.employees = new ArrayList<>(); // Initialize employees list
+        this.stores = new ArrayList<>(); // Initialize stores list
+        this.rides = new ArrayList<>(); // Initialize rides list
+        this.soldTickets = new HashSet<>(); // Initialize sold tickets set
+        this.reportedIssues = new ArrayList<>(); // Initialize reported issues list
     }
 
-    // Constructors for Park
+    // Constructor that allows setting custom park name, location, and goals
     public Park(String parkName, String parkLocation, double dailyRevenueGoal, int dailyVisitorGoal){
         this.parkName = parkName;
         this.parkLocation = parkLocation;
@@ -58,9 +57,9 @@ public class Park {
         this.rides = new ArrayList<>();
         this.soldTickets = new HashSet<>();
         this.reportedIssues = new ArrayList<>();
-
     }
 
+    // Generic method to manage adding/removing entities (visitors, employees, stores, rides)
     private <T> boolean manageEntity(T entity, ArrayList<T> list, String entityName, boolean add) {
         if (entity == null) {
             System.out.println("Invalid " + entityName + ". Cannot perform operations.");
@@ -87,79 +86,70 @@ public class Park {
         }
     }
 
-    // Manage visitors using the generic method
+    // Public methods to manage visitors, employees, rides, and stores using the generic method
     private void manageVisitor(Visitor v, boolean add) {
         manageEntity(v, visitors, "visitor", add);
     }
 
-    // Manage employees using the generic method
     private void manageEmployee(Employee e, boolean add) {
         manageEntity(e, employees, "employee", add);
     }
 
-    // Manage rides using the generic method
     private boolean manageRide(Ride r, boolean add) {
         return manageEntity(r, rides, "ride", add);
     }
 
-    // Manage stores using the generic method
     private boolean manageStore(ParkStore s, boolean add) {
         return manageEntity(s, stores, "store", add);
     }
 
-    // Public method to add a ride
+    // Public methods to add/remove rides, visitors, employees, and stores
     public boolean addRide(Ride r) {
-        return manageRide(r, true);  // Call manageRide with true to add
+        return manageRide(r, true);  // Add a ride
     }
 
-    // Public method to remove a ride
     public boolean removeRide(Ride r) {
-        return manageRide(r, false);  // Call manageRide with false to remove
+        return manageRide(r, false);  // Remove a ride
     }
 
-    // Public method to add a visitor
     public void addVisitor(Visitor v) {
         manageVisitor(v, true);
     }
 
-    // Public method to add an employee
     public void addEmployee(Employee e) {
         manageEmployee(e, true);
     }
 
-    // Public method to add a store
     public boolean addStore(ParkStore s) {
-        return manageStore(s, true);  // Call manageStore with true to add
+        return manageStore(s, true);  // Add a store
     }
 
-    // Public method to remove a store
     public boolean removeStore(ParkStore s) {
-        return manageStore(s, false);  // Call manageStore with false to remove
+        return manageStore(s, false);  // Remove a store
     }
 
-
-    // Method to calculate park metrics (including both ticket and store revenue)
+    // Method to calculate daily park metrics including visitor count, ticket sales, and revenue
     public void calculateParkMetric() {
-        totalVisitors = visitors.size();  // Get the count of total visitors
-        totalTicketsSold = soldTickets.size();  // Get the count of total sold tickets
+        totalVisitors = visitors.size();  // Total visitors count
+        totalTicketsSold = soldTickets.size();  // Total tickets sold count
 
         // Calculate total ticket revenue
         totalTicketRevenue = soldTickets.stream().mapToDouble(Ticket::getTicketPrice).sum();
 
-        // Calculate total revenue from stores
+        // Calculate total store revenue
         totalStoreRevenue = stores.stream().mapToDouble(ParkStore::getParkStoreRevenue).sum();
 
-        // Total revenue is now the sum of ticket revenue and store revenue
+        // Total revenue is sum of ticket revenue and store revenue
         totalRevenue = totalTicketRevenue + totalStoreRevenue;
 
-        // Check if the revenue goal is met
+        // Check if daily revenue goal is met
         if (totalRevenue >= dailyRevenueGoal) {
             System.out.println("GOOD JOB TEAM! WE MET OUR GOAL");
         } else {
             System.out.println("Almost there. We need $" + (dailyRevenueGoal - totalRevenue) + " more to reach our goal.");
         }
 
-        // Check if the visitor goal has been met
+        // Check if daily visitor goal is met
         if (totalVisitors >= dailyVisitorGoal) {
             System.out.println("Goal Met: " + totalVisitors + " visitors have entered the park today!");
         } else {
@@ -167,28 +157,27 @@ public class Park {
         }
     }
 
-    // Method to display park metrics
+    // Method to display park metrics after calculating them
     public void displayParkMetric() {
-        calculateParkMetric();  // Calculate metrics before displaying
+        calculateParkMetric();  // First, calculate metrics
 
-        // Display the metrics for the day in a clean and formatted way
+        // Display metrics in a formatted way
         System.out.println("\n========= Park Metrics =========");
         System.out.printf("%-30s: %d%n", "Total Visitors Today", totalVisitors);
-        System.out.printf("%-30s: $%.2f%n", "Total Ticket Revenue Today", totalTicketRevenue);  // Show ticket revenue
-        System.out.printf("%-30s: $%.2f%n", "Total Store Revenue Today", totalStoreRevenue);  // Show store revenue
-        System.out.printf("%-30s: $%.2f%n", "Total Combined Revenue Today", totalRevenue);  // Show combined revenue (tickets + stores)
+        System.out.printf("%-30s: $%.2f%n", "Total Ticket Revenue Today", totalTicketRevenue);  // Display ticket revenue
+        System.out.printf("%-30s: $%.2f%n", "Total Store Revenue Today", totalStoreRevenue);  // Display store revenue
+        System.out.printf("%-30s: $%.2f%n", "Total Combined Revenue Today", totalRevenue);  // Display total revenue
         System.out.printf("%-30s: %d%n", "Tickets Sold Today", totalTicketsSold);
         System.out.println("================================\n");
     }
 
-
-    // Simplified ticket selling method
+    // Method to sell a ticket to a visitor
     public boolean sellTicket(Visitor v) {
-        double basePrice = 100.00;
+        double basePrice = 100.00; // Base ticket price
 
         // Generate a new ticket
         Ticket newTicket = Ticket.generateTicket(basePrice);
-        double finalPrice = newTicket.applyDiscount(v);
+        double finalPrice = newTicket.applyDiscount(v);  // Apply discount based on visitor category
 
         System.out.printf("Your ticket price after discount: $%.2f\n", finalPrice);
 
@@ -196,15 +185,15 @@ public class Park {
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine();
 
-        exitProgram(response);
+        exitProgram(response);  // Handle exit command
 
         if (response.equalsIgnoreCase("yes")) {
-            newTicket.setTicketPrice(finalPrice);
-            soldTickets.add(newTicket);
-            v.addTicketToPurchaseHistory(newTicket);
-            totalRevenue += finalPrice;
-            totalTicketsSold++;
-            newTicket.displayTicketReceipt(v);
+            newTicket.setTicketPrice(finalPrice); // Set final ticket price
+            soldTickets.add(newTicket); // Add ticket to sold tickets set
+            v.addTicketToPurchaseHistory(newTicket); // Add ticket to visitor's history
+            totalRevenue += finalPrice; // Increase total revenue
+            totalTicketsSold++; // Increment total tickets sold
+            newTicket.displayTicketReceipt(v); // Display receipt
             return true;
         } else {
             System.out.println("Purchase cancelled.");
@@ -212,25 +201,25 @@ public class Park {
         return false;
     }
 
-
-
-  // Method to display all feedbacks from visitors
+    // Method to display all visitor feedbacks
     public void displayAllFeedbacks() {
         System.out.println("Visitor Feedback:");
         if (visitors.isEmpty()) {
-            System.out.println("No visitors have provided feedback."); // Message if no visitors
+            System.out.println("No visitors have provided feedback.");
         } else {
             for (Visitor visitor : visitors) {
-                visitor.provideFeedback(); // Call visitor's method to display their feedback
+                visitor.provideFeedback(); // Display visitor feedback
             }
         }
     }
 
-  public void addIssue(String issue){
-        reportedIssues.add(issue);
+    // Method to report an issue
+    public void addIssue(String issue){
+        reportedIssues.add(issue); // Add issue to reported issues list
         System.out.println("Issue reported: " + issue);
     }
 
+    // Method to view all reported issues
     public void viewReportedIssues(){
         System.out.println("Reported Issues:");
         if (reportedIssues.isEmpty()) System.out.println("None at the moment.");
@@ -241,36 +230,36 @@ public class Park {
         }
     }
 
-    // Method to get list of rides from the park
+    // Getter to retrieve list of rides in the park
     public ArrayList<Ride> getRidesList(){
         return this.rides;
     }
 
-    // Method to display all rides from the park
+    // Display all rides
     public void displayAllRides() {
         for (Ride ride : rides) {
             System.out.println(ride.getRideName());
         }
     }
 
-    // Method to get list of stores from the park
+    // Getter to retrieve list of stores in the park
     public ArrayList<ParkStore> getStoresList(){
         return this.stores;
     }
 
-    // Method to display all stores from the park
+    // Display all stores
     public void displayAllStores() {
         for (ParkStore store : stores) {
             System.out.println(store.getParkStoreName());
         }
     }
 
-    // Getter for visitors (returns an unmodifiable set to prevent outside modification)
+    // Getter for visitors
     public ArrayList<Visitor> getVisitors() {
         return visitors;
     }
 
-    // Getter for employees (returns an unmodifiable set to prevent outside modification)
+    // Getter for employees
     public ArrayList<Employee> getEmployees() {
         return employees;
     }
