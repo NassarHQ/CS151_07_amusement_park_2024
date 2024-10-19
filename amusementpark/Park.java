@@ -43,7 +43,7 @@ public class Park {
         this.reportedIssues = new ArrayList<>();
     }
 
-    // Constructors for Park.java
+    // Constructors for Park
     public Park(String parkName, String parkLocation, double dailyRevenueGoal, int dailyVisitorGoal){
         this.parkName = parkName;
         this.parkLocation = parkLocation;
@@ -83,7 +83,6 @@ public class Park {
                 return false;
             }
             list.add(entity);
-            System.out.printf("The %s was successfully %s in the park.\n", entityName, action);
             return true;
         } else {
             if (!list.contains(entity)) {
@@ -277,5 +276,15 @@ public class Park {
     // Getter for total revenue
     public double getTotalRevenue() {
         return totalRevenue;
+    }
+
+    // Getter for park name
+    public String getParkName() {
+        return parkName;
+    }
+
+    // Getter for park location
+    public String getParkLocation() {
+        return parkLocation;
     }
 }
