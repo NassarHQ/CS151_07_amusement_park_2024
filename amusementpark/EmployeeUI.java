@@ -1,8 +1,9 @@
-
 package amusementpark;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+import static amusementpark.Main.exitProgram;
+
 
 public class EmployeeUI {
     private Scanner scanner;
@@ -31,6 +32,7 @@ public class EmployeeUI {
             System.out.print("Please select an option (1-3): ");
             
             String choice = scanner.nextLine().trim();
+            exitProgram(choice);
             switch (choice) {
                 case "1":
                     handleLogin(); // Handle employee login
@@ -53,8 +55,10 @@ public class EmployeeUI {
         System.out.println("Employee Login");
         System.out.print("Enter username: ");
         String username = scanner.nextLine().trim();
+        exitProgram(username);
         System.out.print("Enter password: ");
         String password = scanner.nextLine().trim();
+        exitProgram(password);
 
         // Check if the username exists and the password is correct
         if (employeeAccounts.containsKey(username)) {
@@ -75,14 +79,18 @@ public class EmployeeUI {
         System.out.println("Create New Employee Account");
         System.out.print("Enter your name: ");
         String name = scanner.nextLine().trim();
+        exitProgram(name);
         System.out.print("Enter your age: ");
-        int age = Integer.parseInt(scanner.nextLine().trim());
+        String ageInput = scanner.nextLine().trim();
+        exitProgram(ageInput);  // Check if "exit" was entered
+        int age = Integer.parseInt(ageInput);
         String username;
         
         // Check if the username already exists
         while (true) {
             System.out.print("Enter a username: ");
             username = scanner.nextLine().trim();
+            exitProgram(username);
             if (employeeAccounts.containsKey(username)) {
                 System.out.println("Username already exists. Please try a different username.");
             } else {
@@ -92,10 +100,13 @@ public class EmployeeUI {
         
         System.out.print("Enter a password: ");
         String password = scanner.nextLine().trim();
+        exitProgram(password);
         System.out.print("Enter your role (e.g., Manager, Shift Lead, etc.): ");
         String role = scanner.nextLine().trim();
+        exitProgram(role);
         System.out.print("Enter your employee ID: ");
         String employeeID = scanner.nextLine().trim();
+        exitProgram(employeeID);
     
         // Create a new employee account and add it to the employeeAccounts map
         Employee newEmployee = new Employee(name, age, username, password, employeeID, role);
@@ -124,6 +135,7 @@ public class EmployeeUI {
             System.out.print("Please select an option (1-11): ");
 
             String choice = scanner.nextLine().trim();
+            exitProgram(choice);
             switch (choice) {
                 case "1":
                     loggedInEmployee.shiftIn();
@@ -179,6 +191,7 @@ public class EmployeeUI {
         while (true) {
             System.out.print("Enter the name of the ride you want to assign (or type 'cancel' to go back): ");
             String rideName = scanner.nextLine().trim();
+            exitProgram(rideName);
             if (rideName.equalsIgnoreCase("cancel")) {
                 System.out.println("Cancelled ride assignment.");
                 return;
