@@ -75,12 +75,30 @@ public class EmployeeUI {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine().trim();
         exitProgram(name);
-        System.out.print("Enter your age: ");
-        String ageInput = scanner.nextLine().trim();
-        exitProgram(ageInput);  // Check if "exit" was entered
-        int age = Integer.parseInt(ageInput);
-        String username;
         
+        // Error checking for age input
+        int age = 0;
+        while (true) {
+            System.out.print("Enter your age: ");
+            String ageInput = scanner.nextLine().trim();
+            exitProgram(ageInput);  // Check if "exit" was entered
+            
+            try {
+                age = Integer.parseInt(ageInput);
+                if (age <= 0) {
+                    System.out.println("Invalid age. Age must be a positive number. Please try again.");
+                }
+                else if (age <= 17)
+                    System.out.println("Employee age must be 18 or older. Please try again"); 
+                else {
+                    break; // Valid age entered
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid age (a positive integer).");
+            }
+        }
+        
+        String username;
         // Check if the username already exists
         while (true) {
             System.out.print("Enter a username: ");
