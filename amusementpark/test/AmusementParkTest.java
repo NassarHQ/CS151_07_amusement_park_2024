@@ -193,6 +193,39 @@ public class AmusementParkTest {
         assertFalse(ride.getOnRide().contains(extraVisitor)); // Verify extra visitor was not added
     }
 
+    @Test
+    public void testAdmitRider() {
+        // Create a ride with a capacity of 2, min height 150cm, and max weight 100kg
+        Ride ride = new Ride("Ferris Wheel", "001", 2, 10, 150, 100);
+        
+        // Create visitors with different height and weight conditions
+        Visitor validVisitor1 = new Visitor("Alice", 25, 160, 90, "usn5", "psw5");
+        Visitor validVisitor2 = new Visitor("Bob", 30, 155, 80, "usn6", "psw6");
+        Visitor overweightVisitor = new Visitor("Charlie", 35, 160, 110, "usn7", "psw7");
+        Visitor shortVisitor = new Visitor("Dave", 20, 140, 70, "usn8", "psw8");
+        Visitor extraVisitor = new Visitor("Eve", 28, 170, 65, "usn9", "psw9");
+
+        // Admit the first valid visitor
+        ride.admitRider(validVisitor1);
+        assertTrue(ride.getOnRide().contains(validVisitor1));  // Check if the visitor is on the ride
+
+        // Admit the second valid visitor
+        ride.admitRider(validVisitor2);
+        assertTrue(ride.getOnRide().contains(validVisitor2));  // Check if the visitor is on the ride
+
+        // Try to admit a third visitor (exceeds capacity)
+        ride.admitRider(extraVisitor);
+        assertFalse(ride.getOnRide().contains(extraVisitor));  // Check if the visitor is not on the ride
+
+        // Try to admit an overweight visitor
+        ride.admitRider(overweightVisitor);
+        assertFalse(ride.getOnRide().contains(overweightVisitor));  // Check if the visitor is not on the ride
+
+        // Try to admit a short visitor
+        ride.admitRider(shortVisitor);
+        assertFalse(ride.getOnRide().contains(shortVisitor));  // Check if the visitor is not on the ride
+    }
+
     // --------- Park Tests ---------
 
     @Test
