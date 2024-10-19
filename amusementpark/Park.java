@@ -97,13 +97,13 @@ public class Park {
     }
 
     // Manage visitors using the generic method
-    private boolean manageVisitor(Visitor v, boolean add) {
-        return manageEntity(v, visitors, "visitor", add);
+    private void manageVisitor(Visitor v, boolean add) {
+        manageEntity(v, visitors, "visitor", add);
     }
 
     // Manage employees using the generic method
-    private boolean manageEmployee(Employee e, boolean add) {
-        return manageEntity(e, employees, "employee", add);
+    private void manageEmployee(Employee e, boolean add) {
+        manageEntity(e, employees, "employee", add);
     }
 
     // Manage rides using the generic method
@@ -127,23 +127,13 @@ public class Park {
     }
 
     // Public method to add a visitor
-    public boolean addVisitor(Visitor v) {
-        return manageVisitor(v, true);  // Call manageVisitor with true to add
-    }
-
-    // Public method to remove a visitor
-    public boolean removeVisitor(Visitor v) {
-        return manageVisitor(v, false);  // Call manageVisitor with false to remove
+    public void addVisitor(Visitor v) {
+        manageVisitor(v, true);
     }
 
     // Public method to add an employee
-    public boolean addEmployee(Employee e) {
-        return manageEmployee(e, true);  // Call manageEmployee with true to add
-    }
-
-    // Public method to remove a visitor
-    public boolean removeEmployee(Employee e) {
-        return manageEmployee(e, false);  // Call manageEmployee with false to remove
+    public void addEmployee(Employee e) {
+        manageEmployee(e, true);
     }
 
     // Public method to add a store

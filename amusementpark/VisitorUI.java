@@ -1,26 +1,150 @@
 package amusementpark;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
+
 import static amusementpark.Main.exitProgram;
 
-public class VisitorUI extends PersonUI{
-    private Visitor visitor;
+public class VisitorUI {
+    private Scanner scanner;
+    private Park park;
+    private Map<String, Visitor> visitorAccounts;
+    private Visitor loggedInVisitor;
     private ParkStore store;
 
-    public VisitorUI(Park park) {
-        super(park);
-        this.visitor = (Visitor) createPerson();
+
+    public VisitorUI(Park park, Map<String, Visitor> visitorAccounts) {
+        scanner = new Scanner(System.in);
+        this.park = park;
+        this.visitorAccounts = visitorAccounts; // Initialize the employee accounts map
     }
 
-    @Override
-    protected Person createPerson() {
-        return new Visitor();
+    public void showVisitorLoginMenu() {
+        while (true) {
+            System.out.println("\n============================");
+            System.out.println("   Welcome to Visitor Management:");
+            System.out.println("============================");
+            System.out.println("1. Login");
+            System.out.println("2. Create New Account");
+            System.out.println("3. Return to Main Menu");
+            System.out.println("EXIT");
+            System.out.println("============================");
+            System.out.print("Please select an option (1-3): ");
+
+            String choice = scanner.nextLine();
+            switch (choice.trim()) {
+                case "1":
+                    handleLogin(); // Handle employee login
+                    break;
+                case "2":
+                    handleAccountCreation(); // Handle new account creation
+                    break;
+                case "3":
+                    return;
+                case "exit":
+                    exitProgram(choice.trim());
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    private void handleLogin() {
+        System.out.println("Visitor Login");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        exitProgram(username.trim());
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        exitProgram(password.trim());
+
+
+        // Check if the username exists and the password is correct
+        if (visitorAccounts.containsKey(username)) {
+            Visitor visitor = visitorAccounts.get(username);
+            if (visitor.getPassword().equals(password)) {
+                loggedInVisitor = visitor; // Set the logged-in visitor
+                System.out.println("Login successful! Welcome, " + visitor.getName() + ".");
+                displayMenu(); // Show the visitor menu after successful login
+            } else {
+                System.out.println("Incorrect password. Please try again.");
+            }
+        } else {
+            System.out.println("No account found for this username.");
+        }
+    }
+
+    private void handleAccountCreation() {
+        System.out.println("Create New Visitor Account");
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine().trim();
+
+        int age = -1;
+        while (age < 0) {
+            try {
+                System.out.print("Enter your age: ");
+                age = Integer.parseInt(scanner.nextLine().trim());
+                if (age <= 0) {
+                    System.out.println("Age has to be greater than 0. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input for age. Please enter a valid number.");
+            }
+        }
+
+        String username;
+        while (true) {
+            System.out.print("Enter a username: ");
+            username = scanner.nextLine().trim();
+            if (visitorAccounts.containsKey(username)) {
+                System.out.println("Username already exists. Please try a different username.");
+            } else {
+                break; // Exit the loop if username is unique
+            }
+        }
+
+        String password;
+        System.out.print("Enter a password: ");
+        password = scanner.nextLine().trim();
+
+        double height = -1;
+        while (height <= 0) {
+            try {
+                System.out.print("Enter your height (cm): ");
+                height = Double.parseDouble(scanner.nextLine().trim());
+                if (height <= 0) {
+                    System.out.println("Height must be greater than 0 cm. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input for height. Please enter a valid number.");
+            }
+        }
+
+        double weight = -1;
+        while (weight <= 0) {
+            try {
+                System.out.print("Enter your weight (kg): ");
+                weight = Double.parseDouble(scanner.nextLine().trim());
+                if (weight <= 0) {
+                    System.out.println("Weight must be greater than 0 kg. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input for weight. Please enter a valid number.");
+            }
+        }
+
+        // Create a new visitor account and add it to the visitorAccounts map
+        Visitor newVisitor = new Visitor(name, age, height, weight, username, password);
+        visitorAccounts.put(username, newVisitor); // Add new visitor account to the system
+        System.out.println("Visitor account created successfully! You can now log in.");
     }
 
     public void displayMenu() {
         // Ask for account information
-        askForAccount();
-        visitor.viewProfile();
+        loggedInVisitor.viewProfile();
 
         while (true) {   // Infinite loop to keep the menu running until EXIT
 
@@ -60,12 +184,12 @@ public class VisitorUI extends PersonUI{
 
     private void buyTickets() {
        Ticket.displayTicketInfo();  // Display tickets info
-        if (park.getVisitors().contains(visitor)) {
+        if (park.getVisitors().contains(loggedInVisitor)) {
             System.out.println("You already purchased a ticket.");
         } else {
-            if (park.sellTicket(visitor)) {
-                visitor.setTicketPurchased(true);
-                park.addVisitor(visitor);
+            if (park.sellTicket(loggedInVisitor)) {
+                loggedInVisitor.setTicketPurchased(true);
+                park.addVisitor(loggedInVisitor);
             }
         }
     }
@@ -105,7 +229,7 @@ public class VisitorUI extends PersonUI{
     }
 
     private void checkoutStores() {
-        if (!visitor.getTicketPurchased()) {
+        if (!loggedInVisitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park. Please purchase a ticket first.");
             return;
         }
@@ -176,7 +300,7 @@ public class VisitorUI extends PersonUI{
 
                         try {
                             int quantity = Integer.parseInt(quantityString);  // Parse the quantity
-                            store.sellItems(visitor, chosenItem, quantity);  // Process the purchase
+                            store.sellItems(loggedInVisitor, chosenItem, quantity);  // Process the purchase
                             return;  // Exit after a successful purchase
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid quantity. Please try again.");
@@ -192,111 +316,26 @@ public class VisitorUI extends PersonUI{
         }
     }
 
+    // Method to write a feedback
     private void writeFeedback() {
-        if (!visitor.getTicketPurchased()) {
+        if (!loggedInVisitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park to write a feedback. Please purchase a ticket first.");
             return;
         }
-        visitor.provideFeedback();
+        loggedInVisitor.provideFeedback();
         System.out.println("Thank you for your feedback.");
 
     }
 
+    // Method to view purchase history
     private void viewPurchaseHistory() {
-        visitor.viewPurchaseTicketHistory();
-        visitor.viewPurchaseItemHistory();
-    }
-
-    // Method to ask for visitor's name
-    private void askVisitorName() {
-        while (true) {
-            System.out.println("\nEnter your name: ");
-            String name = scanner.nextLine().trim();  // Trim to remove leading/trailing spaces
-
-            exitProgram(name);
-
-            // Check if the input is not empty and contains only letters and spaces
-            if (!name.isEmpty() && name.matches("[a-zA-Z ]+")) {
-                visitor.setName(name);
-                break;  // Exit the loop if the name is valid
-            } else {
-                System.out.println("Invalid name. Please enter only letters.");
-            }
-        }
-    }
-
-    // Helper method to ask double input (height, weight)
-    private int askForDoubleInput(String prompt) {
-        while (true) {
-            System.out.println("\n" + prompt);
-            String input = scanner.nextLine().trim();  // Read input as string
-
-            exitProgram(input);  // Check for exit
-
-            try {
-                int userInput = Integer.parseInt(input);  // Parse string to integer
-                if (userInput <= 0) {
-                    throw new IllegalArgumentException("Invalid input. Please enter a valid number.");
-                }
-                return userInput;  // Return valid input
-
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    // Method to ask for visitor's height
-    private void askVisitorHeight() {
-        visitor.setVisitorHeight(askForDoubleInput("Enter your height in cm: "));
-    }
-
-    // Method to ask for visitor's weight
-    private void askVisitorWeight() {
-        visitor.setVisitorWeight(askForDoubleInput("Enter your weight in kg: "));
-    }
-
-    // Method to ask for visitor's age
-    private void askVisitorAge() {
-        while (true) {
-            System.out.println("\nEnter your age: ");
-            String ageInput = scanner.nextLine().trim();  // Read input as a string
-
-            // Check for the exit condition
-            exitProgram(ageInput);
-
-            try {
-                // Parse the string input to an integer
-                int age = Integer.parseInt(ageInput);
-
-                if (age <= 0) {
-                    throw new IllegalArgumentException("Invalid input. Age has to be greater than 0.");
-                }
-
-                visitor.setAge(age);  // Set the age in the visitor object
-                break;  // Exit the loop if age is valid
-
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    @Override
-    protected void askForUserInfo() {
-        askVisitorName();   // Prompt for name
-        askVisitorAge();    // Prompt for age
-        askVisitorHeight(); // Optionally ask for height
-        askVisitorWeight(); // Optionally ask for weight
+        loggedInVisitor.viewPurchaseTicketHistory();
+        loggedInVisitor.viewPurchaseItemHistory();
     }
 
     // Method to queue for a ride
     private void queueForRide() {
-        if (!visitor.getTicketPurchased()) {
+        if (!loggedInVisitor.getTicketPurchased()) {
             System.out.println("You haven't purchased any tickets to enter the park to queue for a ride. Please purchase a ticket first.");
             return;
         }
@@ -320,13 +359,14 @@ public class VisitorUI extends PersonUI{
             Ride selectedRide = EmployeeUI.findRideByName(rideName, rideList);
 
             if (selectedRide != null) {
-                selectedRide.admitRider(visitor);
+                selectedRide.admitRider(loggedInVisitor);
                 break;
             } else {
                 System.out.println("Error: Ride with name '" + rideName + "' not found. Please try again.");
             }
         }
     }
+
 }
 
 

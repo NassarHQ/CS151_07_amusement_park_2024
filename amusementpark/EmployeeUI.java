@@ -231,7 +231,7 @@ public class EmployeeUI {
     }
 
     // Helper method to find a ride by name
-    private Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
+    public static Ride findRideByName(String rideName, ArrayList<Ride> rideList) {
         for (Ride ride : rideList) {
             if (ride.getRideName().equalsIgnoreCase(rideName)) {
                 return ride;

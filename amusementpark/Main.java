@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static Map<String, Employee> employeeAccounts = new HashMap<>();
+    private static Map<String, Visitor> visitorAccounts = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -37,12 +38,12 @@ public class Main {
 
             switch (response.trim()) {
                 case "1":
-                    VisitorUI visitorUI = new VisitorUI(park);
-                    visitorUI.displayMenu();
+                    VisitorUI visitorUI = new VisitorUI(park, visitorAccounts);
+                    visitorUI.showVisitorLoginMenu();
                     break;
                 case "2":
                     //  System.out.println("Employee Menu"); //Call employee UI STUFF
-                    EmployeeUI employeeUI = new EmployeeUI(park,employeeAccounts);
+                    EmployeeUI employeeUI = new EmployeeUI(park, employeeAccounts);
                     employeeUI.showLoginMenu();
                     break;
                 case "3":
