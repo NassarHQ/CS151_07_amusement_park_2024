@@ -60,6 +60,7 @@ public class EmployeeUI {
             if (employee.getPassword().equals(password)) {
                 loggedInEmployee = employee; // Set the logged-in employee
                 System.out.println("Login successful! Welcome, " + employee.getName() + ".");
+                employee.viewProfile();
                 displayMenu(); // Show the employee menu after successful login
             } else {
                 System.out.println("Incorrect password. Please try again.");

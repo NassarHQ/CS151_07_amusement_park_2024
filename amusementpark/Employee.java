@@ -1,15 +1,11 @@
 package amusementpark;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 import java.time.temporal.ChronoUnit;
-import java.time.LocalDateTime;
 import static amusementpark.Main.exitProgram;
 
 
@@ -41,7 +37,6 @@ public class Employee extends Person{
         }
     }
     private List<WorkDay> workSchedule;
-
 
     public Employee(){
         super();
@@ -216,21 +211,7 @@ public class Employee extends Person{
             return; // Exit the method and go back to the employee menu
         }
         park.addIssue(report);
-        //issueScanner.close();
-    }
-
-    //The employee will make sure every visitor on the ride is of appropriate height
-    //and weight limit is not exceeded
-    public boolean checkRideEligibility(Ride ride){
-        List<Visitor> onRide = ride.getOnRide();
-        for (int i = 0; i < onRide.size(); i++){
-            Visitor visitor = onRide.get(i);
-            if (visitor.getAge() < ride.getRideMinHeight()){
-                System.out.println("The ride cannot start yet. Not every person is tall enough for the ride.");
-                return false;
-            }
-        }
-        return true;
+        
     }
 
     public void operateRide(Ride ride) {
@@ -242,7 +223,6 @@ public class Employee extends Person{
             System.out.println("You are not assigned to operate this ride.");
             return;
         }
-
         ride.startUse(); // Call the method to start the ride
     }
 
@@ -302,7 +282,7 @@ public class Employee extends Person{
         return "Employee " + getName() + ", with ID: " + getEmployeeID();
     }
 
-    @Override //Not done yet its temporary stuffs
+    @Override
     public void viewProfile(){
         System.out.println("\n------------------ EMPLOYEE PROFILE ------------------");
         System.out.printf("Name           : %s%n", getName());
@@ -314,12 +294,7 @@ public class Employee extends Person{
         // Check if the employee has a work schedule
         if (workSchedule.isEmpty()) {
             System.out.println("No work scheduled for the next 7 days.");
-        } else {
-            for (WorkDay workDay : workSchedule) {
-                System.out.println(workDay); // Display the work schedule
-            }
-        }
+        } 
         System.out.println("------------------------------------------------------\n");
     }
-
 }
