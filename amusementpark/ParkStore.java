@@ -254,13 +254,12 @@ public void addItems(String item, int quantity) {
         }
     }
 
-    // Method to display all stores
+    // Getter for all stores
     public static void getAllStores(List<ParkStore> stores) {
         if (stores == null || stores.isEmpty()) {
             System.out.println("No stores available.");
             return;
         }
-        
         System.out.println("All available stores: ");
         for (ParkStore store : stores) {
             System.out.println("Store Name: " + store.getParkStoreName() + ", Store Type: " + store.getParkStoreType());

@@ -176,10 +176,10 @@ private boolean askToContinue(String action) {
       int duration = ValidationHelper.getValidPositiveInt(scanner, "ride duration (in minutes)");
       if (duration == -1) return;
   
-      int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 150 and 195)", ride.getRideMinHeight(), 220);
+      int minHeight = ValidationHelper.getValidPositiveIntInRange(scanner, "minimum height (in cm, between 120 and 220)", ride.getRideMinHeight(), 220);
       if (minHeight == -1) return;
   
-      int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "maximum weight (in kg, between 50 and 100)", 25, ride.getRideMaxWeight());
+      int maxWeight = ValidationHelper.getValidPositiveIntInRange(scanner, "maximum weight (in kg, between 25 and 100)", 25, ride.getRideMaxWeight());
       if (maxWeight == -1) return;
   
       // Create a new ride instance and add it to the park
@@ -195,9 +195,13 @@ private boolean askToContinue(String action) {
   }
   
   
-  // Remove an existing ride from the park
+    // Remove an existing ride from the park
     public void removeRide() {
         System.out.println("\n--- Remove a Ride ---");
+
+        // Display available rides with both IDs and names
+        displayAllRides();  // Show all rides first with IDs and Names for clarity
+
         String rideID = getValidatedInput("Enter the Ride ID to be removed:", false, true); // Get ride ID
         if (rideID == null) return;
 
@@ -211,6 +215,7 @@ private boolean askToContinue(String action) {
             System.out.println("Ride not found or could not be removed.");
         }
     }
+
 
     // Display details of a ride
     public void displayRideDetails() {
@@ -232,9 +237,13 @@ private boolean askToContinue(String action) {
     // Open or close a ride for maintenance
     public void openCloseForMaintenance() {
         System.out.println("\n--- Open/Close Ride for Maintenance ---");
+    
+        // Display available rides with both names and IDs
+        displayAllRides();  // Show all rides first with IDs and Names for clarity
+    
         String rideID = getValidatedInput("Enter the Ride ID of the ride to open/close for maintenance: ", false, true); // Get ride ID
         if (rideID == null) return;
-
+    
         Ride ride = findRideByID(rideID);
         if (ride != null) {
             ride.toggleOperational(); // Toggle operational status
@@ -243,7 +252,7 @@ private boolean askToContinue(String action) {
             System.out.println("Ride not found. Please check the Ride ID.");
         }
     }
-
+    
     // Manage stores (similar logic to ride management)
     public void manageStores() {
         while (true) {
@@ -308,49 +317,59 @@ private boolean askToContinue(String action) {
 
     // Remove a store
     public void removeStore() {
-          System.out.println("\n--- Remove a Store ---");
-          
-          String storeNameToRemove = getValidatedInput("Enter the name of the store to remove: ", false, false); // Get store name
-          if (storeNameToRemove == null) return;
-      
-          ParkStore storeToRemove = findStoreByName(storeNameToRemove);
-      
-          if (storeToRemove != null && park.removeStore(storeToRemove)) {
-              System.out.println("Success: Store '" + storeNameToRemove + "' has been removed from the park.");
-          } else {
-              System.out.println("Error: Store '" + storeNameToRemove + "' not found or could not be removed.");
-          }
-      }
+        System.out.println("\n--- Remove a Store ---");
+    
+        // Display available stores with names and types
+        displayAllStores();  // Show all stores first with Names and Types for clarity
+    
+        String storeNameToRemove = getValidatedInput("Enter the name of the store to remove: ", false, false); // Get store name
+        if (storeNameToRemove == null) return;
+    
+        ParkStore storeToRemove = findStoreByName(storeNameToRemove);
+    
+        if (storeToRemove != null && park.removeStore(storeToRemove)) {
+            System.out.println("Success: Store '" + storeNameToRemove + "' has been removed from the park.");
+        } else {
+            System.out.println("Error: Store '" + storeNameToRemove + "' not found or could not be removed.");
+        }
+    }
+    
 
     // Get store type by store name
     public void getStoreType() {
         System.out.println("\n--- Get Store Type ---");
+    
+        // Display available stores with names and types
+        displayAllStores();  // Show all stores first with Names and Types for clarity
+    
         String storeName = getValidatedInput("Enter the store name:", true, false);
         if (storeName == null) return;
-
+    
         ParkStore store = findStoreByName(storeName);
         if (store != null) {
             System.out.println("Store: " + store.getParkStoreName() + ", Type: " + store.getParkStoreType());
         } else {
             printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
-    }
+    }    
 
-    // Add items to a store
     public void addItemsToStore() {
-      System.out.println("\n--- Add Items to Store ---");
-  
-    // Get store name and validate
-    String storeName = getValidatedInput("Enter the store name: ", false, false); 
-    if (storeName == null) return;  // Handle cancel or exit
-
-    ParkStore store = findStoreByName(storeName);
-    if (store != null) {
-        handleStoreItems(store); // Directly handle items without asking to continue
-    } else {
-        System.out.println("Error: Store '" + storeName + "' not found.");
+        System.out.println("\n--- Add Items to Store ---");
+    
+        // Display available stores with names and types
+        displayAllStores();  // Show all stores first with IDs and Names for clarity
+    
+        String storeName = getValidatedInput("Enter the store name: ", false, false);
+        if (storeName == null) return;  // Handle cancel or exit
+    
+        ParkStore store = findStoreByName(storeName);
+        if (store != null) {
+            handleStoreItems(store); // Directly handle items without asking to continue
+        } else {
+            System.out.println("Error: Store '" + storeName + "' not found.");
+        }
     }
-  }
+    
     
     // Handle adding items to a store
     private void handleStoreItems(ParkStore store) {
@@ -380,16 +399,20 @@ private boolean askToContinue(String action) {
     // Validate item in the store (food, drink, or souvenir)
     public void validateItemInStore(String itemType) {
         System.out.println("\n--- Validate " + itemType + " in Store ---");
+    
+        // Display available stores with names and types
+        displayAllStores();  // Show all stores first with Names and Types for clarity
+    
         String storeName = getValidatedInput("Enter the store name: ", true, false);
         if (storeName == null) return;
-
+    
         ParkStore store = findStoreByName(storeName);
         if (store != null) {
             validateItem(itemType, store);
         } else {
             printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
-    }
+    }    
 
     // Helper method to validate item
     private void validateItem(String itemType, ParkStore store) {
@@ -426,37 +449,50 @@ private boolean askToContinue(String action) {
     // Display items in a store
     public void displayStoreItems() {
         System.out.println("\n--- Display Store Items ---");
+    
+        // Display available stores with names and IDs
+        displayAllStores();  // Show all stores first with Names and IDs for clarity
+    
+        // Get store name and validate
         String storeName = getValidatedInput("Enter the store name:", true, false);
         if (storeName == null) return;
-
+    
         ParkStore store = findStoreByName(storeName);
         if (store != null) {
-            store.displayAvailableItems();
+            store.displayAvailableItems();  // Display available items for the chosen store
         } else {
             printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
-    }
+    }    
 
     // View purchase history of a store
     public void viewStorePurchaseHistory() {
         System.out.println("\n--- View Store Purchase History ---");
+    
+        // Display available stores with names and types
+        displayAllStores();  // Show all stores first with Names and Types for clarity
+    
         String storeName = getValidatedInput("Enter the store name: ", true, false);
         if (storeName == null) return;
-
+    
         ParkStore store = findStoreByName(storeName);
         if (store != null) {
             store.viewStorePurchaseHistory();
         } else {
             printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
-    }
+    }    
 
     // Get the number of visitors in a store
     public void getVisitorsInStore() {
         System.out.println("\n--- Get Visitors in Store ---");
+    
+        // Display available stores with names and IDs
+        displayAllStores();  // Show all stores first with IDs and Names for clarity
+    
         String storeName = getValidatedInput("Enter the store name: ", true, false);
         if (storeName == null) return;
-
+    
         ParkStore store = findStoreByName(storeName);
         if (store != null) {
             store.getVisitorsInStore();
@@ -464,6 +500,7 @@ private boolean askToContinue(String action) {
             printHelper.printErrorMessage("Store", storeName, "", "not found");
         }
     }
+    
 
     // Additional methods for showing feedback, reports, metrics, etc.
     public void showFeedback() {
@@ -478,30 +515,24 @@ private boolean askToContinue(String action) {
 
     // Method to display all stores
     public void displayAllStores() {
-        // Get all stores from the park
         List<ParkStore> stores = park.getStores();
-
-        // Call the ParkStore's method to display all stores
         ParkStore.getAllStores(stores);
     }
+    
 
-    // Method to display all rides in the park
+    // Method to display all rides
     public void displayAllRides() {
-        // Get all rides from the park using the existing getRidesList method
-        ArrayList<Ride> rides = park.getRidesList();  // Call the method from Park
-
-        // Check if the park has any rides
+        ArrayList<Ride> rides = park.getRidesList();
         if (rides == null || rides.isEmpty()) {
             System.out.println("No rides available.");
             return;
         }
-
-        // Display the list of rides
         System.out.println("All available rides: ");
         for (Ride ride : rides) {
             System.out.println("Ride Name: " + ride.getRideName() + ", Ride ID: " + ride.getRideID());
         }
-}
+    }
+    
 
     // Method to view ride metrics by ride ID
     public void checkRideMetrics() {

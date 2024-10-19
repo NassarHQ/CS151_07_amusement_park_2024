@@ -16,8 +16,8 @@ public class PrintHelper {
         System.out.println("4. Show employee Reports");
         System.out.println("5. Check Ride Metrics");
         System.out.println("6. Check Park Metrics");
+        System.out.println("Type \"CANCEL\" for previous menu");
         System.out.println("Type \"EXIT\" to quit the program");
-        System.out.println("Type \"CANCEL\" to quit the program");
         System.out.println("============================");
     }
 
