@@ -187,7 +187,7 @@ public class Ride implements ParkInteractables {
         System.out.println("   Ride Metrics for " + rideName);
         System.out.println("============================");
         System.out.printf("Capacity:                %d%n", rideCapacity);
-        System.out.printf("Duration:                %d minutes%n", rideDuration);
+        System.out.printf("Duration:                %d seconds%n", rideDuration);
         System.out.printf("Minimum Height:          %d cm%n", rideMinHeight);
         System.out.printf("Maximum Weight:          %d kg%n", rideMaxWeight);
         System.out.println("============================\n");

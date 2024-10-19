@@ -22,15 +22,9 @@ public class EmployeeUI {
     public void showLoginMenu() {
         boolean exitLoginMenu = false;
         while (!exitLoginMenu) {
-            System.out.println("\n============================");
-            System.out.println("   Welcome to Employee Management:");
-            System.out.println("============================");
-            System.out.println("1. Login");
-            System.out.println("2. Create New Account");
-            System.out.println("3. Exit");
-            System.out.println("============================");
-            System.out.print("Please select an option (1-3): ");
-            
+
+            PrintHelper.printLoginMenu("Employee");
+
             String choice = scanner.nextLine().trim();
             exitProgram(choice);
             switch (choice) {
@@ -117,22 +111,8 @@ public class EmployeeUI {
     public void displayMenu() {
         boolean exitMenu = false;
         while (!exitMenu) {
-            System.out.println("\n============================");
-            System.out.println("   Employee Menu:");
-            System.out.println("============================");
-            System.out.println("1. Clock in");
-            System.out.println("2. Clock out");
-            System.out.println("3. View Work Log");
-            System.out.println("4. Make a report");
-            System.out.println("5. Check Salary Info");
-            System.out.println("6. Check Schedule");
-            System.out.println("7. Request Day Off");
-            System.out.println("8. Assign to a Ride");
-            System.out.println("9. Start Assigned Ride");
-            System.out.println("10. Stop Assigned Ride");
-            System.out.println("11. Log Out");
-            System.out.println("============================");
-            System.out.print("Please select an option (1-11): ");
+
+            PrintHelper.printEmployeeMenu();
 
             String choice = scanner.nextLine().trim();
             exitProgram(choice);

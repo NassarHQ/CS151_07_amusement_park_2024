@@ -22,15 +22,8 @@ public class VisitorUI {
 
     public void showVisitorLoginMenu() {
         while (true) {
-            System.out.println("\n============================");
-            System.out.println("   Welcome to Visitor Management:");
-            System.out.println("============================");
-            System.out.println("1. Login");
-            System.out.println("2. Create New Account");
-            System.out.println("3. Return to Main Menu");
-            System.out.println("EXIT");
-            System.out.println("============================");
-            System.out.print("Please select an option (1-3): ");
+
+            PrintHelper.printLoginMenu("Visitor");
 
             String choice = scanner.nextLine();
             switch (choice.trim()) {
@@ -190,6 +183,7 @@ public class VisitorUI {
             if (park.sellTicket(loggedInVisitor)) {
                 loggedInVisitor.setTicketPurchased(true);
                 park.addVisitor(loggedInVisitor);
+                System.out.println("Visitor " + loggedInVisitor.getName() + " is now in the park.");
             }
         }
     }
