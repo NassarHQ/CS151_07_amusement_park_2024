@@ -204,7 +204,6 @@ public void addItems(String item, int quantity) {
     }
 }
 
-
     // Helper method to check for food validation
     //Test comment making public
     public boolean isValidFoodType(String item) {

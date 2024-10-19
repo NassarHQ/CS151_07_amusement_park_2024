@@ -100,7 +100,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("4. Buy Items from Store");
         System.out.println("5. Write a Feedback");
         System.out.println("6. View Purchase History");
-        System.out.println("7. Return to Main Menu");
+        System.out.println("7. Log out");
         System.out.println("EXIT");
         System.out.println("============================");
         System.out.println("\nPlease select an option (1-7) or type 'EXIT' to exit the program: ");
