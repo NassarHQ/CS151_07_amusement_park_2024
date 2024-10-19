@@ -15,8 +15,6 @@ public class Visitor extends Person {
     private boolean hasProvidedFeedback;
     private boolean ticketPurchased;
     private Ride currentQueuedRide; // The ride the visitor is currently queued for
-    private List<String> allFeedbacks;
-
 
     public Visitor(){
         super();
@@ -24,7 +22,7 @@ public class Visitor extends Person {
         this.purchaseItemHistory = new ArrayList<>();
         this.height = 0.00;
         this.weight = 0.00;
-        this.hasProvidedFeedback = false;   // Initialize the flag as false
+        this.hasProvidedFeedback = false;   // mInitialize the flag as false
         this.ticketPurchased = false; // Initialize the flag as false
     }
 

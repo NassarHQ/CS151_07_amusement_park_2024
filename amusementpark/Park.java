@@ -21,6 +21,7 @@ public class Park {
     private double totalStoreRevenue;   // Revenue generated only from stores
     private int totalVisitors;     // Tracks total number of visitors in the park
     private int totalTicketsSold;  // Tracks total number of tickets sold
+    private double removedStoreRevenue = 0.0; // Store revenue of removed stores
 
     // Collections for visitors, employees, stores, rides, tickets sold, and reported issues
     private ArrayList<Visitor> visitors; // List of visitors in the park
@@ -124,38 +125,51 @@ public class Park {
         return manageStore(s, true);  // Add a store
     }
 
-    public boolean removeStore(ParkStore s) {
-        return manageStore(s, false);  // Remove a store
+// Public method to remove a store
+public boolean removeStore(ParkStore s) {
+    if (stores.contains(s)) {
+        removedStoreRevenue += s.getParkStoreRevenue();  // Add removed store's revenue to the separate variable
+        stores.remove(s);  // Remove the store from the list
+        
+        System.out.printf("The store '%s' has been removed from the park.\n", s.getParkStoreName());
+        return true;
+    } else {
+        System.out.println("Store not found in the park.");
+        return false;
+    }
+}
+
+
+    
+
+// Method to calculate daily park metrics including visitor count, ticket sales, and revenue
+public void calculateParkMetric() {
+    totalVisitors = visitors.size();  // Total visitors count
+    totalTicketsSold = soldTickets.size();  // Total tickets sold count
+
+    // Calculate total ticket revenue
+    totalTicketRevenue = soldTickets.stream().mapToDouble(Ticket::getTicketPrice).sum();
+
+    // Calculate total store revenue from active stores, and add revenue from removed stores
+    totalStoreRevenue = stores.stream().mapToDouble(ParkStore::getParkStoreRevenue).sum() + removedStoreRevenue;
+
+    // Total revenue is the sum of ticket revenue and store revenue
+    totalRevenue = totalTicketRevenue + totalStoreRevenue;
+
+    // Check if daily revenue goal is met
+    if (totalRevenue >= dailyRevenueGoal) {
+        System.out.println("GOOD JOB TEAM! WE MET OUR GOAL");
+    } else {
+        System.out.println("Almost there. We need $" + (dailyRevenueGoal - totalRevenue) + " more to reach our goal.");
     }
 
-    // Method to calculate daily park metrics including visitor count, ticket sales, and revenue
-    public void calculateParkMetric() {
-        totalVisitors = visitors.size();  // Total visitors count
-        totalTicketsSold = soldTickets.size();  // Total tickets sold count
-
-        // Calculate total ticket revenue
-        totalTicketRevenue = soldTickets.stream().mapToDouble(Ticket::getTicketPrice).sum();
-
-        // Calculate total store revenue
-        totalStoreRevenue = stores.stream().mapToDouble(ParkStore::getParkStoreRevenue).sum();
-
-        // Total revenue is sum of ticket revenue and store revenue
-        totalRevenue = totalTicketRevenue + totalStoreRevenue;
-
-        // Check if daily revenue goal is met
-        if (totalRevenue >= dailyRevenueGoal) {
-            System.out.println("GOOD JOB TEAM! WE MET OUR GOAL");
-        } else {
-            System.out.println("Almost there. We need $" + (dailyRevenueGoal - totalRevenue) + " more to reach our goal.");
-        }
-
-        // Check if daily visitor goal is met
-        if (totalVisitors >= dailyVisitorGoal) {
-            System.out.println("Goal Met: " + totalVisitors + " visitors have entered the park today!");
-        } else {
-            System.out.println("Goal Not Met: " + (dailyVisitorGoal - totalVisitors) + " more visitors needed to meet the goal.");
-        }
+    // Check if daily visitor goal is met
+    if (totalVisitors >= dailyVisitorGoal) {
+        System.out.println("Goal Met: " + totalVisitors + " visitors have entered the park today!");
+    } else {
+        System.out.println("Goal Not Met: " + (dailyVisitorGoal - totalVisitors) + " more visitors needed to meet the goal.");
     }
+}
 
     // Method to display park metrics after calculating them
     public void displayParkMetric() {
@@ -208,7 +222,11 @@ public class Park {
             System.out.println("No visitors have provided feedback.");
         } else {
             for (Visitor visitor : visitors) {
+<<<<<<< Updated upstream
                 visitor.viewFeedback(); // Display visitor feedback
+=======
+                visitor.getFeedback(); // Display visitor feedback
+>>>>>>> Stashed changes
             }
         }
     }
