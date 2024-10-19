@@ -124,7 +124,8 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("============================");
         System.out.println("1. Login");
         System.out.println("2. Create New Account");
-        System.out.println("3. Return to main menu");
+        System.out.println("3. Return to Main Menu");
+        System.out.println("EXIT");
         System.out.println("============================");
         System.out.print("Please select an option (1-3) or type 'EXIT' to exit the program: ");
     }
