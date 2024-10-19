@@ -68,6 +68,7 @@ public class ParkStore {
         this.parkStoreRevenue = parkStoreRevenue;  // Initialize with given revenue
         this.inventories = new HashMap<>();
         this.visitors = new ArrayList<>();
+        this.soldItems = new ArrayList<>();
     }
 
     // Getter for parkStoreName
