@@ -19,6 +19,9 @@ public class Ride implements ParkInteractables {
     private Queue<Visitor> rideVisitorQueue; // Queue to manage visitors in line
     private List<Visitor> onRide; // To keep track of visitors currently on the ride
     private Employee operator; // Employee assigned to operate the ride
+    private int roundsCompleted = 0;  // Count the number of rounds completed
+    private int totalRiders = 0;      // Count the total number of visitors who have ridden
+
     
     // Default constructor for Ride class
     public Ride() {
@@ -215,7 +218,7 @@ public class Ride implements ParkInteractables {
         return this.operator;
     }
 
-    // Interface to start ride
+    // Interface to start the ride
     @Override
     public void startUse() {
         if (!isOperational) {
@@ -237,12 +240,13 @@ public class Ride implements ParkInteractables {
             Visitor visitor = rideVisitorQueue.poll();
             onRide.add(visitor);
             System.out.println(visitor.getName() + " has boarded the ride.");
+            totalRiders++;  // Increment the total riders count
         }
 
         hasStarted = true;
     }
 
-    // Interface to stop ride
+    // Interface to stop the ride
     @Override
     public void stopUse() {
         if (!hasStarted) {
@@ -251,10 +255,15 @@ public class Ride implements ParkInteractables {
         }
         System.out.println("Stopping the ride: " + rideName);
 
+        // Increment the roundsCompleted when the ride stops
+        roundsCompleted++;
+
         // Clear all riders after the ride stops
         onRide.clear();
         hasStarted = false;
     }
+
+
 
     // Method to add a visitor that checks if the ride can admit more riders
     public void addRider(Visitor visitor) {
@@ -271,6 +280,16 @@ public class Ride implements ParkInteractables {
         // Admit the visitor to the ride
         onRide.add(visitor);
         System.out.println(visitor.getName() + " has been added to the ride.");
+    }
+
+    // Getter for roundsCompleted
+    public int getRoundsCompleted() {
+        return roundsCompleted;
+    }
+
+    // Getter for totalRiders
+    public int getTotalRiders() {
+        return totalRiders;
     }
 
 }

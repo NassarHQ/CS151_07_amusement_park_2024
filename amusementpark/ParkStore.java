@@ -106,10 +106,11 @@ public class ParkStore {
         }
     }
 
-    // Getter for parkStoreRevenue
+    // Getter for parkStoreRevenue in ParkStore.java
     public double getParkStoreRevenue() {
         return this.parkStoreRevenue;
     }
+
 
     // Method to sell items
     public void sellItems(Visitor v, String item, int quantity) {
@@ -250,6 +251,19 @@ public void addItems(String item, int quantity) {
             for (Visitor v : visitors) {
                 System.out.println(v.getName());
             }
+        }
+    }
+
+    // Method to display all stores
+    public static void getAllStores(List<ParkStore> stores) {
+        if (stores == null || stores.isEmpty()) {
+            System.out.println("No stores available.");
+            return;
+        }
+        
+        System.out.println("All available stores: ");
+        for (ParkStore store : stores) {
+            System.out.println("Store Name: " + store.getParkStoreName() + ", Store Type: " + store.getParkStoreType());
         }
     }
 

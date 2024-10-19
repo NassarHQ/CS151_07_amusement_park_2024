@@ -2,6 +2,7 @@ package amusementpark;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Scanner;
 import static amusementpark.Main.exitProgram;
@@ -16,6 +17,8 @@ public class Park {
 
     // Variables to store daily metrics
     private double totalRevenue;   // Stores total revenue
+    private double totalTicketRevenue;  // Revenue from tickets
+    private double totalStoreRevenue;   // Revenue from stores
     private int totalVisitors;     // Stores total number of visitors
     private int totalTicketsSold;  // Stores total number of tickets sold
 
@@ -135,13 +138,19 @@ public class Park {
     }
 
 
-    // Calculate park metrics (total revenue, visitors, and tickets sold)
+    // Method to calculate park metrics (including both ticket and store revenue)
     public void calculateParkMetric() {
-        totalVisitors = visitors.size(); // Get the count of total visitors
-        totalTicketsSold = soldTickets.size(); // Get the count of total sold tickets
+        totalVisitors = visitors.size();  // Get the count of total visitors
+        totalTicketsSold = soldTickets.size();  // Get the count of total sold tickets
 
-        // Calculate total revenue from sold tickets
-        totalRevenue = soldTickets.stream().mapToDouble(Ticket::getTicketPrice).sum();
+        // Calculate total ticket revenue
+        totalTicketRevenue = soldTickets.stream().mapToDouble(Ticket::getTicketPrice).sum();
+
+        // Calculate total revenue from stores
+        totalStoreRevenue = stores.stream().mapToDouble(ParkStore::getParkStoreRevenue).sum();
+
+        // Total revenue is now the sum of ticket revenue and store revenue
+        totalRevenue = totalTicketRevenue + totalStoreRevenue;
 
         // Check if the revenue goal is met
         if (totalRevenue >= dailyRevenueGoal) {
@@ -158,14 +167,18 @@ public class Park {
         }
     }
 
-    // Display park metrics (calls calculateParkMetric and prints results)
+    // Method to display park metrics
     public void displayParkMetric() {
-        calculateParkMetric(); // Calculate metrics before displaying
-        // Display the metrics for the day
-        System.out.println("Park Metrics:");
-        System.out.println("Total visitors Today: " + totalVisitors);
-        System.out.println("Total revenue Today: $" + totalRevenue);
-        System.out.println("Tickets Sold Today: " + totalTicketsSold);
+        calculateParkMetric();  // Calculate metrics before displaying
+
+        // Display the metrics for the day in a clean and formatted way
+        System.out.println("\n========= Park Metrics =========");
+        System.out.printf("%-30s: %d%n", "Total Visitors Today", totalVisitors);
+        System.out.printf("%-30s: $%.2f%n", "Total Ticket Revenue Today", totalTicketRevenue);  // Show ticket revenue
+        System.out.printf("%-30s: $%.2f%n", "Total Store Revenue Today", totalStoreRevenue);  // Show store revenue
+        System.out.printf("%-30s: $%.2f%n", "Total Combined Revenue Today", totalRevenue);  // Show combined revenue (tickets + stores)
+        System.out.printf("%-30s: %d%n", "Tickets Sold Today", totalTicketsSold);
+        System.out.println("================================\n");
     }
 
 
@@ -275,5 +288,10 @@ public class Park {
     // Getter for park location
     public String getParkLocation() {
         return parkLocation;
+    }
+
+    // Method to get all stores
+    public List<ParkStore> getStores() {
+        return stores;
     }
 }

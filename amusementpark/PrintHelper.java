@@ -2,6 +2,9 @@ package amusementpark;
 
 public class PrintHelper {
 
+    // Instance of Ride class
+    Ride ride = new Ride();
+
     // Method to print the Admin Menu
     public void printAdminMenu() {
         System.out.println("\n============================");
@@ -9,10 +12,12 @@ public class PrintHelper {
         System.out.println("============================");
         System.out.println("1. Manage Rides");
         System.out.println("2. Manage Stores");
-        System.out.println("3. Show visitor feedback");
-        System.out.println("4. Show employee reports");
-        System.out.println("5. Check Park metrics");
+        System.out.println("3. Show visitor Feedback");
+        System.out.println("4. Show employee Reports");
+        System.out.println("5. Check Ride Metrics");
+        System.out.println("6. Check Park Metrics");
         System.out.println("Type \"EXIT\" to quit the program");
+        System.out.println("Type \"CANCEL\" to quit the program");
         System.out.println("============================");
     }
 
@@ -25,6 +30,7 @@ public class PrintHelper {
         System.out.println("2. Remove a Ride");
         System.out.println("3. Display Ride Details");
         System.out.println("4. Open/Close Ride for Maintenance");
+        System.out.println("5. Display All Rides");
         System.out.println("Type \"CANCEL\" for previous menu");
         System.out.println("Type \"EXIT\" to quit the program");
         System.out.println("============================");
@@ -45,6 +51,7 @@ public class PrintHelper {
         System.out.println("8. Display Available Items");
         System.out.println("9. View Store Purchase History");
         System.out.println("10.Get Visitors in Store");
+        System.out.println("11. Display All Stores");
         System.out.println("Type \"CANCEL\" for previous menu");
         System.out.println("Type \"EXIT\" to quit the program");
         System.out.println("============================");
@@ -106,6 +113,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("\nPlease select an option (1-7) or type 'EXIT' to exit the program: ");
     }
 
+    // Method to print main menu
     public static void printMainMenu() {
         System.out.println("\n============================");
         System.out.println("\tMain Menu");
@@ -118,6 +126,7 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("\nPlease select an option (1-3) or type 'EXIT' to exit the program: ");
     }
 
+    // Method to print login menu
     public static void printLoginMenu(String prompt) {
         System.out.println("\n============================");
         System.out.println("   Welcome to " + prompt + " Management:");
@@ -129,7 +138,8 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("============================");
         System.out.print("Please select an option (1-3) or type 'EXIT' to exit the program: ");
     }
-
+    
+    // Method to print employee menu
     public static void printEmployeeMenu() {
         System.out.println("\n============================");
         System.out.println("   Employee Menu:");
@@ -148,4 +158,15 @@ public void printErrorMessage(String entityType, String name, String id, String 
         System.out.println("============================");
         System.out.print("Please select an option (1-11): ");
     }
+
+    // Method to display ride metrics
+    public void displayRideMetrics() {
+        System.out.println("\n============================");
+        System.out.println("   Ride Metrics for " + ride.getRideName());
+        System.out.println("============================");
+        System.out.printf("Rounds Completed:         %d%n", ride.getRoundsCompleted());
+        System.out.printf("Total Riders:             %d%n", ride.getTotalRiders());
+        System.out.println("============================\n");
+    }
+
 }

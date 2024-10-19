@@ -2,6 +2,7 @@ package amusementpark;
 
 import java.util.Scanner;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AdminUI {
@@ -31,7 +32,8 @@ public class AdminUI {
                     case 2 -> manageStores(); // Navigate to store management
                     case 3 -> showFeedback(); // Display visitor feedback
                     case 4 -> showReports(); // Display employee reports
-                    case 5 -> checkMetrics(); // Check park metrics
+                    case 5 -> checkRideMetrics(); // Check ride metrics
+                    case 6 -> checkParkMetrics(); // Check park metrics
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -132,6 +134,7 @@ private boolean askToContinue(String action) {
                     case 2 -> performActionWithLoop("remove", this::removeRide); // Remove a ride
                     case 3 -> performActionWithLoop("display", this::displayRideDetails); // Display ride details
                     case 4 -> performActionWithLoop("open/close for maintenance", this::openCloseForMaintenance); // Open/close for maintenance
+                    case 5 -> performActionWithLoop("display rides", this::displayAllRides);
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -258,6 +261,7 @@ private boolean askToContinue(String action) {
                     case 8 -> performActionWithLoop("display items", this::displayStoreItems); // Display store items
                     case 9 -> performActionWithLoop("view purchase history", this::viewStorePurchaseHistory); // View purchase history
                     case 10 -> performActionWithLoop("get visitors in", this::getVisitorsInStore); // Get visitors in store
+                    case 11 -> performActionWithLoop("display Stores", this::displayAllStores); // Display all stores
                     default -> System.out.println("Invalid choice. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -469,17 +473,55 @@ private boolean askToContinue(String action) {
         park.viewReportedIssues();
     }
 
-    public void checkMetrics() {
-        System.out.println("\n--- Check Metrics ---");
-        String rideName = getValidatedInput("Enter the name of the ride you want to check: ", true, false);
-        if (rideName == null) return;
+    // Method to display all stores
+    public void displayAllStores() {
+        // Get all stores from the park
+        List<ParkStore> stores = park.getStores();
 
-        Ride ride = findRideByID(rideName);
-        if (ride != null) {
-            printHelper.printRideDetails(ride);
-        } else {
-            System.out.println("Ride not found. Please check the name and try again.");
+        // Call the ParkStore's method to display all stores
+        ParkStore.getAllStores(stores);
+    }
+
+    // Method to display all rides in the park
+    public void displayAllRides() {
+        // Get all rides from the park using the existing getRidesList method
+        ArrayList<Ride> rides = park.getRidesList();  // Call the method from Park
+
+        // Check if the park has any rides
+        if (rides == null || rides.isEmpty()) {
+            System.out.println("No rides available.");
+            return;
         }
+
+        // Display the list of rides
+        System.out.println("All available rides: ");
+        for (Ride ride : rides) {
+            System.out.println("Ride Name: " + ride.getRideName() + ", Ride ID: " + ride.getRideID());
+        }
+}
+
+    // Method to view ride metrics by ride ID
+    public void checkRideMetrics() {
+        System.out.println("\n--- Check Ride Metrics ---");
+        
+        // Get ride ID as input (ensure it's numeric)
+        String rideID = getValidatedInput("Enter the ID of the ride you want to check: ", false, false); // Allow numeric input
+        if (rideID == null) return;  // Handle case where the input is null
+
+        // Search for the ride by ID
+        Ride ride = findRideByID(rideID);  // Now we are searching by ID
+        if (ride != null) {
+            System.out.printf("Rounds Completed:         %d%n", ride.getRoundsCompleted());
+            System.out.printf("Total Riders:             %d%n", ride.getTotalRiders());
+        } else {
+            System.out.println("Ride not found. Please check the ID and try again.");
+        }
+    }
+
+
+    // Method to display Park metrics
+    public void checkParkMetrics() {
+        park.displayParkMetric();  // Call displayParkMetric() from Park class
     }
 
     // Helper methods to find rides and stores by ID or name
